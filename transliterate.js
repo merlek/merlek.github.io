@@ -2,9 +2,7 @@ var Transliterate = function(){
   var that = {};
   
   var DEBUG = false;
-  var SYLLABIFY = false;
-
-  var delimiter = "\t";
+  that.SYLLABIFY = false;
   
   that.transliterateList = function (words) {
     
@@ -163,14 +161,14 @@ var Transliterate = function(){
   }
   
   var transliterate = function (list) {
-    if (DEBUG) console.log("SYLLABIFY=" + SYLLABIFY);
+    if (DEBUG) console.log("SYLLABIFY=" + that.SYLLABIFY);
 
     var word = "";
 
     for (var i = 0; i < list.length; i++) {
       var letter = list[i];
 
-      if (SYLLABIFY || letter != Letter.values.SyllableMarker) {
+      if (that.SYLLABIFY || letter != Letter.values.SyllableMarker) {
         if (DEBUG) console.log(letter.name + " -> \"" + letter.transliteration + "\"");
         word += letter.transliteration;
       }

@@ -19,7 +19,15 @@
         <h1>Hebrew Transliterator</h1>
       </div>
       <div class="row">
-        <p>Note: The transliterator does not correctly identify Qamets Hatuf (e.g. ḥoḵmâ not ḥāḵəmâ).</p>
+        <p>Note: The transliterator does not identify Qamets Hatuf (e.g. ḥoḵmâ not ḥāḵəmâ).</p>
+      </div>
+      <div class="row">
+        <div class="form-check">
+          <label class="form-check-label">
+            <input id="syllabify-checkbox" class="form-check-input" type="checkbox" value="true">
+            Syllabify (experimental)
+          </label>
+        </div>
       </div>
       <div class="row">
         <div class="input-group input-group-lg">
@@ -33,10 +41,23 @@
     </div>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script>
-    $('#hebrew-input').bind('input propertychange', function() {
-      var hebrew = $('#hebrew-input').val().split(/\n|\s+/);
+    var updateTransliteratedText = function() {
+      var field = $('#hebrew-input').val();
+      var delimiter = field.match(/[\n\s\,\t]+/);
+      var hebrew = field.split(/[\n\s\,\t]+/);
       var text = Transliterate.transliterateList(hebrew);
+      if (delimiter && delimiter[0]) {
+        text = text.join(delimiter);
+      }
       $('#transliterated').text(text);
+    }
+
+    $('#hebrew-input').bind('input propertychange', function() {
+      updateTransliteratedText();
+    });
+    $('#syllabify-checkbox').change(function() {
+      Transliterate.SYLLABIFY = $('#syllabify-checkbox:checked').val();
+      updateTransliteratedText();
     });
     </script>
   </body>
