@@ -32,20 +32,62 @@ var Transliterate = function(){
     
     if (DEBUG) console.log(list);
     
+    list = reorder(list);
     list = simplify(list);
     list = simplify2(list);
     list = syllabify(list);
     return transliterate(list);
   }
-  
-  var simplify = function(list) {
-    if (DEBUG) { console.log("==SIMPLIFY=="); printList(list)}
+
+  var reorder = function(list) {
+    if (DEBUG) { console.log("==REORDER=="); console.log(textList(list)); }
     
     var newList = [];
     var last = list[0];
     
     for (var i = 1; i < list.length; i++) {
-      if (DEBUG) { console.log(i + ") newList: "); printList(newList); }
+      if (DEBUG) { console.log(i + ") newList: "+textList(newList)); }
+      
+      var letter = list[i];
+      
+      if (DEBUG) { 
+        console.log("last: "+last.name);
+        console.log("letter-"+i+": "+letter.name);
+      }
+      
+      if ((letter == Letter.values.SinDot || letter == Letter.values.ShinDot)
+       && last != Letter.values.ShinDotless) {
+        var t = letter;
+        letter = last;
+        last = t;
+      }
+
+      if (letter == Letter.values.ShinDot && last != Letter.values.ShinDotless) {
+        letter = last;
+        last = Letter.values.SinDot;
+      }
+
+      if (letter == Letter.values.Dagesh && last.isVowel()) {
+        letter = last;
+        last = Letter.values.Dagesh;
+      }
+
+      newList.push(last);
+      last = letter;
+    }
+    
+    newList.push(last);
+    return newList;
+  }
+  
+  var simplify = function(list) {
+    if (DEBUG) { console.log("==SIMPLIFY=="); console.log(textList(list)); }
+    
+    var newList = [];
+    var last = list[0];
+    
+    for (var i = 1; i < list.length; i++) {
+      if (DEBUG) { console.log(i + ") newList: "+textList(newList)); }
       
       var letter = list[i];
       
@@ -77,12 +119,12 @@ var Transliterate = function(){
   }
   
   var simplify2 = function (list) {
-    if (DEBUG) { console.log("==SIMPLIFY2=="); printList(list)}
+    if (DEBUG) { console.log("==SIMPLIFY2=="); console.log(textList(list)); }
     
     var newList = [];
     
     for (var i = 0; i < list.length; i++) {
-      if (DEBUG) { console.log(i + ") newList: "); printList(newList); }
+      if (DEBUG) { console.log(i + ") newList: "+textList(newList)); }
       var letter = list[i];
       if (DEBUG) console.log("letter-"+i+": " + letter.name);
       
@@ -123,12 +165,12 @@ var Transliterate = function(){
   }
   
   var syllabify = function(list) {
-    if (DEBUG) { console.log("==SYLLABIFY=="); printList(list); }
+    if (DEBUG) { console.log("==SYLLABIFY=="); console.log(textList(list)); }
 
     var newList = [];
 
     for (var i = 0; i < list.length; i++) {
-      if (DEBUG) { console.log(i + ") newList: "); printList(newList); }
+      if (DEBUG) { console.log(i + ") newList: "+textList(newList)); }
 
       var letter = list[i];
 
@@ -177,12 +219,12 @@ var Transliterate = function(){
     return word;
   }
 
-  var printList = function (list) {
+  var textList = function (list) {
     var text = "";
     for (var i = 0; i < list.length; i++) {
         text += list[i].name + ", ";
     }
-    console.log(text);
+    return text;
   }
   
   return that;
