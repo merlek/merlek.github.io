@@ -27,7 +27,7 @@ var Transliterate = function(){
     var list = [];
     
     for (var i = 0; i < hebrewWord.length; i++) {
-      list.push(Letter.parse(hebrewWord[i]));
+      list.push(Letter.parse(true, hebrewWord[i]));
     }
     
     if (DEBUG) console.log(list);
@@ -39,13 +39,13 @@ var Transliterate = function(){
   }
   
   var simplify = function(list) {
-    if (DEBUG) { console.log("==SIMPLIFY=="); console.log(list)}
+    if (DEBUG) { console.log("==SIMPLIFY=="); printList(list)}
     
     var newList = [];
     var last = list[0];
     
     for (var i = 1; i < list.length; i++) {
-      if (DEBUG) { console.log(i + ") newList: "); console.log(newList); }
+      if (DEBUG) { console.log(i + ") newList: "); printList(newList); }
       
       var letter = list[i];
       
@@ -55,7 +55,7 @@ var Transliterate = function(){
       }
       
       var combo = last.hebrew + letter.hebrew;
-      var newLetter = Letter.parse(combo, i >= list.length - 1);
+      var newLetter = Letter.parse(false, combo, i >= list.length - 1);
       
       if (DEBUG) console.log("newLetter: " + newLetter.name);
       
@@ -77,12 +77,12 @@ var Transliterate = function(){
   }
   
   var simplify2 = function (list) {
-    if (DEBUG) { console.log("==SIMPLIFY2=="); console.log(list)}
+    if (DEBUG) { console.log("==SIMPLIFY2=="); printList(list)}
     
     var newList = [];
     
     for (var i = 0; i < list.length; i++) {
-      if (DEBUG) { console.log(i + ") newList: "); console.log(newList); }
+      if (DEBUG) { console.log(i + ") newList: "); printList(newList); }
       var letter = list[i];
       if (DEBUG) console.log("letter-"+i+": " + letter.name);
       
@@ -109,7 +109,8 @@ var Transliterate = function(){
         var previousLetter = newList[newList.length - 1];
         if (previousLetter == Letter.values.Ḥet || previousLetter == Letter.values.Ayin || previousLetter == Letter.values.HeMappiq) {
           // Furtive Pathach !
-          newList.push(newList.length - 1, letter);
+          newList.pop();
+          newList.push(letter,previousLetter);
           letter = Letter.values.NULL;
         }
       }
@@ -122,12 +123,12 @@ var Transliterate = function(){
   }
   
   var syllabify = function(list) {
-    if (DEBUG) { console.log("==SYLLABIFY=="); console.log(list); }
+    if (DEBUG) { console.log("==SYLLABIFY=="); printList(list); }
 
     var newList = [];
 
     for (var i = 0; i < list.length; i++) {
-      if (DEBUG) { console.log(i + ") newList: "); console.log(newList); }
+      if (DEBUG) { console.log(i + ") newList: "); printList(newList); }
 
       var letter = list[i];
 
@@ -174,6 +175,14 @@ var Transliterate = function(){
       }
     }
     return word;
+  }
+
+  var printList = function (list) {
+    var text = "";
+    for (var i = 0; i < list.length; i++) {
+        text += list[i].name + ", ";
+    }
+    console.log(text);
   }
   
   return that;

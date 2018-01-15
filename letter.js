@@ -396,18 +396,27 @@ var Letter = function() {
   });
 
 
-  letterEnum.parse = function(hebrew, endWord) {
+  letterEnum.parse = function(allowEnglish, hebrew, endWord) {
     for (prop in values) {
-      var letter = values[prop];
-      if (hebrew == (letter.hebrew)) {
-        if (!letter.endVowel || letter.endVowel && endWord) {
-          return letter;
+      var letterValue = values[prop];
+      if (hebrew == (letterValue.hebrew)) {
+        if (!letterValue.endVowel || letterValue.endVowel && endWord) {
+          return letterValue;
         } else {
           break;
         }
       }
     }
-    return values.NULL;
+
+    if (allowEnglish){
+      return letter({
+        name: hebrew,
+        hebrew: hebrew,
+        transliteration: hebrew
+      });
+    } else {
+      return Letter.values.NULL;
+    }
   }
   
   letterEnum.values = values;
