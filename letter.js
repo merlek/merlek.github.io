@@ -43,6 +43,11 @@ var Letter = function() {
     hebrew: "בּ",
     transliteration:"b"
   });
+  values.BetDagesh2 = letter({
+    name: "BetDagesh",
+    hebrew: "בּ",
+    transliteration:"b"
+  });
   values.Bet = letter({
     name: "Bet",
     hebrew: "ב",
@@ -215,6 +220,11 @@ var Letter = function() {
   values.TawDagesh = letter({
     name: "TawDagesh",
     hebrew: "תּ",
+    transliteration: "t"
+  });
+  values.TawDagesh2 = letter({
+    name: "TawDagesh",
+    hebrew: "תּ",
     transliteration: "t"
   });
   values.Taw = letter({
