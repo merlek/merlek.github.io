@@ -38,7 +38,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"cover-container d-flex h-100 p-3 mx-auto flex-column text-center\">\n  <header [title]=\"title\"></header>\n  <main role=\"main\" class=\"inner cover\">\n    <app-transliterate></app-transliterate>\n  </main>\n  <footer class=\"mastfoot mt-auto\">\n    <div class=\"inner\">\n      <p>Cover template for <a href=\"https://getbootstrap.com/\">Bootstrap</a>.</p>\n    </div>\n  </footer>\n</div>"
+module.exports = "<div class=\"cover-container d-flex h-100 p-3 mx-auto flex-column text-center\">\n  <header [title]=\"title\"></header>\n  <main role=\"main\" class=\"inner cover\">\n    <app-transliterate></app-transliterate>\n  </main>\n  <footer class=\"mastfoot mt-auto\">\n    <div class=\"inner\">\n      <p>Cover template for <a href=\"https://getbootstrap.com/\">Bootstrap</a>, by <a href=\"https://twitter.com/mdo\">@mdo</a>.</p>\n    </div>\n  </footer>\n</div>"
 
 /***/ }),
 
