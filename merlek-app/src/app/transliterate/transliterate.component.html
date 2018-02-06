@@ -1,23 +1,23 @@
 <!-- <div class="container"> -->
-	<div class="row justify-content-md-center">
-		<h1>{{title}}</h1>
+<div class="row justify-content-md-center">
+	<h1>{{title}}</h1>
+</div>
+<div class="row">{{info}}</div>
+<div class="row">
+	<div class="form-check">
+		<label class="form-check-label">
+			<input id="syllabify-checkbox" class="form-check-input" type="checkbox" value="true">
+			Syllabify (experimental)
+		</label>
 	</div>
-	<div class="row">{{info}}</div>
-	<div class="row">
-		<div class="form-check">
-			<label class="form-check-label">
-				<input id="syllabify-checkbox" class="form-check-input" type="checkbox" value="true">
-				Syllabify (experimental)
-			</label>
-		</div>
+</div>
+<div class="row">
+	<div class="input-group input-group">
+		<textarea #hebrewInput class="form-control" id="hebrew-input" rows="4" placeholder="Hebrew" dir="rtl" (keyup)="update(hebrewInput.value)" ></textarea>
+		<!-- <button id="transliterate-btn" type="submit" class="btn btn-primary">Submit</button> -->
 	</div>
-	<div class="row">
-		<div class="input-group input-group">
-			<textarea #hebrewInput class="form-control" id="hebrew-input" rows="4" placeholder="Hebrew" dir="rtl" (keyup)="update(hebrewInput.value)" ></textarea>
-			<!-- <button id="transliterate-btn" type="submit" class="btn btn-primary">Submit</button> -->
-		</div>
-		<div class="input-group input-group">
-			<textarea [(ngModel)]="transliteratedText" class="form-control" id="transliterated" rows="4" placeholder="Transliteration" readonly></textarea>
-		</div>
+	<div class="input-group input-group">
+		<textarea [(ngModel)]="transliteratedText" class="form-control" id="transliterated" rows="4" placeholder="Transliteration" readonly></textarea>
 	</div>
+</div>
 <!-- </div> -->

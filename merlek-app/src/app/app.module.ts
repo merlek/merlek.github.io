@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { TransliterateComponent } from './transliterate/transliterate.component';
@@ -9,18 +10,23 @@ import { HeaderComponent } from './header/header.component';
 
 import { LetterService } from './letter.service';
 import { TransliteratorService } from './transliterator.service';
+import { AppRoutingModule } from './/app-routing.module';
+import { GreekVocabComponent } from './greek-vocab/greek-vocab.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     TransliterateComponent,
-    HeaderComponent
+    HeaderComponent,
+    GreekVocabComponent
   ],
   imports: [
     BrowserModule,
     NgbModule.forRoot(),
-    FormsModule
+    FormsModule,
+    AppRoutingModule,
+    HttpModule,
   ],
   providers: [ TransliteratorService, LetterService ],
   bootstrap: [ AppComponent ]
