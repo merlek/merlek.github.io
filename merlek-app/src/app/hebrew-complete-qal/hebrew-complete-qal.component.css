@@ -1,0 +1,45 @@
+table, tbody, tr, td {
+	border-collapse: collapse;
+	border: none;
+}
+
+table {
+	font-family: Cardo, Serif;
+	text-align: center;
+	margin: 1em auto;
+}
+
+tr {
+	border-bottom: 1px solid #ccc;
+}
+
+tr:last-child {
+	border-bottom: none;
+}
+
+tr th {
+	border-bottom: 2px solid black;
+}
+
+tr th:first-child, tr td:first-child {
+	border-right: 2px solid black;
+}
+
+tr:nth-child(7) td {
+	border-top: 2px solid black;
+}
+
+td {
+  padding: 4px;
+  text-align: left;
+}
+
+.red {
+	color: red;
+}
+
+.hebrew {
+	direction: rtl;
+	font-size: 1.75em;
+	text-align: right;
+}

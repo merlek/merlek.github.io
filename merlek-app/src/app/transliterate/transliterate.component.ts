@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import {
-   debounceTime, distinctUntilChanged, switchMap
- } from 'rxjs/operators';
+  debounceTime, distinctUntilChanged, switchMap
+} from 'rxjs/operators';
 
-import { TransliteratorService } from '../transliterator.service';
+import {TransliteratorService} from '../transliterator.service';
 
 
 @Component({
@@ -13,27 +13,24 @@ import { TransliteratorService } from '../transliterator.service';
   styleUrls: ['./transliterate.component.css']
 })
 export class TransliterateComponent implements OnInit {
-	title = "Hebrew Transliterator";
-	info = "Note: cannot identify Qamets Hatuf (e.g. ḥoḵmâ not ḥāḵəmâ).";
+  title = 'Hebrew Transliterator';
+  info = 'Note: cannot identify Qamets Hatuf (e.g. ḥoḵmâ not ḥāḵəmâ).';
 
-	hebrewText = "";
-	transliteratedText = "";
+  hebrewText = '';
+  transliteratedText = '';
 
-  constructor(private translitService: TransliteratorService) { }
+  constructor(private translitService: TransliteratorService) {}
 
-  ngOnInit() {  }
+  ngOnInit() {}
 
   update(hebrew: string): void {
     this.transliteratedText =
-    	this.translitService.transliterateWord( hebrew );
+      this.translitService.transliterateWord(hebrew);
   }
 
-    // $('#hebrew-input').bind('input propertychange', function() {
-    //   updateTransliteratedText();
-    // });
-    // $('#syllabify-checkbox').change(function() {
-    //   Transliterate.SYLLABIFY = $('#syllabify-checkbox:checked').val();
-    //   updateTransliteratedText();
-    // });
+  // $('#syllabify-checkbox').change(function() {
+  //   Transliterate.SYLLABIFY = $('#syllabify-checkbox:checked').val();
+  //   updateTransliteratedText();
+  // });
 
 }
