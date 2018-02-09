@@ -4,10 +4,12 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { TransliterateComponent } from './transliterate/transliterate.component';
 import { GreekVocabComponent } from './greek-vocab/greek-vocab.component';
+import { HebrewCompleteQalComponent } from './hebrew-complete-qal/hebrew-complete-qal.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/transliterate', pathMatch: 'full' },
-  { path: 'transliterate', component: TransliterateComponent },
+  { path: '', redirectTo: '/hebrew/transliterate', pathMatch: 'full' },
+  { path: 'hebrew/transliterate', component: TransliterateComponent },
+  { path: 'hebrew/complete-qal', component: HebrewCompleteQalComponent },
   { path: 'greek-vocab', component: GreekVocabComponent },
 ];
 
@@ -16,4 +18,4 @@ const routes: Routes = [
   exports: [ RouterModule ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

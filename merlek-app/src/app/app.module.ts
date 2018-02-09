@@ -12,6 +12,7 @@ import { LetterService } from './letter.service';
 import { TransliteratorService } from './transliterator.service';
 import { AppRoutingModule } from './/app-routing.module';
 import { GreekVocabComponent } from './greek-vocab/greek-vocab.component';
+import { HebrewCompleteQalComponent } from './hebrew-complete-qal/hebrew-complete-qal.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { GreekVocabComponent } from './greek-vocab/greek-vocab.component';
     AppComponent,
     TransliterateComponent,
     HeaderComponent,
-    GreekVocabComponent
+    GreekVocabComponent,
+    HebrewCompleteQalComponent
   ],
   imports: [
     BrowserModule,
