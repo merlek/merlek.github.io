@@ -1,0 +1,92 @@
+<div class="row justify-content-center">
+  <h1>{{title}}</h1>
+</div>
+<div class='row justify-content-center'>
+<div class='form-check'>
+  <input class='form-check-input' type='checkbox' [checked]='tenseForm'  (change)='tenseForm = !tenseForm' id='tenseFormCheck'>
+  <label class='form-check-label' for='tenseFormCheck'>Tense Formatives</label>
+</div>
+</div>
+<div class='row justify-content-center'>
+<div class='table-responsive-sm'>
+ <table class='table'>
+    <thead>
+      <tr>
+        <th scope='col'>Stem</th>
+        <th scope='col'>Perfect</th>
+        <th scope='col'>Imperfect</th>
+        <th scope='col'>Imperative</th>
+        <th scope='col'>Infinitive<br />Construct</th>
+        <th scope='col'>Infinitive<br />Absolute</th>
+        <th scope='col'>Participle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class='qal'>
+        <th scope='row' class='stem'>Qal</th>
+        <td class='hebrew perf'><span>ק</span><span [class.tense-form]='tenseForm'>ָ</span><span>ט</span><span [class.tense-form]='tenseForm'>ַ</span><span>ל</span></td>
+        <td class='hebrew impf'><span [class.tense-form]='tenseForm'>יִ</span><span>ק</span><span [class.tense-form]='tenseForm'>ְ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֹ</span><span>ל</span></td>
+        <td class='hebrew impv'><span>ק</span><span [class.tense-form]='tenseForm'>ְ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֹ</span><span>ל</span></td>
+        <td class='hebrew infc'><span>ק</span><span [class.tense-form]='tenseForm'>ְ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֹ</span><span>ל</span></td>
+        <td class='hebrew infa'><span>ק</span><span [class.tense-form]='tenseForm'>ָ</span><span>ט</span><span [class.tense-form]='tenseForm'>וֹ</span><span>ל</span></td>
+        <td class='hebrew ptcp'><span>ק</span><span [class.tense-form]='tenseForm'>ֹ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֵ</span><span>ל</span><br>
+          <span>ק</span><span [class.tense-form]='tenseForm'>ָ</span><span>ט</span><span [class.tense-form]='tenseForm'>וּ</span><span>ל</span></td>
+      </tr>
+      <tr class='nif'>
+        <th scope='row' class='stem'>Niphal</th>
+        <td class='hebrew perf'><span [class.tense-form]='tenseForm'>נִ</span><span>ק</span><span [class.tense-form]='tenseForm'>ְ</span><span>ט</span><span [class.tense-form]='tenseForm'>ַ</span><span>ל</span></td>
+        <td class='hebrew impf'><span>י</span><span [class.tense-form]='tenseForm'>ִ</span><span>ק</span><span [class.tense-form]='tenseForm'>ָּ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֵ</span><span>ל</span></td>
+        <td class='hebrew impv'><span [class.tense-form]='tenseForm'>הִ</span><span>ק</span><span [class.tense-form]='tenseForm'>ָּ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֵ</span><span>ל</span></td>
+        <td class='hebrew infc'><span [class.tense-form]='tenseForm'>הִ</span><span>ק</span><span [class.tense-form]='tenseForm'>ָּ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֵ</span><span>ל</span></td>
+        <td class='hebrew infa'><span [class.tense-form]='tenseForm'>הִ</span><span>ק</span><span [class.tense-form]='tenseForm'>ָּ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֹ</span><span>ל</span><br><span [class.tense-form]='tenseForm'>נִ</span><span>ק</span><span [class.tense-form]='tenseForm'>ְ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֹ</span><span>ל</span></td>
+        <td class='hebrew ptcp'><span [class.tense-form]='tenseForm'>נִ</span><span>ק</span><span [class.tense-form]='tenseForm'>ְ</span><span>ט</span><span [class.tense-form]='tenseForm'>ָ</span><span>ל</span></td>
+      </tr>
+      <tr class='piel'>
+        <th scope='row' class='stem'>Piel</th>
+        <td class='hebrew perf'><span>ק</span><span [class.tense-form]='tenseForm'>ִ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֵּ</span><span>ל</span></td>
+        <td class='hebrew impf'><span>י</span><span [class.tense-form]='tenseForm'>ְ</span><span>ק</span><span [class.tense-form]='tenseForm'>ַ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֵּ</span><span>ל</span></td>
+        <td class='hebrew impv'><span>ק</span><span [class.tense-form]='tenseForm'>ַ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֵּ</span><span>ל</span></td>
+        <td class='hebrew infc'><span>ק</span><span [class.tense-form]='tenseForm'>ַ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֵּ</span><span>ל</span></td>
+        <td class='hebrew infa'><span>ק</span><span [class.tense-form]='tenseForm'>ַ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֵּ</span><span>ל</span><br><span>ק</span><span [class.tense-form]='tenseForm'>ַ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֹּ</span><span>ל</span></td>
+        <td class='hebrew ptcp'><span [class.tense-form]='tenseForm'>מְ</span><span>ק</span><span [class.tense-form]='tenseForm'>ַ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֵּ</span><span>ל</span></td>
+      </tr>
+      <tr class='pual'>
+        <th scope='row' class='stem'>Pual</th>
+        <td class='hebrew perf'><span>ק</span><span [class.tense-form]='tenseForm'>ֻ</span><span>ט</span><span [class.tense-form]='tenseForm'>ַּ</span><span>ל</span></td>
+        <td class='hebrew impf'><span>י</span><span [class.tense-form]='tenseForm'>ְ</span><span>ק</span><span [class.tense-form]='tenseForm'>ֻ</span><span>ט</span><span [class.tense-form]='tenseForm'>ַּ</span><span>ל</span></td>
+        <td class='hebrew impv'><span>ק</span><span [class.tense-form]='tenseForm'>ֻ</span><span>ט</span><span [class.tense-form]='tenseForm'>ַּ</span><span>ל</span></td>
+        <td class='hebrew infc'><span>ק</span><span [class.tense-form]='tenseForm'>ֻ</span><span>ט</span><span [class.tense-form]='tenseForm'>ַּ</span><span>ל</span></td>
+        <td class='hebrew infa'><span>ק</span><span [class.tense-form]='tenseForm'>ֻ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֹּ</span><span>ל</span></td>
+        <td class='hebrew ptcp'><span [class.tense-form]='tenseForm'>מְ</span><span>ק</span><span [class.tense-form]='tenseForm'>ֻ</span><span>ט</span><span [class.tense-form]='tenseForm'>ָּ</span><span>ל</span></td>
+      </tr>
+      <tr class='hith'>
+        <th scope='row' class='stem'>Hithpael</th>
+        <td class='hebrew perf'><span [class.tense-form]='tenseForm'>הִתְ</span><span>ק</span><span [class.tense-form]='tenseForm'>ַ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֵּ</span><span>ל</span></td>
+        <td class='hebrew impf'><span [class.tense-form]='tenseForm'>יִתְ</span><span>ק</span><span [class.tense-form]='tenseForm'>ַ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֵּ</span><span>ל</span></td>
+        <td class='hebrew impv'><span [class.tense-form]='tenseForm'>הִתְ</span><span>ק</span><span [class.tense-form]='tenseForm'>ַ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֵּ</span><span>ל</span></td>
+        <td class='hebrew infc'><span [class.tense-form]='tenseForm'>הִתְ</span><span>ק</span><span [class.tense-form]='tenseForm'>ַ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֵּ</span><span>ל</span></td>
+        <td class='hebrew infa'><span [class.tense-form]='tenseForm'>הִתְ</span><span>ק</span><span [class.tense-form]='tenseForm'>ַ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֵּ</span><span>ל</span><br><span [class.tense-form]='tenseForm'>הִתְ</span><span>ק</span><span [class.tense-form]='tenseForm'>ַ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֹּ</span><span>ל</span></td>
+        <td class='hebrew ptcp'><span [class.tense-form]='tenseForm'>מִתְ</span><span>ק</span><span [class.tense-form]='tenseForm'>ַ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֵּ</span><span>ל</span></td>
+      </tr>
+      <tr class='hif'>
+        <th scope='row' class='stem'>Hiphil</th>
+        <td class='hebrew perf'><span [class.tense-form]='tenseForm'>הִ</span><span>ק</span><span [class.tense-form]='tenseForm'>ְ</span><span>ט</span><span [class.tense-form]='tenseForm'>ִי</span><span>ל</span></td>
+        <td class='hebrew impf'><span>י</span><span [class.tense-form]='tenseForm'>ַ</span><span>ק</span><span [class.tense-form]='tenseForm'>ְ</span><span>ט</span><span [class.tense-form]='tenseForm'>ִי</span><span>ל</span></td>
+        <td class='hebrew impv'><span [class.tense-form]='tenseForm'>הַ</span><span>ק</span><span [class.tense-form]='tenseForm'>ְ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֵ</span><span>ל</span></td>
+        <td class='hebrew infc'><span [class.tense-form]='tenseForm'>הַ</span><span>ק</span><span [class.tense-form]='tenseForm'>ְ</span><span>ט</span><span [class.tense-form]='tenseForm'>ִי</span><span>ל</span></td>
+        <td class='hebrew infa'><span [class.tense-form]='tenseForm'>הַ</span><span>ק</span><span [class.tense-form]='tenseForm'>ְ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֵ</span><span>ל</span></td>
+        <td class='hebrew ptcp'><span [class.tense-form]='tenseForm'>מַ</span><span>ק</span><span [class.tense-form]='tenseForm'>ְ</span><span>ט</span><span [class.tense-form]='tenseForm'>ִי</span><span>ל</span></td>
+      </tr>
+      <tr class='hof'>
+        <th class='stem'>Hophal</th>
+        <td class='hebrew perf'><span [class.tense-form]='tenseForm'>הָ</span><span>ק</span><span [class.tense-form]='tenseForm'>ְ</span><span>ט</span><span [class.tense-form]='tenseForm'>ַ</span><span>ל</span></td>
+        <td class='hebrew impf'><span>י</span><span [class.tense-form]='tenseForm'>ָ</span><span>ק</span><span [class.tense-form]='tenseForm'>ְ</span><span>ט</span><span [class.tense-form]='tenseForm'>ַ</span><span>ל</span></td>
+        <td class='hebrew impv'><span [class.tense-form]='tenseForm'>הָ</span><span>ק</span><span [class.tense-form]='tenseForm'>ְ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֵ</span><span>ל</span></td>
+        <td class='hebrew infc'><span [class.tense-form]='tenseForm'>הָ</span><span>ק</span><span [class.tense-form]='tenseForm'>ְ</span><span>ט</span><span [class.tense-form]='tenseForm'>ַַ</span><span>ל</span></td>
+        <td class='hebrew infa'><span [class.tense-form]='tenseForm'>הָ</span><span>ק</span><span [class.tense-form]='tenseForm'>ְ</span><span>ט</span><span [class.tense-form]='tenseForm'>ֵ</span><span>ל</span></td>
+        <td class='hebrew ptcp'><span [class.tense-form]='tenseForm'>מָ</span><span>ק</span><span [class.tense-form]='tenseForm'>ְ</span><span>ט</span><span [class.tense-form]='tenseForm'>ָ</span><span>ל</span></td>
+      </tr>
+    </tbody>
+  </table> 
+  </div>
+ </div>

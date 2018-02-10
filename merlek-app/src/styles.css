@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
+@import "/fonts/cardo/font-styles.css";
+
 html {
 	position: relative;
 	min-height: 100%;
@@ -10,4 +12,35 @@ body {
 	/* Margin bottom by footer height */
 	/* margin-bottom: 60px; */
 	padding-top: 4.5rem;
+}
+
+table, tbody, tr, td {
+  border-collapse: collapse;
+  border: none;
+}
+
+table {
+  margin: 1em auto;
+}
+
+tr:last-child {
+  border-bottom: none;
+}
+
+thead > tr:first-child > th {
+	border-top: none;
+  border-bottom: 2px solid black;
+}
+
+.table td, .table th {
+  padding: 4px 6px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.hebrew {
+  font-family: Cardo, serif;
+  direction: rtl;
+  font-size: 1.65em;
+  text-align: center;
 }

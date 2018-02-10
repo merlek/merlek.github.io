@@ -1,45 +1,33 @@
-table, tbody, tr, td {
-	border-collapse: collapse;
-	border: none;
+
+tr > th:first-child {
+  border-right: 2px solid black;
 }
 
-table {
-	font-family: Cardo, Serif;
+tr > *:nth-child(5) {
+  border-right: 2px solid black;
 	text-align: center;
-	margin: 1em auto;
+	font-style: italic;
+	color: #ccc;
 }
 
-tr {
-	border-bottom: 1px solid #ccc;
-}
-
-tr:last-child {
-	border-bottom: none;
-}
-
-tr th {
-	border-bottom: 2px solid black;
-}
-
-tr th:first-child, tr td:first-child {
+tr > *:nth-child(6) {
+	text-align: center;
 	border-right: 2px solid black;
 }
 
-tr:nth-child(7) td {
+tr:nth-child(6) > * {
 	border-top: 2px solid black;
 }
 
-td {
-  padding: 4px;
-  text-align: left;
+.bordertop {
+	border-top: 2px solid black;
 }
 
-.red {
+.borderbottom {
+  border-bottom: 2px solid black;
+  vertical-align: bottom;
+}
+
+.vowel {
 	color: red;
-}
-
-.hebrew {
-	direction: rtl;
-	font-size: 1.75em;
-	text-align: right;
 }

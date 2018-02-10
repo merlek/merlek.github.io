@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./hebrew-complete-qal.component.css']
 })
 export class HebrewCompleteQalComponent implements OnInit {
+  title = 'Complete Qal';
+  vowels = true;
 
   constructor() { }
 
