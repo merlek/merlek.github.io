@@ -1,16 +1,15 @@
-import { Injectable } from '@angular/core';
-
-import { Letter } from './letters';
-import { LETTERS } from './letters';
+import {Injectable} from '@angular/core';
+import {Letter} from './letters';
 
 @Injectable()
 export class LetterService {
 
-  constructor() { }
+  constructor() {}
 
-  parse (allowEnglish: boolean, hebrew: string, endWord?: boolean): Letter {
-    for (var prop in LETTERS) {
-      var letterValue = LETTERS[prop];
+  parse(allowEnglish: boolean, hebrew: string, endWord?: boolean): Letter {
+
+    for (let i = 0; i < Letter.values.length; i++) {
+      const letterValue = Letter.values[i];
       if (hebrew === letterValue.hebrew) {
         if (!letterValue.endVowel || letterValue.endVowel && endWord) {
           return letterValue;
@@ -20,15 +19,15 @@ export class LetterService {
       }
     }
 
-    if (allowEnglish){
+    if (allowEnglish) {
       return new Letter({
         name: hebrew,
         hebrew: hebrew,
         transliteration: hebrew
       });
     } else {
-      return LETTERS.NULL;
+      return Letter.NULL;
     }
   }
-  
+
 }

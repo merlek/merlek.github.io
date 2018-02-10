@@ -1,9 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-
-import {
-  debounceTime, distinctUntilChanged, switchMap
-} from 'rxjs/operators';
-
 import {TransliteratorService} from '../transliterator.service';
 
 
@@ -24,8 +19,12 @@ export class TransliterateComponent implements OnInit {
   ngOnInit() {}
 
   update(hebrew: string): void {
-    this.transliteratedText =
-      this.translitService.transliterateWord(hebrew);
+    if (hebrew) {
+      this.transliteratedText =
+        this.translitService.transliterateWord(hebrew);
+    } else {
+      this.transliteratedText = '';
+    }
   }
 
   // $('#syllabify-checkbox').change(function() {

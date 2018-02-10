@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
-import { LetterService } from './letter.service';
-import { Letter } from './letters';
-import { LETTERS } from './letters';
+import {LetterService} from './letter.service';
+import {Letter} from './letters';
 
 @Injectable()
 export class TransliteratorService {
@@ -10,36 +9,28 @@ export class TransliteratorService {
   DEBUG = false;
   SYLLABIFY = false;
 
-	constructor(private letterService: LetterService) { }
-  
-  transliterateList (words: string[]) : string[] {
-    
-    var transliteratedTerms = [];
+  constructor(private letterService: LetterService) {}
 
-    for (var i in words) {
-      var word = words[i];
-      var tWord = this.transliterateWord(word);
-      transliteratedTerms.push(tWord);
-    }
+  transliterateList(words: string[]): string[] {
 
-    for (var j in transliteratedTerms) {
-      if (this.DEBUG) console.log(transliteratedTerms[j]);
-    }
+    const transliteratedTerms = words.map(word => this.transliterateWord(word));
+
+    if (this.DEBUG) {transliteratedTerms.forEach(term => console.log(term)); }
 
     return transliteratedTerms;
   }
-  
-  transliterateWord (hebrewWord: string) {
-    if (this.DEBUG) console.log("transliterateWord: " + hebrewWord);
-    
-    var list = [];
-    
-    for (var i = 0; i < hebrewWord.length; i++) {
+
+  transliterateWord(hebrewWord: string) {
+    this.debug('transliterateWord: ' + hebrewWord);
+
+    let list = [];
+
+    for (let i = 0; i < hebrewWord.length; i++) {
       list.push(this.letterService.parse(true, hebrewWord[i]));
     }
-    
-    if (this.DEBUG) console.log(list);
-    
+
+    if (this.DEBUG) {console.log(list); }
+
     list = this.reorder(list);
     list = this.simplify(list);
     list = this.simplify2(list);
@@ -47,70 +38,68 @@ export class TransliteratorService {
     return this.transliterate(list);
   }
 
-  private reorder(list: Letter[]) : Letter[] {
-    if (this.DEBUG) { console.log("==REORDER=="); console.log(this.textList(list)); }
-    
-    var newList = [];
-    var last = list[0];
-    
-    for (var i = 1; i < list.length; i++) {
-      if (this.DEBUG) { console.log(i + ") newList: "+this.textList(newList)); }
-      
-      var letter = list[i];
-      
-      if (this.DEBUG) { 
-        console.log("last: "+last.name);
-        console.log("letter-"+i+": "+letter.name);
-      }
-      
-      if ((letter == LETTERS.SinDot || letter == LETTERS.ShinDot)
-       && last != LETTERS.ShinDotless) {
-        var t = letter;
+  private reorder(list: Letter[]): Letter[] {
+    this.debug('===REORDER===');
+    this.debug(this.textList(list));
+
+    const newList = [];
+    let last = list[0];
+
+    for (let i = 1; i < list.length; i++) {
+      this.debug(i + ') newList: ' + this.textList(newList));
+
+      let letter = list[i];
+
+      this.debug('last: ' + last.name);
+      this.debug('letter-' + i + ': ' + letter.name);
+
+      if ((letter === Letter.SinDot || letter === Letter.ShinDot)
+        && last !== Letter.ShinDotless) {
+        const t = letter;
         letter = last;
         last = t;
       }
 
-      if (letter == LETTERS.ShinDot && last != LETTERS.ShinDotless) {
+      if (letter === Letter.ShinDot && last !== Letter.ShinDotless) {
         letter = last;
-        last = LETTERS.SinDot;
+        last = Letter.SinDot;
       }
 
-      if (letter == LETTERS.Dagesh && last.isVowel()) {
+      if (letter === Letter.Dagesh && last.isVowel()) {
         letter = last;
-        last = LETTERS.Dagesh;
+        last = Letter.Dagesh;
       }
 
       newList.push(last);
       last = letter;
     }
-    
+
     newList.push(last);
     return newList;
   }
-  
-  private simplify(list: Letter[]) : Letter[] {
-    if (this.DEBUG) { console.log("==SIMPLIFY=="); console.log(this.textList(list)); }
-    
-    var newList = [];
-    var last = list[0];
-    
-    for (var i = 1; i < list.length; i++) {
-      if (this.DEBUG) { console.log(i + ") newList: "+this.textList(newList)); }
-      
-      var letter = list[i];
-      
-      if (this.DEBUG) { 
-        console.log("last: "+last.name);
-        console.log("letter-"+i+": "+letter.name);
-      }
-      
-      var combo = last.hebrew + letter.hebrew;
-      var newLetter = this.letterService.parse(false, combo, i >= list.length - 1);
-      
-      if (this.DEBUG) console.log("newLetter: " + newLetter.name);
-      
-      if (newLetter != LETTERS.NULL) {
-        if (newLetter == LETTERS.HolemWaw && newList.length > 1 && newList[newList.length - 1] == LETTERS.Shewa) {
+
+  private simplify(list: Letter[]): Letter[] {
+    this.debug('===SIMPLIFY===');
+    this.debug(this.textList(list));
+
+    const newList = [];
+    let last = list[0];
+
+    for (let i = 1; i < list.length; i++) {
+      this.debug(i + ') newList: ' + this.textList(newList));
+
+      const letter = list[i];
+
+      this.debug('last: ' + last.name);
+      this.debug('letter-' + i + ': ' + letter.name);
+
+      const combo = last.hebrew + letter.hebrew;
+      const newLetter = this.letterService.parse(false, combo, i >= list.length - 1);
+
+      this.debug('newLetter: ' + newLetter.name);
+
+      if (newLetter !== Letter.NULL) {
+        if (newLetter === Letter.HolemWaw && newList.length > 1 && newList[newList.length - 1] === Letter.Shewa) {
           newList.push(last);
           last = letter;
         } else {
@@ -121,86 +110,89 @@ export class TransliteratorService {
         last = letter;
       }
     }
-    
+
     newList.push(last);
     return newList;
   }
-  
-  private simplify2(list: Letter[]) : Letter[] {
-    if (this.DEBUG) { console.log("==SIMPLIFY2=="); console.log(this.textList(list)); }
-    
-    var newList = [];
-    
-    for (var i = 0; i < list.length; i++) {
-      if (this.DEBUG) { console.log(i + ") newList: "+ this.textList(newList)); }
-      var letter = list[i];
-      if (this.DEBUG) console.log("letter-"+i+": " + letter.name);
-      
-      if (letter == LETTERS.Shewa &&
-          (newList.length > 2 && "short" == (newList[newList.length - 2].vowelType)
-           || (i >= list.length - 1 && newList.length > 1))) {
+
+  private simplify2(list: Letter[]): Letter[] {
+    this.debug('===SIMPLIFY2===');
+    this.debug(this.textList(list));
+
+    const newList = [];
+
+    for (let i = 0; i < list.length; i++) {
+      this.debug(i + ') newList: ' + this.textList(newList));
+      let letter = list[i];
+      this.debug('letter-' + i + ': ' + letter.name);
+
+      if (letter === Letter.Shewa &&
+        (newList.length > 2 && 'short' === (newList[newList.length - 2].vowelType)
+          || (i >= list.length - 1 && newList.length > 1))) {
         // check for Silent Shewa
-        letter = LETTERS.ShewaSilent;
-      } else if (letter == LETTERS.Dagesh) {
+        letter = Letter.ShewaSilent;
+      } else if (letter === Letter.Dagesh) {
         // Dagesh Forte
         letter = newList[newList.length - 1];
-        if (letter == LETTERS.Alef || letter == LETTERS.Ayin || letter == LETTERS.He || letter == LETTERS.Ḥet) {
+        if (letter === Letter.Alef || letter === Letter.Ayin || letter === Letter.He || letter === Letter.Ḥet) {
           // guttural rejects
-          letter = LETTERS.NULL;
+          letter = Letter.NULL;
         }
-      } else if ((letter == LETTERS.BetDagesh || letter == LETTERS.GimelDagesh || letter == LETTERS.DaletDagesh
-      						 || letter == LETTERS.KafDagesh || letter == LETTERS.PeDagesh || letter == LETTERS.TawDagesh)
+      } else if ((letter === Letter.BetDagesh || letter === Letter.GimelDagesh || letter === Letter.DaletDagesh
+        || letter === Letter.KafDagesh || letter === Letter.PeDagesh || letter === Letter.TawDagesh)
         && newList.length > 1 && newList[newList.length - 1].isVowel()
-        && newList[newList.length - 1] != LETTERS.Shewa) {
+        && newList[newList.length - 1] !== Letter.Shewa) {
         // Dagesh Forte
         newList.push(letter);
       }
-      
-      if (i >= list.length - 1 && letter == LETTERS.Pathach) {
+
+      if (i >= list.length - 1 && letter === Letter.Pathach) {
         // check for Furtive Pathach
-        var previousLetter = newList[newList.length - 1];
-        if (previousLetter == LETTERS.Ḥet || previousLetter == LETTERS.Ayin || previousLetter == LETTERS.HeMappiq) {
+        const previousLetter = newList[newList.length - 1];
+        if (previousLetter === Letter.Ḥet || previousLetter === Letter.Ayin || previousLetter === Letter.HeMappiq) {
           // Furtive Pathach !
           newList.pop();
-          newList.push(letter,previousLetter);
-          letter = LETTERS.NULL;
+          newList.push(letter, previousLetter);
+          letter = Letter.NULL;
         }
       }
-      
-      if (letter && letter != LETTERS.NULL && letter.transliteration)
+
+      if (letter && letter !== Letter.NULL && letter.transliteration) {
         newList.push(letter);
+      }
     }
-    
+
     return newList;
   }
-  
+
   private syllabify(list: Letter[]): Letter[] {
-    if (this.DEBUG) { console.log("==SYLLABIFY=="); console.log(this.textList(list)); }
+    this.debug('===SYLLABIFY===');
+    this.debug(this.textList(list));
 
-    var newList = [];
+    const newList = [];
 
-    for (var i = 0; i < list.length; i++) {
-      if (this.DEBUG) { console.log(i + ") newList: "+this.textList(newList)); }
+    for (let i = 0; i < list.length; i++) {
+      if (this.DEBUG) {console.log(i + ') newList: ' + this.textList(newList)); }
 
-      var letter = list[i];
+      const letter = list[i];
 
-      if (this.DEBUG) console.log("letter-" + i + ": " + letter.name);
+      if (this.DEBUG) {console.log('letter-' + i + ': ' + letter.name); }
 
       if (letter.isConstonant() && newList.length > 0 && i < list.length - 1) {
-        var next = list[++i];
-        if (this.DEBUG) console.log("next-" + i + ": " + next.name);
+        const next = list[++i];
+        if (this.DEBUG) {console.log('next-' + i + ': ' + next.name); }
 
         if (next.isConstonant()) {
           if (i < list.length - 1) {
             newList.push(letter);
-            newList.push(LETTERS.SyllableMarker);
+            newList.push(Letter.SyllableMarker);
             newList.push(next);
           } else {
             newList.push(letter);
             newList.push(next);
           }
         } else {
-          newList.push(LETTERS.SyllableMarker);
+          newList.push(Letter.SyllableMarker);
           newList.push(letter);
           newList.push(next);
         }
@@ -212,17 +204,17 @@ export class TransliteratorService {
 
     return newList;
   }
-  
+
   private transliterate(list: Letter[]): string {
-    if (this.DEBUG) console.log("SYLLABIFY=" + this.SYLLABIFY);
+    this.debug('SYLLABIFY=' + this.SYLLABIFY);
 
-    var word = "";
+    let word = '';
 
-    for (var i = 0; i < list.length; i++) {
-      var letter = list[i];
+    for (let i = 0; i < list.length; i++) {
+      const letter = list[i];
 
-      if (this.SYLLABIFY || letter != LETTERS.SyllableMarker) {
-        if (this.DEBUG) console.log(letter.name + " -> \"" + letter.transliteration + "\"");
+      if (this.SYLLABIFY || letter !== Letter.SyllableMarker) {
+        this.debug(letter.name + ' -> "' + letter.transliteration + '"');
         word += letter.transliteration;
       }
     }
@@ -230,8 +222,12 @@ export class TransliteratorService {
     return word;
   }
 
-  textList(list: Letter[]): string {   
-    return list.map( l => l ? l.name : '' ).join(", ");
+  textList(list: Letter[]): string {
+    return list.map(l => l ? l.name : '').join(', ');
+  }
+
+  debug(data) {
+    if (this.DEBUG) {console.log(data); }
   }
 
 }
