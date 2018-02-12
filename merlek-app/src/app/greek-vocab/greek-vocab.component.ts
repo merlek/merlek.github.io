@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
+import {GreekVocab} from './greekVocab';
+import {GreekFilterPipe} from './greekFilter';
 
 @Component({
   selector: 'app-greek-vocab',
@@ -11,25 +13,64 @@ export class GreekVocabComponent implements OnInit {
 
   title = 'Greek Vocab';
   file = './assets/metzger.json';
-  data = {};
+  vocab: GreekVocab[];
+  exportFileName = 'greek_';
 
-  constructor(private http: HttpClient) {}
+  columns: any[] = [
+    {
+      display: 'Greek',
+      variable: 'Greek',
+      filter: 'text',
+    },
+    {
+      display: 'Declension',
+      variable: 'Declension',
+      filter: 'text'
+    },
+    {
+      display: 'Article',
+      variable: 'Article',
+      filter: 'text'
+    },
+    {
+      display: 'English',
+      variable: 'English',
+      filter: 'text'
+    },
+    {
+      display: 'Notes',
+      variable: 'Note',
+      filter: 'text'
+    },
+    {
+      display: 'Type',
+      variable: 'Type',
+      filter: 'text'
+    },
+    {
+      display: 'Tag',
+      variable: 'Tag',
+      filter: 'text'
+    }
+  ];
 
-  ngOnInit() {
-    this.http.get(this.file)
-      .subscribe(
-      data => this.data = data,
-      err => this.handleError(err)
-      );
+  sorting: any = {
+    column: 'Tag',
+    descending: true
+  };
+
+  constructor(private http: HttpClient, public greekFilter: GreekFilterPipe) {}
+
+  ngOnInit(): void {
+    this.loadData();
   }
 
-  format(): string {
-    const text = [];
-    for (let i = 0; i < arguments.length; ++i) {
-      const arg = arguments[i];
-      if (arg) { text.push(arg); }
-    }
-    return text.join(', ');
+  loadData(): void {
+    this.http.get<GreekVocab[]>(this.file)
+      .subscribe(
+      data => this.vocab = data,
+      err => this.handleError(err)
+      );
   }
 
   private handleError(error: any) {

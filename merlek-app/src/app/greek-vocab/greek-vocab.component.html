@@ -2,21 +2,12 @@
   <h1>{{title}}</h1>
 </div>
 <div class="row">
-	<div class="table-responsive">
-	<table class="table table-sm">
-	  <thead class="thead">
-			<tr>
-				<th scope="col">Greek</th>
-				<th scope="col">English</th>
-				<th scope="col">Note</th>
-				<th scope="col">Frequency</th>
-			</tr>
-		</thead>
-		<tbody>
-		<tr *ngFor="let d of data">
-			<td>{{format(d.greek,d.declension,d.article)}}</td><td>{{d.english}}</td><td>{{d.note}}</td><td>{{d.tag}}</td>
-		</tr>
-		</tbody>
-	</table>
-	</div>
+	<app-data-grid [columns]="columns"
+			           [data]="vocab"
+			           [sort]="sorting"
+			           [isShowFilter]=true
+			           [isExportToCSV]=true
+			           [exportFileName]="exportFileName"
+			           [filter] = greekFilter>
+	</app-data-grid>
 </div>
