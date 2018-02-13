@@ -20,6 +20,7 @@ export class Nav {
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
+  public isCollapsed = true;
 
   @Input()
   title: string;
