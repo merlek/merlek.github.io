@@ -18,6 +18,7 @@ import {HebrewStemSynopsisComponent} from './hebrew-stem-synopsis/hebrew-stem-sy
 import {DataGridComponent} from './data-grid/data-grid.component';
 import {Format} from './data-grid/format';
 import {OrderBy} from './data-grid/orderby';
+import {Filter} from './data-grid/filter';
 import {SearchListComponent} from './search-list/search-list.component';
 
 
@@ -33,6 +34,7 @@ import {SearchListComponent} from './search-list/search-list.component';
     DataGridComponent,
     Format,
     OrderBy,
+    Filter,
     SearchListComponent
   ],
   imports: [

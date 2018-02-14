@@ -9,7 +9,7 @@
 			<button *ngIf="!hdrbtn.ishide" type="button" class="btn btn-primary"
 				(click)="click(hdrbtn,null)">{{hdrbtn.title}}</button>
 			</ng-container>
-			<button *ngIf="isExportToCSV && (pdata!=null && pdata.length>0)"
+			<button *ngIf="isExportToCSV && (pdata!=null)"
 				type="button" class="float-right btn btn-outline-secondary"
 				(click)="exportToCSV()">Export to CSV</button>
 		</div>
@@ -17,7 +17,7 @@
 	<div class="row">
 		<div class="table-responsive" [style.height.px]="tableHeight" (window:resize)="onResize($event)">
 			<table class="table table-hover table-sortable"
-				*ngIf='data ; else loadingScreen;'>
+				*ngIf='pdata ; else loadingScreen;'>
 				<thead>
 					<tr>
 						<th *ngFor="let column of columns"
@@ -29,7 +29,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr *ngFor="let row of pdata | orderby : convertSorting()">
+					<tr *ngFor="let row of pdata | filter : listFilter : filterIgnore | orderby : convertSorting()">
 						<td *ngFor="let column of columns">{{row[column.variable] |
 							format : column.filter}}</td>
 						<ng-container *ngFor="let btn of gridbtns">

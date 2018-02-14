@@ -1,4 +1,7 @@
-import {Component, Input, OnInit, OnChanges, Output, EventEmitter, AfterViewInit} from '@angular/core';
+import {Component, Input, OnInit, OnChanges, Output, EventEmitter, AfterViewInit, PipeTransform, Pipe} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {of} from 'rxjs/observable/of';
+
 import {DataGridUtil} from './data-grid.util';
 import {Format} from './format';
 
@@ -26,7 +29,8 @@ export class DataGridComponent implements OnInit, OnChanges {
   @Input() isShowFilter: boolean;
   @Input() isExportToCSV: boolean;
   @Input() exportFileName: string;
-  @Input() filter: any;
+  @Input() filter: PipeTransform;
+  @Input() filterIgnore: string[];
 
   // Output Variable
   @Output()
@@ -94,9 +98,9 @@ export class DataGridComponent implements OnInit, OnChanges {
   }
 
   criteriaChange(value: any) {
-    if (this.filter != null) {
-      if (!(value instanceof Event)) {
-        this.listFilter = value;
+    if (!(value instanceof Event)) {
+      this.listFilter = value;
+      if (this.filter != null) {
         this.pdata = this.filter.transform(this.data, this.listFilter);
       }
     }
