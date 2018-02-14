@@ -1,5 +1,19 @@
 import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 
+
+export class SearchLogic { 
+
+  static OR = new SearchLogic("OR");
+  static AND = new SearchLogic("AND");
+
+  logicalOperator: string;
+  
+  constructor(logic:string) {
+    this.logicalOperator = logic;
+  }
+
+}
+
 @Component({
   selector: 'app-search-list',
   templateUrl: './search-list.component.html',
@@ -8,12 +22,24 @@ import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 export class SearchListComponent implements OnInit {
 
   listFilter: string;
+
+  logicActive= SearchLogic.OR;
+  logicInactive = SearchLogic.AND;
+
   @Input() title: string;
-  @Output() change: EventEmitter<string> = new EventEmitter<string>();
+  @Output() change: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.change.emit(this.logicActive);
+  }
+
+  swapLogic(value: SearchLogic) {
+    this.logicInactive = this.logicActive;
+    this.logicActive = value;
+    this.change.emit(this.logicActive);
+  }
 
   getEachChar(value: any) {
     this.change.emit(value);
@@ -26,6 +52,7 @@ export class SearchListComponent implements OnInit {
 
   getPasteData(value: any) {
     const pastedVal = value.clipboardData.getData('text/plain');
+    this.listFilter = pastedVal;
     this.change.emit(pastedVal);
     value.preventDefault();
   }

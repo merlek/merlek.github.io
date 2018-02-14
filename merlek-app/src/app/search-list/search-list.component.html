@@ -3,11 +3,17 @@
 		<span class="input-group-text" id="searchLabel">{{title}}</span>
 	</div>
 	<input id="searchBox" class='form-control' aria-describedby="searchLabel"
-		placeholder='Enter any text to filter' (paste)='getPasteData($event)'
-		(keyup)='getEachChar($event.target.value)' type='text'
-		[(ngModel)]='listFilter' />
-</div>
-	<div *ngIf='listFilter'>
-		<ngb-alert type="secondary" (close)="clearFilter()">Filter
-		by: {{listFilter}}</ngb-alert>
+	placeholder='Enter any text to filter' (paste)='getPasteData($event)'
+	(keyup)='getEachChar($event.target.value)' type='text'
+	[(ngModel)]='listFilter' />
+	<div ngbDropdown class="input-group-append">
+		<button ngbDropdownToggle class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{logicActive.logicalOperator}}</button>
+		<div ngbDropdownMenu class="dropdown-menu">
+			<a class="dropdown-item" (click)="swapLogic(logicInactive)">{{logicInactive.logicalOperator}}</a>
+		</div>
 	</div>
+</div>
+<div *ngIf='listFilter'>
+	<ngb-alert type="secondary" (close)="clearFilter()">Filter
+	by: {{listFilter.split(" ").join(" "+logicActive.logicalOperator+" ")}}</ngb-alert>
+</div>

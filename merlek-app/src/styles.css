@@ -13,6 +13,14 @@ body {
 	padding-top: 4.5rem;
 }
 
+.modal-open .container {
+  -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -o-filter: blur(2px);
+  -ms-filter: blur(2px);
+  filter: blur(2px);
+}
+
 table, tbody, tr, td {
   border-collapse: collapse;
   border: none;

@@ -4,6 +4,7 @@ import {of} from 'rxjs/observable/of';
 
 import {DataGridUtil} from './data-grid.util';
 import {Format} from './format';
+import {SearchLogic} from '../search-list/search-list.component'
 
 export interface GridAction {
   action: string;
@@ -28,6 +29,7 @@ export class DataGridComponent implements OnInit, OnChanges {
   @Input() hdrbtns: any[];
   @Input() isShowFilter: boolean;
   @Input() isExportToCSV: boolean;
+  @Input() isFlashCards: boolean;
   @Input() exportFileName: string;
   @Input() filter: PipeTransform;
   @Input() filterIgnore: string[];
@@ -39,6 +41,7 @@ export class DataGridComponent implements OnInit, OnChanges {
   // Local Variable
   pdata: any[] = this.data;
   listFilter: string;
+  filterLogic: SearchLogic;
   searchTitle = 'Search:';
   tableHeight = this.calculateTableHeight();
 
@@ -99,9 +102,15 @@ export class DataGridComponent implements OnInit, OnChanges {
 
   criteriaChange(value: any) {
     if (!(value instanceof Event)) {
-      this.listFilter = value;
-      if (this.filter != null) {
-        this.pdata = this.filter.transform(this.data, this.listFilter);
+      if (value instanceof SearchLogic) {
+        this.filterLogic = value;
+      } else if(typeof value === "string"){
+        this.listFilter = value;
+        if (this.filter != null) {
+          this.pdata = this.filter.transform(this.data, this.listFilter);
+        }
+      } else if (value == null) {
+        this.listFilter = null;
       }
     }
   }

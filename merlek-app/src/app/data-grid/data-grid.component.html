@@ -6,9 +6,10 @@
 		</div>
 		<div class="col" *ngIf="data">
 			<ng-container *ngFor="let hdrbtn of hdrbtns">
-			<button *ngIf="!hdrbtn.ishide" type="button" class="btn btn-primary"
-				(click)="click(hdrbtn,null)">{{hdrbtn.title}}</button>
+				<button *ngIf="!hdrbtn.ishide" type="button" class="btn btn-primary"
+					(click)="click(hdrbtn,null)">{{hdrbtn.title}}</button>
 			</ng-container>
+			<app-flash-cards *ngIf="isFlashCards && (pdata!=null)" [data]="pdata | filter : listFilter : filterLogic : filterIgnore | orderby : convertSorting()"></app-flash-cards>
 			<button *ngIf="isExportToCSV && (pdata!=null)"
 				type="button" class="float-right btn btn-outline-secondary"
 				(click)="exportToCSV()">Export to CSV</button>
@@ -29,7 +30,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr *ngFor="let row of pdata | filter : listFilter : filterIgnore | orderby : convertSorting()">
+					<tr *ngFor="let row of pdata | filter : listFilter : filterLogic : filterIgnore | orderby : convertSorting()">
 						<td *ngFor="let column of columns">{{row[column.variable] |
 							format : column.filter}}</td>
 						<ng-container *ngFor="let btn of gridbtns">

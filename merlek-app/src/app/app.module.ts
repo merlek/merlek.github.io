@@ -20,6 +20,8 @@ import {Format} from './data-grid/format';
 import {OrderBy} from './data-grid/orderby';
 import {Filter} from './data-grid/filter';
 import {SearchListComponent} from './search-list/search-list.component';
+import { FlashCardsComponent } from './flash-cards/flash-cards.component';
+import { GreekFlashCardsComponent } from './greek-flash-cards/greek-flash-cards.component';
 
 
 @NgModule({
@@ -35,7 +37,9 @@ import {SearchListComponent} from './search-list/search-list.component';
     Format,
     OrderBy,
     Filter,
-    SearchListComponent
+    SearchListComponent,
+    FlashCardsComponent,
+    GreekFlashCardsComponent
   ],
   imports: [
     BrowserModule,
@@ -43,6 +47,9 @@ import {SearchListComponent} from './search-list/search-list.component';
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
+  ],
+  entryComponents: [
+    GreekFlashCardsComponent
   ],
   providers: [TransliteratorService, LetterService, GreekFilterPipe],
   bootstrap: [AppComponent]

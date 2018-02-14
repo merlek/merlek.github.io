@@ -1,4 +1,5 @@
 ﻿import {PipeTransform, Pipe, Injectable} from '@angular/core';
+import {SearchLogic} from '../search-list/search-list.component'
 
 @Pipe({
   name: 'filter'
@@ -34,19 +35,24 @@ export class Filter implements PipeTransform {
     return false;
   }
 
-  transform(value: any[], filter: string, ignore?: string[]): any[] {
-    if (value == null) {
+  transform(values: any[], filter: string, filterLogic?: SearchLogic, ignore?: string[]): any[] {
+    if (values == null) {
       return [];
     }
-
-    if (filter) {
-      filter.toLocaleLowerCase().split(/\s+/g)
-        .forEach(f => value = value.filter(v => Filter._match(v, f, ignore)));
-    } else {
-      return value;
+    if (filter){
+      let filters = filter.toLocaleLowerCase().split(/\s+/g);
+      console.log(filterLogic);
+      if (filterLogic && filterLogic.logicalOperator === "OR") {
+        let fV = [];
+        filters.forEach(f => fV = fV.concat(
+            values.filter(v => Filter._match(v, f, ignore))));
+        values = fV;
+      } else  {
+        filters.forEach(f => values = values.filter(v => Filter._match(v, f, ignore)));
+      }  
     }
 
-    return value;
+    return values;
   }
 
 }
