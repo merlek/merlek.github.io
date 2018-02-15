@@ -2,6 +2,7 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.css";
 @import "./assets/fonts/cardo/font-styles.css";
 
+
 html {
 	position: relative;
 	min-height: 100%;
@@ -13,6 +14,7 @@ body {
 	padding-top: 4.5rem;
 }
 
+.modal-open app-root,
 .modal-open .container {
   -webkit-filter: blur(2px);
   -moz-filter: blur(2px);

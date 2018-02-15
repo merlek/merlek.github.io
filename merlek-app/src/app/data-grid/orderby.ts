@@ -4,46 +4,9 @@
 
 export class OrderBy implements PipeTransform {
 
-  static notAlpha = /[^\u00BF-\u1FFF\u2C00-\uD7FF\w]/g;
-  static notNum = /[^\d]/g;
+  static collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
 
   value: string[] = [];
-
-  static _normalize(value: any): any {
-    if (Object.prototype.toString.call(value) === '[object String]') {
-      return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-    } else {
-      return value;
-    }
-  }
-
-  static _sortAlphaNum(a: any, b: any): number {
-    const aString = OrderBy._normalize(a);
-    const bString = OrderBy._normalize(b);
-
-    const aInt = parseInt(aString, 10);
-    const bInt = parseInt(bString, 10);
-
-    if (isNaN(aInt) && isNaN(bInt)) {
-      // neither are Integers
-      const aAlpha = aString.replace(OrderBy.notAlpha, '');
-      const bAlpha = bString.replace(OrderBy.notAlpha, '');
-
-      if (aAlpha === bAlpha) {
-        const aNum = parseInt(aString.replace(OrderBy.notNum, ''), 10);
-        const bNum = parseInt(bString.replace(OrderBy.notNum, ''), 10);
-        return aNum === bNum ? 0 : aNum > bNum ? 1 : -1;
-      } else {
-        return aAlpha > bAlpha ? 1 : -1;
-      }
-    } else if (isNaN(aInt)) {// A is not an Int
-      return 1; // to make alphanumeric sort first return -1 here
-    } else if (isNaN(bInt)) {// B is not an Int
-      return -1; // to make alphanumeric sort first return 1 here
-    } else {
-      return aInt > bInt ? 1 : -1;
-    }
-  }
 
   static _orderByComparator(a: any, b: any): number {
     if (typeof a === 'object') {
@@ -59,10 +22,19 @@ export class OrderBy implements PipeTransform {
     if (b === null || typeof b === 'undefined') {
       b = 0;
     }
-    return OrderBy._sortAlphaNum(a, b);
+
+    if (typeof a === 'number' && typeof b === 'number') {
+      return a === b ? 0 : a > b ? 1 : -1;
+    } else if (typeof a === 'number') {
+      a = String(a);
+    } else if (typeof b === 'number') {
+      b = String(b);
+    }
+
+    return this.collator.compare(a,b);
   }
 
-  transform(input: any, config: string = '+'): any {
+  transform(input: any, config: string[] | string  = '+'): any {
     if (input == null) {
       return;
     }

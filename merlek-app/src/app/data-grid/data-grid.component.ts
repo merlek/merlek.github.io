@@ -1,9 +1,13 @@
-import {Component, Input, OnInit, OnChanges, Output, EventEmitter, AfterViewInit, PipeTransform, Pipe} from '@angular/core';
+import {Component, Input, OnInit, OnChanges, Output, EventEmitter} from '@angular/core';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
 
 import {DataGridUtil} from './data-grid.util';
 import {Format} from './format';
+import {OrderBy} from './orderby';
+import {Filter} from './filter';
 import {SearchLogic} from '../search-list/search-list.component'
 
 export interface GridAction {
@@ -31,7 +35,6 @@ export class DataGridComponent implements OnInit, OnChanges {
   @Input() isExportToCSV: boolean;
   @Input() isFlashCards: boolean;
   @Input() exportFileName: string;
-  @Input() filter: PipeTransform;
   @Input() filterIgnore: string[];
 
   // Output Variable
@@ -44,6 +47,11 @@ export class DataGridComponent implements OnInit, OnChanges {
   filterLogic: SearchLogic;
   searchTitle = 'Search:';
   tableHeight = this.calculateTableHeight();
+  page = 0;
+  pageSize = 10;
+
+  filter = new Filter();
+  orderBy = new OrderBy();
 
   constructor() {}
 
@@ -58,14 +66,19 @@ export class DataGridComponent implements OnInit, OnChanges {
 
   calculateTableHeight(): number {
     const e = document.getElementsByTagName('table')[0];
+    const p = document.getElementsByTagName('pagination-controls')[0];
     let top = 198;
+    let bottom = 46;
     if (e) {
       top = e.getBoundingClientRect().top;
     }
-    return window.innerHeight - top;
+    if (p) {
+      bottom = p.clientHeight;
+    }
+    return window.innerHeight - top - bottom;
   }
 
-  onResize(event: Event) {
+  onResize(event?: Event) {
     this.tableHeight = this.calculateTableHeight();
   }
 
@@ -81,10 +94,14 @@ export class DataGridComponent implements OnInit, OnChanges {
       sort.column = columnName;
       sort.descending = false;
     }
+    this.pdata = this.getTransformedData();
   }
 
-  convertSorting(): string {
-    return this.sort.descending ? '-' + this.sort.column : this.sort.column;
+  convertSorting(): string[] {
+    let sort = []
+    sort.push(this.sort.descending ? '-' + this.sort.column : this.sort.column);
+    sort.push("+Greek");
+    return sort;
   }
 
   click(btn: any, row: any): void {
@@ -106,13 +123,18 @@ export class DataGridComponent implements OnInit, OnChanges {
         this.filterLogic = value;
       } else if(typeof value === "string"){
         this.listFilter = value;
-        if (this.filter != null) {
-          this.pdata = this.filter.transform(this.data, this.listFilter);
-        }
       } else if (value == null) {
         this.listFilter = null;
       }
+      this.pdata = this.getTransformedData();
     }
+    this.onResize();
+  }
+
+  getTransformedData() {
+    return this.orderBy.transform(
+      this.filter.transform(this.data, this.listFilter, this.filterLogic, this.filterIgnore)
+      ,this.convertSorting());
   }
 
   exportToCSV() {
@@ -127,6 +149,19 @@ export class DataGridComponent implements OnInit, OnChanges {
       exprtcsv.push(obj);
     });
     DataGridUtil.downloadcsv(exprtcsv, this.exportFileName);
+  }
+
+  setPageSize(value:number) {
+    this.pageSize = value;
+  }
+
+  pdataRange(): any[] {
+    let arr = [];
+    for (var i = 10; i < this.pdata.length; i = i*2) {
+      arr.push(i);
+    }
+    arr.push(this.pdata.length);
+    return arr;
   }
 
 }

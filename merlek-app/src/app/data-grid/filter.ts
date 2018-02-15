@@ -41,7 +41,6 @@ export class Filter implements PipeTransform {
     }
     if (filter){
       let filters = filter.toLocaleLowerCase().split(/\s+/g);
-      console.log(filterLogic);
       if (filterLogic && filterLogic.logicalOperator === "OR") {
         let fV = [];
         filters.forEach(f => fV = fV.concat(

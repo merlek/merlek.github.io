@@ -25,12 +25,12 @@ export class HeaderComponent implements OnInit {
   @Input()
   title: string;
   navs = [
+    new Nav('Greek Vocab', '/greek-vocab'),
     new Nav('Hebrew', '/hebrew', [
       new Nav('Transliterate', '/transliterate'),
       new Nav('Complete Qal', '/complete-qal'),
       new Nav('Stem Synopsis', '/stem-synopsis'),
     ]),
-    new Nav('Greek Vocab', '/greek-vocab'),
   ];
 
   constructor() {}

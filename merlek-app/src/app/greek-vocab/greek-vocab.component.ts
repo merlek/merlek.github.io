@@ -1,16 +1,28 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {HttpErrorResponse} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 
 import {GreekVocab} from './greekVocab';
-import {GreekFilterPipe} from './greekFilter';
-import {HttpErrorResponse} from '@angular/common/http';
+import {DataGridComponent} from '../data-grid/data-grid.component'
 
 @Component({
   selector: 'app-greek-vocab',
-  templateUrl: './greek-vocab.component.html',
-  styleUrls: ['./greek-vocab.component.css']
+  template:`<div class="row justify-content-center">
+              <h1>{{title}}</h1>
+            </div>
+            <div class="row">
+              <app-data-grid [columns]="columns"
+                             [data]="vocab"
+                             [sort]="sorting"
+                             [isShowFilter]=true
+                             [isExportToCSV]=true
+                             [isFlashCards]=true
+                             [exportFileName]="exportFileName"
+                             [filterIgnore]="filterIgnore">
+              </app-data-grid>
+            </div>`,
 })
 export class GreekVocabComponent implements OnInit {
 
@@ -43,10 +55,13 @@ export class GreekVocabComponent implements OnInit {
     descending: true
   };
 
-  constructor(private http: HttpClient, public greekFilter: GreekFilterPipe) {}
+  @ViewChild(DataGridComponent) dataGrid: DataGridComponent
+
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.getData();
+    this.dataGrid.onResize();
   }
 
   getData(): void {

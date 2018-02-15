@@ -3,6 +3,7 @@ export interface GreekVocab {
   Greek: string;
   Declension: string;
   Article: string;
+  Root: string;
   English: string;
   Note: string;
   Transliteration: string;

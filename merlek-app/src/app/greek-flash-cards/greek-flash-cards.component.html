@@ -8,7 +8,7 @@
 	<div class="card">
 		<div class="front">
 			<div class="term">
-				<span *ngIf="item.Article" class="term2">{{item.Article}}&nbsp;</span><a href="http://www.perseus.tufts.edu/hopper/morph?la=greek&l={{greek}}">{{item.Greek}}</a><span *ngIf="item.Declension" class="term2">&nbsp;{{item.Declension}}</span>
+				<span *ngIf="item.Article" class="term2">{{item.Article}}&nbsp;</span><a target="_blank" href="http://www.perseus.tufts.edu/hopper/morph?la=greek&l={{item.Greek}}">{{item.Greek}}</a><span *ngIf="item.Declension" class="term2">&nbsp;{{item.Declension}}</span>
 			</div>
 		</div>
 		<div class="back">

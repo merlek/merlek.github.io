@@ -8,7 +8,7 @@ import { HebrewCompleteQalComponent } from './hebrew-complete-qal/hebrew-complet
 import { HebrewStemSynopsisComponent } from './hebrew-stem-synopsis/hebrew-stem-synopsis.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/hebrew/transliterate', pathMatch: 'full' },
+  { path: '', redirectTo: '/greek-vocab', pathMatch: 'full' },
   { path: 'hebrew/transliterate', component: TransliterateComponent },
   { path: 'hebrew/complete-qal', component: HebrewCompleteQalComponent },
   { path: 'hebrew/stem-synopsis', component: HebrewStemSynopsisComponent },

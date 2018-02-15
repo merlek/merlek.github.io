@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
-
+import {Router, ActivatedRoute, Params} from '@angular/router';
 
 export class SearchLogic { 
 
@@ -29,10 +29,16 @@ export class SearchListComponent implements OnInit {
   @Input() title: string;
   @Output() change: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor() {}
+  constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.change.emit(this.logicActive);
+
+    let params = this.activatedRoute.snapshot.queryParams;
+    if(params.filter){
+      this.listFilter = params.filter;
+      this.change.emit(this.listFilter);
+    }
   }
 
   swapLogic(value: SearchLogic) {
