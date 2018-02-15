@@ -12,7 +12,7 @@ import {DataGridComponent} from '../data-grid/data-grid.component'
   template:`<div class="row justify-content-center">
               <h1>{{title}}</h1>
             </div>
-            <div class="row">
+            <div class="row justify-content-center">
               <app-data-grid [columns]="columns"
                              [data]="vocab"
                              [sort]="sorting"
