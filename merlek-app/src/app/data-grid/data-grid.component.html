@@ -1,22 +1,26 @@
 <div class="container">
 	<div class="row justify-content-center">
-		<div class="col" *ngIf="isShowFilter && data">
+		<div class="col-md-6" *ngIf="isShowFilter && data">
 			<app-search-list [title]="searchTitle"
 				(change)="criteriaChange($event)"></app-search-list>
 		</div>
-		<div class="col" *ngIf="data">
+		<div class="col-1" *ngIf="data">
 			<ng-container *ngFor="let hdrbtn of hdrbtns">
 				<button *ngIf="!hdrbtn.ishide" type="button" class="btn btn-primary"
 					(click)="click(hdrbtn,null)">{{hdrbtn.title}}</button>
 			</ng-container>
+		</div>
+		<div class="col-md-2" *ngIf="data">
 			<app-flash-cards *ngIf="isFlashCards && (pdata!=null && pdata.length>0)" [data]="pdata"></app-flash-cards>
-			<button *ngIf="isExportToCSV && (pdata!=null && pdata.length>0)"
-				type="button" class="float-right btn btn-outline-secondary"
+		</div>
+		<div class="col-md-3" *ngIf="data">
+			<button *ngIf='isExportToCSV && (pdata!=null && pdata.length>0)'
+				type="button" class="btn btn-secondary"
 				(click)="exportToCSV()">Export to CSV</button>
 		</div>
 	</div>
 	<div class="row justify-content-center">
-		<div class="table-responsive" [style.max-height.px]="tableHeight" (window:resize)="onResize($event)">
+		<div class="table-responsive-sm" [style.max-height.px]="tableHeight" (window:resize)="onResize($event)">
 			<table class="table table-hover table-sortable"
 				*ngIf='pdata ; else loadingScreen;'>
 				<thead>

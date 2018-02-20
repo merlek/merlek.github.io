@@ -6,10 +6,55 @@ export class SearchLogic {
   static OR = new SearchLogic("OR");
   static AND = new SearchLogic("AND");
 
-  logicalOperator: string;
+  value: string;
   
-  constructor(logic:string) {
-    this.logicalOperator = logic;
+  private constructor(logic:string) {
+    this.value = logic;
+  }
+
+
+  other() : SearchLogic {
+    if(this === SearchLogic.OR) {
+      return SearchLogic.AND;
+    } else {
+      return SearchLogic.OR;
+    }
+  }
+
+}
+
+export class SearchMatch { 
+
+  static EXACT = new SearchMatch("EXACT");
+  static CONTAINS = new SearchMatch("CONTAINS");
+
+  value: string;
+  
+  private constructor(match:string) {
+    this.value = match;
+  }
+
+  other() : SearchMatch {
+    if(this === SearchMatch.EXACT) {
+      return SearchMatch.CONTAINS;
+    } else {
+      return SearchMatch.EXACT;
+    }
+  }
+
+}
+
+export class SearchEvent { 
+
+  search: string;
+  match: SearchMatch;
+  logic: SearchLogic;
+
+  
+  constructor(search:string,match:SearchMatch,logic:SearchLogic) {
+    this.search = search;
+    this.match = match;
+    this.logic = logic;
   }
 
 }
@@ -21,45 +66,53 @@ export class SearchLogic {
 })
 export class SearchListComponent implements OnInit {
 
-  listFilter: string;
-
-  logicActive= SearchLogic.OR;
-  logicInactive = SearchLogic.AND;
+  search: string;
+  logic = SearchLogic.OR;
+  match = SearchMatch.EXACT;
 
   @Input() title: string;
   @Output() change: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
-    this.change.emit(this.logicActive);
-
-    let params = this.activatedRoute.snapshot.queryParams;
-    if(params.filter){
-      this.listFilter = params.filter;
-      this.change.emit(this.listFilter);
-    }
+  emitChange(): void {
+    let search = new SearchEvent(this.search,this.match,this.logic);
+    this.change.emit(search);
   }
 
-  swapLogic(value: SearchLogic) {
-    this.logicInactive = this.logicActive;
-    this.logicActive = value;
-    this.change.emit(this.logicActive);
+  ngOnInit() {
+    let params = this.activatedRoute.snapshot.queryParams;
+    if(params.filter){
+      this.search = params.filter;
+    }
+
+    this.emitChange();
+  }
+
+  swapLogic() {
+    this.logic = this.logic.other();
+    this.emitChange();
+  }
+
+  swapMatch() {
+    this.match = this.match.other();
+    this.emitChange();
   }
 
   getEachChar(value: any) {
-    this.change.emit(value);
+    this.search = value;
+    this.emitChange();
   }
 
   clearFilter() {
-    this.listFilter = null;
-    this.change.emit(null);
+    this.search = null;
+    this.emitChange();
   }
 
   getPasteData(value: any) {
     const pastedVal = value.clipboardData.getData('text/plain');
-    this.listFilter = pastedVal;
-    this.change.emit(pastedVal);
+    this.search = pastedVal;
+    this.emitChange();
     value.preventDefault();
   }
 }

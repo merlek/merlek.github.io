@@ -9,6 +9,9 @@ import {Format} from './format';
 import {OrderBy} from './orderby';
 import {Filter} from './filter';
 import {SearchLogic} from '../search-list/search-list.component'
+import {SearchEvent} from '../search-list/search-list.component'
+import {SearchMatch} from '../search-list/search-list.component'
+
 
 export interface GridAction {
   action: string;
@@ -21,7 +24,7 @@ export interface GridAction {
 @Component({
   selector: 'app-data-grid',
   templateUrl: './data-grid.component.html',
-  styleUrls: ['./data-grid.component.css']
+  styleUrls: ['./data-grid.component.scss']
 })
 export class DataGridComponent implements OnInit, OnChanges {
 
@@ -43,8 +46,7 @@ export class DataGridComponent implements OnInit, OnChanges {
 
   // Local Variable
   pdata: any[] = this.data;
-  listFilter: string;
-  filterLogic: SearchLogic;
+  search: SearchEvent;
   searchTitle = 'Search:';
   tableHeight = this.calculateTableHeight();
   page = 0;
@@ -61,7 +63,7 @@ export class DataGridComponent implements OnInit, OnChanges {
     if (JSON.stringify(changes).indexOf('data') !== -1) {
       this.pdata = this.data;
     }
-    this.criteriaChange(this.listFilter);
+    this.criteriaChange(changes);
   }
 
   calculateTableHeight(): number {
@@ -119,12 +121,8 @@ export class DataGridComponent implements OnInit, OnChanges {
 
   criteriaChange(value: any) {
     if (!(value instanceof Event)) {
-      if (value instanceof SearchLogic) {
-        this.filterLogic = value;
-      } else if(typeof value === "string"){
-        this.listFilter = value;
-      } else if (value == null) {
-        this.listFilter = null;
+      if (value instanceof SearchEvent) {
+        this.search = value;
       }
       this.pdata = this.getTransformedData();
     }
@@ -133,7 +131,7 @@ export class DataGridComponent implements OnInit, OnChanges {
 
   getTransformedData() {
     return this.orderBy.transform(
-      this.filter.transform(this.data, this.listFilter, this.filterLogic, this.filterIgnore)
+      this.filter.transform(this.data, this.search, this.filterIgnore)
       ,this.convertSorting());
   }
 
