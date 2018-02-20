@@ -1,13 +1,12 @@
 export interface GreekVocab {
-  Id: number;
+  Transliteration: string;
   Greek: string;
   Declension: string;
   Article: string;
   Root: string;
   English: string;
-  Note: string;
-  Transliteration: string;
+  Notes: string;
   Type: string;
   Frequency: number;
-  Tag: string;
+  Tags: string;
 }

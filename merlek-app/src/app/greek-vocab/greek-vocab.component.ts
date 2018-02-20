@@ -10,24 +10,29 @@ import {DataGridComponent} from '../data-grid/data-grid.component'
 @Component({
   selector: 'app-greek-vocab',
   template:`<div class="row justify-content-center">
-              <h1>{{title}}</h1>
+              <h1>Greek Vocab</h1>
             </div>
             <div class="row justify-content-center">
-              <app-data-grid [columns]="columns"
-                             [data]="vocab"
-                             [sort]="sorting"
-                             [isShowFilter]=true
-                             [isExportToCSV]=true
-                             [isFlashCards]=true
-                             [exportFileName]="exportFileName"
-                             [filterIgnore]="filterIgnore">
-              </app-data-grid>
-            </div>`,
+            <p>
+            <b>Tags:</b>
+            <abbr title="Basics of Biblical Hebrew (Mounce)">BBG</abbr>
+            <abbr title="A Primer of Biblical Greek (Croy)">Croy</abbr>
+            <abbr title="Lexical Aides for Students of New Testament Greek (Metzger)">Mz</abbr>
+            </p>
+            </div>
+            <app-data-grid [columns]="columns"
+                           [data]="vocab"
+                           [sort]="sorting"
+                           [isShowFilter]=true
+                           [isExportToCSV]=true
+                           [isFlashCards]=true
+                           [exportFileName]="exportFileName"
+                           [filterIgnore]="filterIgnore">
+            </app-data-grid>`,
 })
 export class GreekVocabComponent implements OnInit {
 
-  title = 'Greek Vocab';
-  file = './assets/metzger.json';
+  file = './assets/greek-vocab.json';
   vocab: GreekVocab[];
   exportFileName = 'greek_';
   filterIgnore = ['Id'];
@@ -42,17 +47,19 @@ export class GreekVocabComponent implements OnInit {
     }, {
       display: 'English', variable: 'English', filter: 'text'
     }, {
-      display: 'Notes', variable: 'Note', filter: 'text'
+      display: 'Notes', variable: 'Notes', filter: 'text'
+    },{
+      display: 'Freq', variable: 'Frequency', filter: 'number'
     }, {
       display: 'Type', variable: 'Type', filter: 'text'
     }, {
-      display: 'Tag', variable: 'Tag', filter: 'text'
+      display: 'Tags', variable: 'Tags', filter: 'text'
     }
   ];
 
   sorting: any = {
-    column: 'Tag',
-    descending: true
+    column: 'Frequency',
+    descending: true 
   };
 
   @ViewChild(DataGridComponent) dataGrid: DataGridComponent
