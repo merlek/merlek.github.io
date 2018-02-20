@@ -1,0 +1,33 @@
+<div class="modal-header">
+	<h4 class="modal-title">Cards remaining: {{data.length+1}}</h4>
+	<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+	<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body">
+	<div class="card">
+		<div class="front">
+			<div class="term">
+				<span *ngIf="item.Article" class="term2">{{item.Article}}&nbsp;</span><a target="_blank" href="http://www.perseus.tufts.edu/hopper/morph?la=greek&l={{item.Greek}}">{{item.Greek}}</a><span *ngIf="item.Declension" class="term2">&nbsp;{{item.Declension}}</span>
+			</div>
+		</div>
+		<div class="back">
+			<div id="answer" [class.invisible]="!isShowAnswer">
+				<hr>
+				<div>{{item.English}}</div>
+				<div class="note" *ngIf="item.Note">({{item.Note}})</div>
+				<div class="root" *ngIf="item.Root">{{item.Root}}</div>
+				<div class="term2">{{item.Transliteration}}</div>
+				<div class="type" *ngIf="item.Type">{{item.Type}}</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button *ngIf="!isShowAnswer" type="button" class="btn btn-outline-primary mx-auto" (click)="showAnswer()">Show Answer</button>
+	<div *ngIf="isShowAnswer" class="btn-group mx-auto" role="group" aria-label="Basic example">
+		<button type="button" class="btn btn-danger" (click)="again()">Again</button>
+		<button type="button" class="btn btn-primary" (click)="next()">Good!</button>
+	</div>
+	<button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+</div>

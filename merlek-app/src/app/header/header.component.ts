@@ -20,16 +20,17 @@ export class Nav {
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
+  public isCollapsed = true;
 
   @Input()
   title: string;
   navs = [
+    new Nav('Greek Vocab', '/greek-vocab'),
     new Nav('Hebrew', '/hebrew', [
       new Nav('Transliterate', '/transliterate'),
       new Nav('Complete Qal', '/complete-qal'),
       new Nav('Stem Synopsis', '/stem-synopsis'),
     ]),
-    new Nav('Greek Vocab', '/greek-vocab'),
   ];
 
   constructor() {}

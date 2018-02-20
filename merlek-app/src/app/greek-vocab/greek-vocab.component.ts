@@ -1,42 +1,90 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {HttpErrorResponse} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
+import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 
+import {GreekVocab} from './greekVocab';
+import {DataGridComponent} from '../data-grid/data-grid.component'
 
 @Component({
   selector: 'app-greek-vocab',
-  templateUrl: './greek-vocab.component.html',
-  styleUrls: ['./greek-vocab.component.css']
+  template:`<div class="row justify-content-center">
+              <h1>{{title}}</h1>
+            </div>
+            <div class="row justify-content-center">
+              <app-data-grid [columns]="columns"
+                             [data]="vocab"
+                             [sort]="sorting"
+                             [isShowFilter]=true
+                             [isExportToCSV]=true
+                             [isFlashCards]=true
+                             [exportFileName]="exportFileName"
+                             [filterIgnore]="filterIgnore">
+              </app-data-grid>
+            </div>`,
 })
 export class GreekVocabComponent implements OnInit {
 
   title = 'Greek Vocab';
   file = './assets/metzger.json';
-  data = {};
+  vocab: GreekVocab[];
+  exportFileName = 'greek_';
+  filterIgnore = ['Id'];
+
+  columns: any[] = [
+    {
+      display: 'Greek', variable: 'Greek', filter: 'text',
+    }, {
+      display: 'Declension', variable: 'Declension', filter: 'text'
+    }, {
+      display: 'Article', variable: 'Article', filter: 'text'
+    }, {
+      display: 'English', variable: 'English', filter: 'text'
+    }, {
+      display: 'Notes', variable: 'Note', filter: 'text'
+    }, {
+      display: 'Type', variable: 'Type', filter: 'text'
+    }, {
+      display: 'Tag', variable: 'Tag', filter: 'text'
+    }
+  ];
+
+  sorting: any = {
+    column: 'Tag',
+    descending: true
+  };
+
+  @ViewChild(DataGridComponent) dataGrid: DataGridComponent
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit() {
-    this.http.get(this.file)
+  ngOnInit(): void {
+    this.getData();
+    this.dataGrid.onResize();
+  }
+
+  getData(): void {
+    this.http.get<GreekVocab[]>(this.file)
       .subscribe(
-      data => this.data = data,
+      data => this.vocab = data,
       err => this.handleError(err)
       );
   }
 
-  format(): string {
-    const text = [];
-    for (let i = 0; i < arguments.length; ++i) {
-      const arg = arguments[i];
-      if (arg) { text.push(arg); }
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
     }
-    return text.join(', ');
-  }
-
-  private handleError(error: any) {
-    const errMsg = (error.message) ? error.message :
-      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.error(errMsg); // log to console instead
-    return errMsg;
+    // return an ErrorObservable with a user-facing error message
+    return new ErrorObservable('Something bad happened; please try again later.');
   }
 
 }
