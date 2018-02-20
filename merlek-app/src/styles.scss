@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+// @import "./assets/fonts/cardo/font-styles.css";
+
+@import url('https://fonts.googleapis.com/css?family=Cardo:400,400i,700|Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&subset=greek,greek-ext,latin-ext');
+
+@import 'scss/_variables.scss';
+@import 'scss/_tables.scss';
+
+body {
+	/* Margin bottom by footer height */
+	// margin-bottom: 60px;
+	padding-top: 4.5rem;
+}
+
+.modal-open {
+  app-root,
+  .container {
+    -webkit-filter: blur(2px);
+    -moz-filter: blur(2px);
+    -o-filter: blur(2px);
+    -ms-filter: blur(2px);
+    filter: blur(2px);
+  }
+}
+
+.hebrew {
+  font-family: Cardo, serif;
+  direction: rtl;
+  font-size: 1.65em;
+  text-align: center;
+}
+
+@import "~bootstrap/scss/bootstrap";
