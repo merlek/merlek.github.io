@@ -6,7 +6,7 @@ import {HebrewFlashCardsComponent} from './hebrew/hebrew-flash-cards.component'
 
 @Component({
   selector: 'app-flash-cards',
-  template: `<button class="btn btn-primary" (click)="open()">Flash Cards</button>`,
+  template: `<button class="btn btn-primary btn-block" (click)="open()">Flash Cards</button>`,
 })
 export class FlashCardsComponent implements OnInit {
 

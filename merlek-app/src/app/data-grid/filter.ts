@@ -13,9 +13,10 @@ export class Filter implements PipeTransform {
   static _normalize(value: any): any {
     if (Object.prototype.toString.call(value) === '[object String]') {
       return value
-        .replace(/<[^>]+>/gm, '')
-        .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,' ')
-        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/<[^>]+>/gm,' ') // replace with space so that words are matched correctly
+        .replace(/[.,\/#!$%\^&\*;:{}=\_`~()]/g,' ')
+        .replace(/[-]/g,'')
+        .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
         .toLocaleLowerCase();
     } else {
       return value;
@@ -26,25 +27,27 @@ export class Filter implements PipeTransform {
     for (const prop in value) {
       if (value.hasOwnProperty(prop) && value[prop] != null) {
         if (!ignore || !ignore.includes(prop)) {
-          if (typeof value[prop] === 'string' && Filter._normalize(value[prop]).indexOf(filter) !== -1) {
-            if(!exact) {
-              return true;
-            } else {
-              let words = Filter._normalize(value[prop]).split(/\s+/g);
-              for (var word of words) {
-                if(word === filter) {
-                  return true;
+
+          if (typeof value[prop] === 'string') {
+            const normalizedValue = Filter._normalize(value[prop]);
+
+            if (normalizedValue.indexOf(filter) !== -1) {
+              if (exact) {
+                for (var word of normalizedValue.split(/\s+/g)) {
+                  if(word === filter) {
+                    return true;
+                  }
                 }
+              } else {
+                return true;
               }
-//            console.log('match', prop, value[prop], filter);
             }
           } else if (typeof value[prop] === 'number' && value[prop] === +filter) {
-//            console.log('match', prop, value[prop], filter);
             return true;
           } else if (typeof value[prop] === 'object' && Filter._match(value[prop], filter, exact, ignore)) {
-//            console.log('match', prop, value[prop], filter);
             return true;
           }
+
         }
       }
     }
