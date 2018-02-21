@@ -36,7 +36,7 @@ export class DataGridComponent implements OnInit, OnChanges {
   @Input() hdrbtns: any[];
   @Input() isShowFilter: boolean;
   @Input() isExportToCSV: boolean;
-  @Input() isFlashCards: boolean;
+  @Input() flashCardsType: string;
   @Input() exportFileName: string;
   @Input() filterIgnore: string[];
 

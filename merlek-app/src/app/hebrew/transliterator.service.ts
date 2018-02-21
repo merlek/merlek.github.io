@@ -94,7 +94,7 @@ export class TransliteratorService {
       this.debug('letter-' + i + ': ' + letter.name);
 
       const combo = last.hebrew + letter.hebrew;
-      const newLetter = this.letterService.parse(false, combo, i >= list.length - 1);
+      const newLetter = this.letterService.parse(false, combo, (i >= list.length - 1 || list[i+1].hebrew.match(/^\s+/) !== null));
 
       this.debug('newLetter: ' + newLetter.name);
 

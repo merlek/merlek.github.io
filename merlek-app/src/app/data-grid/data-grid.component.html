@@ -1,21 +1,21 @@
-<div class="container">
+<!-- <div class="container"> -->
 	<div class="row justify-content-center">
-		<div class="col-md-6" *ngIf="isShowFilter && data">
+		<div class="col-sm-12 col-md-8" *ngIf="isShowFilter && data">
 			<app-search-list [title]="searchTitle"
 				(change)="criteriaChange($event)"></app-search-list>
 		</div>
-		<div class="col-1" *ngIf="data">
-			<ng-container *ngFor="let hdrbtn of hdrbtns">
-				<button *ngIf="!hdrbtn.ishide" type="button" class="btn btn-primary"
-					(click)="click(hdrbtn,null)">{{hdrbtn.title}}</button>
-			</ng-container>
+		<ng-container *ngFor="let hdrbtn of hdrbtns">
+			<div class="col-1" *ngIf="data">
+			<button *ngIf="!hdrbtn.ishide" type="button" class="btn btn-primary"
+				(click)="click(hdrbtn,null)">{{hdrbtn.title}}</button>
+			</div>
+		</ng-container>
+		<div class="col-6 col-sm-4 col-md-3 col-lg-2" *ngIf="data">
+			<app-flash-cards *ngIf="flashCardsType && (pdata!=null && pdata.length>0)" [data]="pdata" [cardType]="flashCardsType"></app-flash-cards>
 		</div>
-		<div class="col-md-2" *ngIf="data">
-			<app-flash-cards *ngIf="isFlashCards && (pdata!=null && pdata.length>0)" [data]="pdata"></app-flash-cards>
-		</div>
-		<div class="col-md-3" *ngIf="data">
+		<div class="col-6 col-sm-4 col-md-3 col-lg-2" *ngIf="data">
 			<button *ngIf='isExportToCSV && (pdata!=null && pdata.length>0)'
-				type="button" class="btn btn-secondary"
+				type="button" class="btn btn-secondary btn-block"
 				(click)="exportToCSV()">Export to CSV</button>
 		</div>
 	</div>
@@ -35,8 +35,9 @@
 				</thead>
 				<tbody>
 					<tr *ngFor="let row of pdata | paginate: {itemsPerPage: pageSize, currentPage:page, id: '1'}; let i = index">
-						<td *ngFor="let column of columns">{{row[column.variable] |
-							format : column.filter}}</td>
+						<td *ngFor="let column of columns"
+						[class]="column.class ? column.class : '' "
+						[innerHTML]="row[column.variable] | format : column.filter"></td>
 						<ng-container *ngFor="let btn of gridbtns">
 						<td *ngIf="!btn.ishide">
 							<button type="button" class="btn btn-primary"
@@ -69,4 +70,4 @@
   	</div>
 
 	</div>
-</div>
+<!-- </div> -->

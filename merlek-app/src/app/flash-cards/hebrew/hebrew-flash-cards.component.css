@@ -1,0 +1,39 @@
+.card {
+  font-family: Cardo, Georgia, Serif;
+  font-size: 30px;
+  text-align: center;
+  color: black;
+  background-color: white;
+}
+div {
+  margin: 10px;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+.term{
+  font-size: 2.5em;
+  font-family: Cardo, Serif;
+  direction: rtl;
+  margin-bottom: 40px;
+}
+.translit {
+  font-family: Courier New, monospace;
+  font-size: .8em;
+  opacity: 0.75;
+}
+.info {
+  font-size: .6em;
+  opacity: 0.75;
+}
+.notes {
+  font-family: Courier New, monospace;
+  font-size: .6em;
+  opacity: 0.5;
+}
+
+.type {
+  font-size: .6em;
+  opacity: 0.5;
+}

@@ -5,7 +5,7 @@ import {TransliteratorService} from '../transliterator.service';
 @Component({
   selector: 'app-transliterate',
   templateUrl: './transliterate.component.html',
-  styleUrls: ['./transliterate.component.css']
+  styles: ['textarea {font-family: Cardo,Serif; font-size: 2em;}']
 })
 export class TransliterateComponent implements OnInit {
   title = 'Hebrew Transliterator';

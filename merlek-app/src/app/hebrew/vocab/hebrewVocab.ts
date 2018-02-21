@@ -1,12 +1,12 @@
-export interface GreekVocab {
+export interface HebrewVocab {
+  Hebrew: string;
   Transliteration: string;
-  Greek: string;
-  Declension: string;
-  Article: string;
-  Root: string;
   English: string;
+  Info: string;
   Notes: string;
   Type: string;
+  GenNum: string;
   Frequency: number;
+  Sort: number;
   Tags: string;
 }
