@@ -7,7 +7,8 @@
 	</div>
 	<input id="searchBox" class='form-control' aria-describedby="searchLabel"
 	placeholder='Enter any text to filter' (paste)='getPasteData($event)'
-	(keyup)='getEachChar($event.target.value)' type='text'/>
+	(keyup)='getEachChar($event.target.value)' type='text'
+	[(ngModel)]="search" />
 	<div ngbDropdown class="input-group-append">
 		<button ngbDropdownToggle class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{logic.value}}</button>
 		<div ngbDropdownMenu class="dropdown-menu">

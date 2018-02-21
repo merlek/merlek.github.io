@@ -7,22 +7,24 @@ import {HttpClientModule} from '@angular/common/http';
 import {NgxPaginationModule} from 'ngx-pagination';
 
 import {AppComponent} from './app.component';
-import {TransliterateComponent} from './transliterate/transliterate.component';
+import {TransliterateComponent} from './hebrew/transliterate/transliterate.component';
 import {HeaderComponent} from './header/header.component';
 
-import {LetterService} from './letter.service';
-import {TransliteratorService} from './transliterator.service';
+import {LetterService} from './hebrew/letter.service';
+import {TransliteratorService} from './hebrew/transliterator.service';
 import {AppRoutingModule} from './/app-routing.module';
 import {GreekVocabComponent} from './greek-vocab/greek-vocab.component';
-import {HebrewCompleteQalComponent} from './hebrew-complete-qal/hebrew-complete-qal.component';
-import {HebrewStemSynopsisComponent} from './hebrew-stem-synopsis/hebrew-stem-synopsis.component';
+import {HebrewCompleteQalComponent} from './hebrew/complete-qal/hebrew-complete-qal.component';
+import {HebrewStemSynopsisComponent} from './hebrew/stem-synopsis/hebrew-stem-synopsis.component';
 import {DataGridComponent} from './data-grid/data-grid.component';
 import {Format} from './data-grid/format';
 import {OrderBy} from './data-grid/orderby';
 import {Filter} from './data-grid/filter';
 import {SearchListComponent} from './search-list/search-list.component';
 import {FlashCardsComponent} from './flash-cards/flash-cards.component';
-import {GreekFlashCardsComponent} from './greek-flash-cards/greek-flash-cards.component';
+import {GreekFlashCardsComponent} from './flash-cards/greek/greek-flash-cards.component';
+import { HebrewVocabComponent } from './hebrew/vocab/hebrew-vocab.component';
+import { HebrewFlashCardsComponent } from './flash-cards/hebrew/hebrew-flash-cards.component';
 
 
 @NgModule({
@@ -40,6 +42,8 @@ import {GreekFlashCardsComponent} from './greek-flash-cards/greek-flash-cards.co
     OrderBy,
     SearchListComponent,
     TransliterateComponent,
+    HebrewVocabComponent,
+    HebrewFlashCardsComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -50,7 +54,8 @@ import {GreekFlashCardsComponent} from './greek-flash-cards/greek-flash-cards.co
     NgbModule.forRoot(),
   ],
   entryComponents: [
-    GreekFlashCardsComponent
+    GreekFlashCardsComponent,
+    HebrewFlashCardsComponent,
   ],
   providers: [TransliteratorService, LetterService],
   bootstrap: [AppComponent]

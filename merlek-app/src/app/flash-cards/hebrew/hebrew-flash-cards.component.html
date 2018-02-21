@@ -1,0 +1,34 @@
+<div class="modal-header">
+  <h4 class="modal-title">Cards remaining: {{data.length+1}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+  <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="card">
+    <div class="front">
+      <div class="term" [innerHTML]="item.Hebrew"></div>
+    </div>
+    <div class="back">
+      <div id="answer" [class.invisible]="!isShowAnswer">
+        <hr>
+        <div [innerHTML]="item.English"></div>
+        <div class="translit" [innerHTML]="item.Transliteration"></div>
+        <div class="info" *ngIf="item.Info" [innerHTML]="'('+item.Info+')'"></div>
+        <div class="notes" *ngIf="item.Notes" [innerHTML]="'('+item.Notes+')'"></div>
+        <div class="type">
+          <span *ngIf="item.GenNum" [innerHTML]="item.GenNum"> </span>
+          <span *ngIf="item.Type" [innerHTML]="item.Type"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button *ngIf="!isShowAnswer" type="button" class="btn btn-outline-primary mx-auto" (click)="showAnswer()">Show Answer</button>
+  <div *ngIf="isShowAnswer" class="btn-group mx-auto" role="group" aria-label="Basic example">
+    <button type="button" class="btn btn-danger" (click)="again()">Again</button>
+    <button type="button" class="btn btn-primary" (click)="next()">Good!</button>
+  </div>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+</div>

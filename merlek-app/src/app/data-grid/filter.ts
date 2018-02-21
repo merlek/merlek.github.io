@@ -12,7 +12,11 @@ export class Filter implements PipeTransform {
 
   static _normalize(value: any): any {
     if (Object.prototype.toString.call(value) === '[object String]') {
-      return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      return value
+        .replace(/<[^>]+>/gm, '')
+        .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,' ')
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .toLocaleLowerCase();
     } else {
       return value;
     }
@@ -22,11 +26,11 @@ export class Filter implements PipeTransform {
     for (const prop in value) {
       if (value.hasOwnProperty(prop) && value[prop] != null) {
         if (!ignore || !ignore.includes(prop)) {
-          if (typeof value[prop] === 'string' && Filter._normalize(value[prop]).toLocaleLowerCase().indexOf(filter) !== -1) {
+          if (typeof value[prop] === 'string' && Filter._normalize(value[prop]).indexOf(filter) !== -1) {
             if(!exact) {
               return true;
             } else {
-              let words = Filter._normalize(value[prop]).toLocaleLowerCase().split(/\s+/g);
+              let words = Filter._normalize(value[prop]).split(/\s+/g);
               for (var word of words) {
                 if(word === filter) {
                   return true;
@@ -52,7 +56,9 @@ export class Filter implements PipeTransform {
       return [];
     }
     if (search && search.search){
-      let filters = search.search.toLocaleLowerCase().split(/\s+/g);
+      let filters = search.search
+                            .toLocaleLowerCase().split(/\s+/g)
+                            .map(f => Filter._normalize(f));
       let exact = search.match === SearchMatch.EXACT;
       let logic = search.logic;
       if (logic && logic === SearchLogic.OR) {

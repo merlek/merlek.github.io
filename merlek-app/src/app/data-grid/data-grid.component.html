@@ -11,7 +11,7 @@
 			</div>
 		</ng-container>
 		<div class="col-4 col-md-2" *ngIf="data">
-			<app-flash-cards *ngIf="isFlashCards && (pdata!=null && pdata.length>0)" [data]="pdata"></app-flash-cards>
+			<app-flash-cards *ngIf="flashCardsType && (pdata!=null && pdata.length>0)" [data]="pdata" [cardType]="flashCardsType"></app-flash-cards>
 		</div>
 		<div class="col-4 col-md-2" *ngIf="data">
 			<button *ngIf='isExportToCSV && (pdata!=null && pdata.length>0)'
@@ -35,8 +35,9 @@
 				</thead>
 				<tbody>
 					<tr *ngFor="let row of pdata | paginate: {itemsPerPage: pageSize, currentPage:page, id: '1'}; let i = index">
-						<td *ngFor="let column of columns">{{row[column.variable] |
-							format : column.filter}}</td>
+						<td *ngFor="let column of columns"
+						[class]="column.class ? column.class : '' "
+						[innerHTML]="row[column.variable] | format : column.filter"></td>
 						<ng-container *ngFor="let btn of gridbtns">
 						<td *ngIf="!btn.ishide">
 							<button type="button" class="btn btn-primary"

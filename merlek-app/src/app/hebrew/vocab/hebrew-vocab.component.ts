@@ -4,54 +4,44 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 
-import {GreekVocab} from './greekVocab';
-import {DataGridComponent} from '../data-grid/data-grid.component'
+import {HebrewVocab} from './hebrewVocab';
+import {DataGridComponent} from '../../data-grid/data-grid.component'
 
 @Component({
-  selector: 'app-greek-vocab',
+  selector: 'app-hebrew-vocab',
   template:`<div class="row justify-content-center">
-              <h1>Greek Vocab</h1>
-            </div>
-            <div class="row justify-content-center">
-            <p>
-            <b>Tags:</b>
-            <abbr title="Basics of Biblical Hebrew (Mounce)">BBG</abbr>
-            <abbr title="A Primer of Biblical Greek (Croy)">Croy</abbr>
-            <abbr title="Lexical Aides for Students of New Testament Greek (Metzger)">Mz</abbr>
-            </p>
+              <h1>Hebrew Vocab</h1>
             </div>
             <app-data-grid [columns]="columns"
                            [data]="vocab"
                            [sort]="sorting"
                            [isShowFilter]=true
                            [isExportToCSV]=true
-                           [flashCardsType]="'greek'"
+                           [flashCardsType]="'hebrew'"
                            [exportFileName]="exportFileName"
                            [filterIgnore]="filterIgnore">
             </app-data-grid>`,
 })
-export class GreekVocabComponent implements OnInit {
+export class HebrewVocabComponent implements OnInit {
 
-  file = './assets/greek-vocab.json';
-  vocab: GreekVocab[];
-  exportFileName = 'greek_';
+file = './assets/hebrew-vocab.json';
+  vocab: HebrewVocab[];
+  exportFileName = 'hebrew_';
   filterIgnore = ['Id'];
 
   columns: any[] = [
     {
-      display: 'Greek', variable: 'Greek', filter: 'text',
-    }, {
-      display: 'Declension', variable: 'Declension', filter: 'text'
-    }, {
-      display: 'Article', variable: 'Article', filter: 'text'
+      display: 'Hebrew', variable: 'Hebrew', filter: 'text', class:"hebrew",
     }, {
       display: 'English', variable: 'English', filter: 'text'
     }, {
-      display: 'Notes', variable: 'Notes', filter: 'text'
-    },{
-      display: 'Freq', variable: 'Frequency', filter: 'number'
+      display: 'Info', variable: 'Info', filter: 'text'
     }, {
-      display: 'Type', variable: 'Type', filter: 'text'
+      display: 'Notes', variable: 'Notes', filter: 'text'
+    }, {
+      display: 'Type', variable: 'Type', filter: 'number'
+    }, {
+      display: 'Freq', variable: 'Frequency', filter: 'number'
     }, {
       display: 'Tags', variable: 'Tags', filter: 'text'
     }
@@ -72,7 +62,7 @@ export class GreekVocabComponent implements OnInit {
   }
 
   getData(): void {
-    this.http.get<GreekVocab[]>(this.file)
+    this.http.get<HebrewVocab[]>(this.file)
       .subscribe(
       data => this.vocab = data,
       err => this.handleError(err)
@@ -93,5 +83,6 @@ export class GreekVocabComponent implements OnInit {
     // return an ErrorObservable with a user-facing error message
     return new ErrorObservable('Something bad happened; please try again later.');
   }
+
 
 }
