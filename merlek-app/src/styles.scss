@@ -18,14 +18,18 @@ body {
   font-family: $font-family-sans-serif;
 }
 
+@mixin filter($radius) {
+  -webkit-filter: blur($radius);
+  -moz-filter: blur($radius);
+  -o-filter: blur($radius);
+  -ms-filter: blur($radius);
+  filter: blur($radius);
+}
+
 .modal-open {
   app-root,
   .container {
-    -webkit-filter: blur(2px);
-    -moz-filter: blur(2px);
-    -o-filter: blur(2px);
-    -ms-filter: blur(2px);
-    filter: blur(2px);
+    @include filter(5px);
   }
 }
 
