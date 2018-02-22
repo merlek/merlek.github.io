@@ -1,6 +1,6 @@
 <!-- <div class="container"> -->
 	<div class="row justify-content-center">
-		<div class="col-sm-12 col-md-8" *ngIf="isShowFilter && data">
+		<div class="col-sm-12 col-md-8 col-lg-6" *ngIf="isShowFilter && data">
 			<app-search-list [title]="searchTitle"
 				(change)="criteriaChange($event)"></app-search-list>
 		</div>
@@ -10,12 +10,10 @@
 				(click)="click(hdrbtn,null)">{{hdrbtn.title}}</button>
 			</div>
 		</ng-container>
-		<div class="col-6 col-sm-4 col-md-3 col-lg-2" *ngIf="data">
+		<div class="col-12 col-sm-8 col-md-6 col-lg-4" *ngIf="data">
 			<app-flash-cards *ngIf="flashCardsType && (pdata!=null && pdata.length>0)" [data]="pdata" [cardType]="flashCardsType"></app-flash-cards>
-		</div>
-		<div class="col-6 col-sm-4 col-md-3 col-lg-2" *ngIf="data">
 			<button *ngIf='isExportToCSV && (pdata!=null && pdata.length>0)'
-				type="button" class="btn btn-secondary btn-block"
+				type="button" class="btn btn-secondary mx-1"
 				(click)="exportToCSV()">Export to CSV</button>
 		</div>
 	</div>

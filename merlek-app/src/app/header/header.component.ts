@@ -17,8 +17,11 @@ export class Nav {
 @Component({
   selector: 'app-header',
   template: `
-    <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark">
-      <a class="navbar-brand" routerLink="">{{title}}</a>
+    <nav class="navbar fixed-top navbar-expand-sm navbar-light">
+      <a class="navbar-brand" routerLink="">
+        <img src="/assets/logo.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+        {{title}}
+      </a>
       <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed"
         [attr.aria-expanded]="!isCollapsed" aria-controls="navbarSupportedContent"
         aria-label="Toggle navigation">

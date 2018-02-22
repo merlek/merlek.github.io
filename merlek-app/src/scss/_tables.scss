@@ -4,7 +4,7 @@ table, tbody, tr, td {
   border: none;
 }
 
-table {
+.table {
   margin: 1em auto;
 
   thead > tr:first-child > th {
@@ -12,13 +12,18 @@ table {
     border-bottom: 2px solid black;
   }
 
+  thead th {
+    font-family: $font-family-sans-serif;
+    font-weight: inherit;
+  }
+
   tr:last-child {
     border-bottom: none;
   }
-}
 
-.table td, .table th {
-  padding: 4px 6px;
-  text-align: center;
-  vertical-align: middle;
+  td, th {
+    padding: 4px 6px;
+    text-align: center;
+    vertical-align: middle;
+  }
 }
