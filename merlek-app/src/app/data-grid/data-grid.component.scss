@@ -1,3 +1,5 @@
+@import '../../scss/_variables.scss';
+
 .table-sortable > thead > tr {
     > th {
         cursor: pointer;
@@ -40,3 +42,8 @@
   overflow-y: scroll;
   border: 1px solid #dee2e6;
 }
+
+.data-pagination /deep/ .ngx-pagination .current {
+    background: $primary;
+}
+
