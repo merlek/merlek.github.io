@@ -1,0 +1,41 @@
+@import '../../../scss/_variables';
+
+tr > th:first-child {
+  border-right: 2px solid black;
+}
+  
+tbody {
+
+  th, td {
+    height: 5rem;
+  }
+
+  > tr:nth-child(1) > *,
+  > tr:nth-child(2) > *,
+  > tr:nth-child(5) > * {
+    border-bottom: 1px solid black;
+  }
+}
+
+.qal .tense-form {
+  color: $red;
+}
+.nif .tense-form {
+  color: $green;
+}
+.piel .tense-form {
+  color: $blue;
+}
+.pual .tense-form {
+  color: $blue;
+}
+.hith .tense-form {
+  color: $blue;
+}
+.hif .tense-form {
+  color: $purple;
+}
+.hof .tense-form {
+  color: $purple;
+}
+
