@@ -6,7 +6,7 @@ import {HebrewVocab} from '../../hebrew/vocab/hebrewVocab';
 @Component({
   selector: 'app-hebrew-flash-cards',
   templateUrl: './hebrew-flash-cards.component.html',
-  styleUrls: ['./hebrew-flash-cards.component.css']
+  styleUrls: ['../flash-cards.scss']
 })
 export class HebrewFlashCardsComponent implements OnInit {
 

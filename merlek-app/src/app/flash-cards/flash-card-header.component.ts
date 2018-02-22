@@ -6,7 +6,7 @@ import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
   selector: 'app-flash-card-header',
   template: `
     <div class="modal-header">
-      <h4 class="modal-title">Cards remaining: {{data.length+1}}</h4>
+      <h5 class="modal-title text-muted">Cards remaining: {{data.length+1}}</h5>
       <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>

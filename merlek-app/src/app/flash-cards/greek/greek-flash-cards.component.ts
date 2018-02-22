@@ -6,7 +6,7 @@ import {GreekVocab} from '../../greek-vocab/greekVocab';
 @Component({
   selector: 'app-greek-flash-cards',
   templateUrl: './greek-flash-cards.component.html',
-  styleUrls: ['./greek-flash-cards.component.css']
+  styleUrls: ['../flash-cards.scss']
 })
 export class GreekFlashCardsComponent implements OnInit {
 

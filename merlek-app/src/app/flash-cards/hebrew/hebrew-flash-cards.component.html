@@ -2,16 +2,16 @@
 <div class="modal-body">
   <div class="card">
     <div class="front">
-      <div class="term" [innerHTML]="item.Hebrew"></div>
+      <div class="hebrew font-size-2_5" [innerHTML]="item.Hebrew"></div>
     </div>
     <div class="back">
       <div id="answer" [class.invisible]="!isShowAnswer">
         <hr>
         <div [innerHTML]="item.English"></div>
-        <div class="translit" [innerHTML]="item.Transliteration"></div>
-        <div class="info" *ngIf="item.Info" [innerHTML]="'('+item.Info+')'"></div>
-        <div class="notes" *ngIf="item.Notes" [innerHTML]="'('+item.Notes+')'"></div>
-        <div class="type">
+        <div class="font-mono font-size-0_8 opacity-75" [innerHTML]="item.Transliteration"></div>
+        <div class="font-size-0_7 opacity-75" *ngIf="item.Info" [innerHTML]="'('+item.Info+')'"></div>
+        <div class="font-size-0_7 opacity-50" *ngIf="item.Notes" [innerHTML]="'('+item.Notes+')'"></div>
+        <div class="font-size-0_7 opacity-50">
           <span *ngIf="item.GenNum" [innerHTML]="item.GenNum"> </span>
           <span *ngIf="item.Type" [innerHTML]="item.Type"></span>
         </div>

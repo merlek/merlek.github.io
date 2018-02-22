@@ -14,10 +14,11 @@ import {DataGridComponent} from '../data-grid/data-grid.component'
             </div>
             <div class="row justify-content-center">
             <p>
-            <b>Tags:</b>
-            <abbr title="Basics of Biblical Hebrew (Mounce)">BBG</abbr>
-            <abbr title="A Primer of Biblical Greek (Croy)">Croy</abbr>
-            <abbr title="Lexical Aides for Students of New Testament Greek (Metzger)">Mz</abbr>
+              <b>Tags:</b>
+              <button *ngFor="let tag of tags" type="button" class="btn btn-sm mx-1 btn-outline-secondary" placement="top" triggers="mouseenter:mouseleave"
+                popoverTitle="{{tag.tag}}" ngbPopover="{{tag.description}}">
+                {{tag.tag}}
+              </button>
             </p>
             </div>
             <app-data-grid [columns]="columns"
@@ -61,6 +62,12 @@ export class GreekVocabComponent implements OnInit {
     column: 'Frequency',
     descending: true 
   };
+
+  tags = [
+    {tag:"BBG", description:"Basics of Biblical Hebrew (Mounce)"},
+    {tag:"Croy", description:"A Primer of Biblical Greek (Croy)"},
+    {tag:"Mz",description:"Lexical Aides for Students of New Testament Greek (Metzger)"},
+  ];
 
   @ViewChild(DataGridComponent) dataGrid: DataGridComponent
 

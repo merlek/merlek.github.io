@@ -3,6 +3,10 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {GreekFlashCardsComponent} from './greek/greek-flash-cards.component'
 import {HebrewFlashCardsComponent} from './hebrew/hebrew-flash-cards.component'
 
+export enum KEY_CODE {
+  RIGHT_ARROW = 39,
+  LEFT_ARROW = 37
+}
 
 @Component({
   selector: 'app-flash-cards',

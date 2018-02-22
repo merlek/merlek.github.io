@@ -2,18 +2,18 @@
 <div class="modal-body">
 	<div class="card">
 		<div class="front">
-			<div class="term">
-				<span *ngIf="item.Article" class="term2" [innerHTML]="item.Article+'&nbsp;'"></span><a target="_blank" href="http://www.perseus.tufts.edu/hopper/morph?la=greek&l={{item.Greek}}" [innerHTML]="item.Greek"></a><span *ngIf="item.Declension" class="term2" [innerHTML]="'&nbsp;'+item.Declension"></span>
+			<div class="font-size-1_5">
+				<span *ngIf="item.Article" class="font-size-0_8 opacity-75" [innerHTML]="item.Article+'&nbsp;'"></span><a target="_blank" href="http://www.perseus.tufts.edu/hopper/morph?la=greek&l={{item.Greek}}" [innerHTML]="item.Greek"></a><span *ngIf="item.Declension" class="font-size-0_8 opacity-75" [innerHTML]="'&nbsp;'+item.Declension"></span>
 			</div>
 		</div>
 		<div class="back">
 			<div id="answer" [class.invisible]="!isShowAnswer">
 				<hr>
 				<div [innerHTML]="item.English"></div>
-				<div class="note" *ngIf="item.Notes" [innerHTML]="'('+item.Notes+')'"></div>
-				<div class="root" *ngIf="item.Root" [innerHTML]="item.Root"></div>
-				<div class="term2" [innerHTML]="item.Transliteration"></div>
-				<div class="type" *ngIf="item.Type" [innerHTML]="item.Type"></div>
+				<div class="font-size-0_7" *ngIf="item.Notes" [innerHTML]="'('+item.Notes+')'"></div>
+				<div class="font-size-0_8 opacity-75" *ngIf="item.Root" [innerHTML]="item.Root"></div>
+				<div class="font-size-0_8 font-mono" [innerHTML]="item.Transliteration"></div>
+				<div class="font-size-0_8 opacity-50" *ngIf="item.Type" [innerHTML]="item.Type"></div>
 			</div>
 		</div>
 	</div>
