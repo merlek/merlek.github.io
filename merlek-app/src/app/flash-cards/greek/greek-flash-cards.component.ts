@@ -3,8 +3,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {GreekVocab} from '../../greek-vocab/greekVocab';
 
-
-
 @Component({
   selector: 'app-greek-flash-cards',
   templateUrl: './greek-flash-cards.component.html',

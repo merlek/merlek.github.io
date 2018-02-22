@@ -25,6 +25,8 @@ import {FlashCardsComponent} from './flash-cards/flash-cards.component';
 import {GreekFlashCardsComponent} from './flash-cards/greek/greek-flash-cards.component';
 import { HebrewVocabComponent } from './hebrew/vocab/hebrew-vocab.component';
 import { HebrewFlashCardsComponent } from './flash-cards/hebrew/hebrew-flash-cards.component';
+import { FlashCardHeaderComponent } from './flash-cards/flash-card-header.component';
+import { FlashCardFooterComponent } from './flash-cards/flash-card-footer.component';
 
 
 @NgModule({
@@ -44,6 +46,8 @@ import { HebrewFlashCardsComponent } from './flash-cards/hebrew/hebrew-flash-car
     TransliterateComponent,
     HebrewVocabComponent,
     HebrewFlashCardsComponent,
+    FlashCardHeaderComponent,
+    FlashCardFooterComponent,
   ],
   imports: [
     AppRoutingModule,

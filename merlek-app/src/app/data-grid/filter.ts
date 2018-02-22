@@ -24,30 +24,32 @@ export class Filter implements PipeTransform {
   }
 
   static _match(value: any, filter: string, exact?:boolean, ignore?: string[]): boolean {
-    for (const prop in value) {
-      if (value.hasOwnProperty(prop) && value[prop] != null) {
-        if (!ignore || !ignore.includes(prop)) {
+    if (filter) {
+      for (const prop in value) {
+        if (value.hasOwnProperty(prop) && value[prop] != null) {
+          if (!ignore || !ignore.includes(prop)) {
 
-          if (typeof value[prop] === 'string') {
-            const normalizedValue = Filter._normalize(value[prop]);
+            if (typeof value[prop] === 'string') {
+              const normalizedValue = Filter._normalize(value[prop]);
 
-            if (normalizedValue.indexOf(filter) !== -1) {
-              if (exact) {
-                for (var word of normalizedValue.split(/\s+/g)) {
-                  if(word === filter) {
-                    return true;
+              if (normalizedValue.indexOf(filter) !== -1) {
+                if (exact) {
+                  for (var word of normalizedValue.split(/\s+/g)) {
+                    if(word === filter) {
+                      return true;
+                    }
                   }
+                } else {
+                  return true;
                 }
-              } else {
-                return true;
               }
+            } else if (typeof value[prop] === 'number' && value[prop] === +filter) {
+              return true;
+            } else if (typeof value[prop] === 'object' && Filter._match(value[prop], filter, exact, ignore)) {
+              return true;
             }
-          } else if (typeof value[prop] === 'number' && value[prop] === +filter) {
-            return true;
-          } else if (typeof value[prop] === 'object' && Filter._match(value[prop], filter, exact, ignore)) {
-            return true;
-          }
 
+          }
         }
       }
     }

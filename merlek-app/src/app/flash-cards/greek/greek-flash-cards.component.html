@@ -1,9 +1,4 @@
-<div class="modal-header">
-	<h4 class="modal-title">Cards remaining: {{data.length+1}}</h4>
-	<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-	<span aria-hidden="true">&times;</span>
-	</button>
-</div>
+<app-flash-card-header [data]="data"></app-flash-card-header>
 <div class="modal-body">
 	<div class="card">
 		<div class="front">
@@ -23,11 +18,4 @@
 		</div>
 	</div>
 </div>
-<div class="modal-footer">
-	<button *ngIf="!isShowAnswer" type="button" class="btn btn-outline-primary mx-auto" (click)="showAnswer()">Show Answer</button>
-	<div *ngIf="isShowAnswer" class="btn-group mx-auto" role="group" aria-label="Basic example">
-		<button type="button" class="btn btn-danger" (click)="again()">Again</button>
-		<button type="button" class="btn btn-primary" (click)="next()">Good!</button>
-	</div>
-	<button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
-</div>
+<app-flash-card-footer (onShowAnswer)="showAnswer()" (onNext)="next()" (onAgain)="again()" ></app-flash-card-footer>
