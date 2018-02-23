@@ -17,6 +17,9 @@ fi
 
 git push origin master # Deploy to Heroku
 git checkout develop # Checkout master again
+
+set +o errexit # Exit on error
+
 git stash pop # And restore the changes
 
 exit 0
