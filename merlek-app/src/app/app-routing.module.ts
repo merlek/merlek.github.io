@@ -7,6 +7,7 @@ import { GreekVocabComponent } from './greek-vocab/greek-vocab.component';
 import { HebrewCompleteQalComponent } from './hebrew/complete-qal/hebrew-complete-qal.component';
 import { HebrewStemSynopsisComponent } from './hebrew/stem-synopsis/hebrew-stem-synopsis.component';
 import { HebrewVocabComponent } from './hebrew/vocab/hebrew-vocab.component';
+import { ThemeComponent } from './theme/theme.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/greek-vocab', pathMatch: 'full' },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'hebrew/complete-qal', component: HebrewCompleteQalComponent },
   { path: 'hebrew/stem-synopsis', component: HebrewStemSynopsisComponent },
   { path: 'greek-vocab', component: GreekVocabComponent },
+  { path: 'theme', component: ThemeComponent },
 ];
 
 @NgModule({

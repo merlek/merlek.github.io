@@ -85,7 +85,7 @@ export class DataGridComponent implements OnInit, OnChanges {
   }
 
   selectedClass(columnName: string): any {
-    return columnName === this.sort.column ? 'sort-' + this.sort.descending : false;
+    return columnName === this.sort && this.sort.column ? 'sort-' + this.sort.descending : false;
   }
 
   changeSorting(columnName: string): void {
@@ -101,8 +101,10 @@ export class DataGridComponent implements OnInit, OnChanges {
 
   convertSorting(): string[] {
     let sort = []
-    sort.push(this.sort.descending ? '-' + this.sort.column : this.sort.column);
-    sort.push("+Greek");
+    if (this.sort) {
+      sort.push(this.sort.descending ? '-' + this.sort.column : this.sort.column);
+      sort.push("+Greek");
+    }
     return sort;
   }
 

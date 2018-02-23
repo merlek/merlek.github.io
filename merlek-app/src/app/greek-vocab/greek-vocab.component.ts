@@ -58,13 +58,14 @@ export class GreekVocabComponent implements OnInit {
     }
   ];
 
-  sorting: any = {
-    column: 'Frequency',
-    descending: true 
-  };
+  sorting: any = null;
+  // {
+  //   column: 'Frequency',
+  //   descending: true 
+  // };
 
   tags = [
-    {tag:"BBG", description:"Basics of Biblical Hebrew (Mounce)"},
+    {tag:"BBG", description:"Basics of Biblical Greek (Mounce)"},
     {tag:"Croy", description:"A Primer of Biblical Greek (Croy)"},
     {tag:"Mz",description:"Lexical Aides for Students of New Testament Greek (Metzger)"},
   ];
@@ -81,10 +82,18 @@ export class GreekVocabComponent implements OnInit {
   getData(): void {
     this.http.get<GreekVocab[]>(this.file)
       .subscribe(
-      data => this.vocab = data,
+      data => this.vocab = this.shuffle(data),
       err => this.handleError(err)
       );
   }
+
+  private shuffle(array:any[]): any[] {
+   for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+  return array;
+}
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

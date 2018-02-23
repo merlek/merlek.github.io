@@ -40,6 +40,7 @@ export class Nav {
       </div>
     </nav>
   `,
+  styles:['.navbar {background: #fff;  opacity: 0.95;}'],
 })
 export class HeaderComponent implements OnInit {
   public isCollapsed = true;
