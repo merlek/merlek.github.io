@@ -85,10 +85,13 @@ export class DataGridComponent implements OnInit, OnChanges {
   }
 
   selectedClass(columnName: string): any {
-    return columnName === this.sort && this.sort.column ? 'sort-' + this.sort.descending : false;
+    return this.sort && columnName === this.sort.column ? 'sort-' + this.sort.descending : false;
   }
 
   changeSorting(columnName: string): void {
+    if (!this.sort) {
+      this.sort = {};
+    }
     const sort = this.sort;
     if (sort.column === columnName) {
       sort.descending = !sort.descending;
