@@ -8,3 +8,5 @@ cd ..
 ls | grep -v $result | xargs rm -rf
 
 echo "Cleaned." 
+
+exit 0
