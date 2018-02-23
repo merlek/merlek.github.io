@@ -9,7 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "clean": "./bin/clean.sh"
+    "clean": "./bin/clean.sh",
+    "deploy": "./bin/deploy.sh"
   },
   "private": true,
   "dependencies": {
