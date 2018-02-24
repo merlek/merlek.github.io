@@ -10,31 +10,31 @@ import {GreekVocab} from '../../greek-vocab/greekVocab';
 })
 export class GreekFlashCardsComponent implements OnInit {
 
-	@Input() data: GreekVocab[];
+  @Input() data: GreekVocab[];
 
-	item: GreekVocab;
-	isShowAnswer = false;
+  item: GreekVocab;
+  isShowAnswer = false;
 
   constructor(public activeModal: NgbActiveModal) {}
 
   ngOnInit() {
-  	this.item = this.data.shift();
+    this.item = this.data.shift();
   }
 
   showAnswer() {
-  	this.isShowAnswer = true;
+    this.isShowAnswer = true;
   }
 
   next() {
-  	this.isShowAnswer = false;
-  	this.item = this.data.shift();
-  	if(!this.item) {
-  		this.activeModal.close();
-  	}
+    this.isShowAnswer = false;
+    this.item = this.data.shift();
+    if (!this.item) {
+      this.activeModal.close();
+    }
   }
 
   again() {
-  	this.data.push(this.item);
-  	this.next();
+    this.data.push(this.item);
+    this.next();
   }
 }

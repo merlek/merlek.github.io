@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {GreekFlashCardsComponent} from './greek/greek-flash-cards.component'
-import {HebrewFlashCardsComponent} from './hebrew/hebrew-flash-cards.component'
+import {GreekFlashCardsComponent} from './greek/greek-flash-cards.component';
+import {HebrewFlashCardsComponent} from './hebrew/hebrew-flash-cards.component';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -23,15 +23,15 @@ export class FlashCardsComponent implements OnInit {
 
   open() {
     let comp = null;
-    if(this.cardType === "greek") {
+    if (this.cardType === 'greek') {
       comp = GreekFlashCardsComponent;
-    } else if (this.cardType === "hebrew"){
+    } else if (this.cardType === 'hebrew') {
       comp = HebrewFlashCardsComponent;
     }
 
-    if(comp !== null) {
+    if (comp !== null) {
       const modalRef = this.modalService.open(comp,
-      	{ size:"lg" });
+        { size: 'lg' });
       modalRef.componentInstance.data = this.data.slice();
     }
   }

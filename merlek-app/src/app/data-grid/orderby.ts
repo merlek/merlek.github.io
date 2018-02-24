@@ -1,4 +1,4 @@
-﻿import {Pipe, PipeTransform} from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({name: 'orderby'})
 
@@ -31,7 +31,7 @@ export class OrderBy implements PipeTransform {
       b = String(b);
     }
 
-    return this.collator.compare(a,b);
+    return this.collator.compare(a, b);
   }
 
   transform(input: any, config: string[] | string  = '+'): any {

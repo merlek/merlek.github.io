@@ -29,18 +29,21 @@ export class Nav {
       </button>
       <div [ngbCollapse]="isCollapsed" class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li *ngFor="let nav of navs" ngbDropdown [class.dropdown]="nav.children" class="nav-item" [routerLinkActive]="['active']">
+          <li *ngFor="let nav of navs" ngbDropdown [class.dropdown]="nav.children" class="nav-item"
+            [routerLinkActive]="['active']">
             <a *ngIf="!nav.children" class="nav-link" routerLink="{{nav.path}}">{{nav.name}}</a>
-            <a *ngIf="nav.children" ngbDropdownToggle class="nav-link" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{nav.name}}</a>
+            <a *ngIf="nav.children" ngbDropdownToggle class="nav-link" id="navbarDropdown"
+              role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{nav.name}}</a>
             <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a *ngFor="let child of nav.children" class="dropdown-item" [routerLinkActive]="['active']" routerLink="{{nav.path}}{{child.path}}">{{child.name}}</a>
+              <a *ngFor="let child of nav.children" class="dropdown-item" [routerLinkActive]="['active']"
+                routerLink="{{nav.path}}{{child.path}}">{{child.name}}</a>
             </div>
           </li>
         </ul>
       </div>
     </nav>
   `,
-  styles:['.navbar {background: #fff;  opacity: 0.95;}'],
+  styles: ['.navbar {background: #fff;  opacity: 0.95;}'],
 })
 export class HeaderComponent implements OnInit {
   public isCollapsed = true;

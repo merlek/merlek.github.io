@@ -28,7 +28,7 @@ export class HebrewFlashCardsComponent implements OnInit {
   next() {
     this.isShowAnswer = false;
     this.item = this.data.shift();
-    if(!this.item) {
+    if (!this.item) {
       this.activeModal.close();
     }
   }

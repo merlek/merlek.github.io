@@ -5,11 +5,11 @@ import {Observable} from 'rxjs/Observable';
 import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 
 import {HebrewVocab} from './hebrewVocab';
-import {DataGridComponent} from '../../data-grid/data-grid.component'
+import {DataGridComponent} from '../../data-grid/data-grid.component';
 
 @Component({
   selector: 'app-hebrew-vocab',
-  template:`<div class="row justify-content-center">
+  template: `<div class="row justify-content-center">
               <h1>Hebrew Vocab</h1>
             </div>
             <app-data-grid [columns]="columns"
@@ -31,7 +31,7 @@ file = './assets/hebrew-vocab.json';
 
   columns: any[] = [
     {
-      display: 'Hebrew', variable: 'Hebrew', filter: 'text', class:"hebrew",
+      display: 'Hebrew', variable: 'Hebrew', filter: 'text', class: 'hebrew',
     }, {
       display: 'English', variable: 'English', filter: 'text'
     }, {
@@ -49,10 +49,10 @@ file = './assets/hebrew-vocab.json';
 
   sorting: any = {
     column: 'Frequency',
-    descending: true 
+    descending: true
   };
 
-  @ViewChild(DataGridComponent) dataGrid: DataGridComponent
+  @ViewChild(DataGridComponent) dataGrid: DataGridComponent;
 
   constructor(private http: HttpClient) {}
 

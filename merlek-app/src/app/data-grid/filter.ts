@@ -1,7 +1,7 @@
-﻿import {PipeTransform, Pipe, Injectable} from '@angular/core';
-import {SearchLogic} from '../search-list/search-list.component'
-import {SearchMatch} from '../search-list/search-list.component'
-import {SearchEvent} from '../search-list/search-list.component'
+import {PipeTransform, Pipe, Injectable} from '@angular/core';
+import {SearchLogic} from '../search-list/search-list.component';
+import {SearchMatch} from '../search-list/search-list.component';
+import {SearchEvent} from '../search-list/search-list.component';
 
 
 @Pipe({
@@ -13,17 +13,17 @@ export class Filter implements PipeTransform {
   static _normalize(value: any): any {
     if (Object.prototype.toString.call(value) === '[object String]') {
       return value
-        .replace(/<[^>]+>/gm,' ') // replace with space so that words are matched correctly
-        .replace(/[.,\/#!$%\^&\*;:{}=\_`~()]/g,' ')
-        .replace(/[-]/g,'')
-        .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+        .replace(/<[^>]+>/gm, ' ') // replace with space so that words are matched correctly
+        .replace(/[.,\/#!$%\^&\*;:{}=\_`~()]/g, ' ')
+        .replace(/[-]/g, '')
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
         .toLocaleLowerCase();
     } else {
       return value;
     }
   }
 
-  static _match(value: any, filter: string, exact?:boolean, ignore?: string[]): boolean {
+  static _match(value: any, filter: string, exact?: boolean, ignore?: string[]): boolean {
     if (filter) {
       for (const prop in value) {
         if (value.hasOwnProperty(prop) && value[prop] != null) {
@@ -34,8 +34,8 @@ export class Filter implements PipeTransform {
 
               if (normalizedValue.indexOf(filter) !== -1) {
                 if (exact) {
-                  for (var word of normalizedValue.split(/\s+/g)) {
-                    if(word === filter) {
+                  for (const word of normalizedValue.split(/\s+/g)) {
+                    if (word === filter) {
                       return true;
                     }
                   }
@@ -60,12 +60,12 @@ export class Filter implements PipeTransform {
     if (values == null) {
       return [];
     }
-    if (search && search.search){
-      let filters = search.search
+    if (search && search.search) {
+      const filters = search.search
                             .toLocaleLowerCase().split(/\s+/g)
                             .map(f => Filter._normalize(f));
-      let exact = search.match === SearchMatch.EXACT;
-      let logic = search.logic;
+      const exact = search.match === SearchMatch.EXACT;
+      const logic = search.logic;
       if (logic && logic === SearchLogic.OR) {
         let fV = [];
         filters.forEach(f => fV = fV.concat(
@@ -73,7 +73,7 @@ export class Filter implements PipeTransform {
         values = fV;
       } else  {
         filters.forEach(f => values = values.filter(v => Filter._match(v, f, exact, ignore)));
-      }  
+      }
     }
 
     return values;

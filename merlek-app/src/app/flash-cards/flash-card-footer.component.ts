@@ -21,16 +21,16 @@ export enum KEY_CODE {
 })
 export class FlashCardFooterComponent implements OnInit {
 
-  @Input() isShowAnswer: boolean = false;
+  @Input() isShowAnswer = false;
 
-  @Output() onShowAnswer: EventEmitter<any> = new EventEmitter();
-  @Output() onNext: EventEmitter<any> = new EventEmitter();
-  @Output() onAgain: EventEmitter<any> = new EventEmitter();
+  @Output() showAnswerEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() nextEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() againEmitter: EventEmitter<any> = new EventEmitter();
 
   constructor(public activeModal: NgbActiveModal) {}
 
   @HostListener('window:keyup', ['$event'])
-  keyEvent(event: KeyboardEvent) {    
+  keyEvent(event: KeyboardEvent) {
     if (event.keyCode === KEY_CODE.SPACE || event.keyCode === KEY_CODE.RIGHT_ARROW) {
       if (!this.isShowAnswer) {
         this.showAnswer();
@@ -46,17 +46,17 @@ export class FlashCardFooterComponent implements OnInit {
 
   showAnswer() {
     this.isShowAnswer = true;
-    this.onShowAnswer.emit(true);
+    this.showAnswerEmitter.emit(true);
   }
 
   next() {
     this.isShowAnswer = false;
-    this.onNext.emit(true);
+    this.nextEmitter.emit(true);
   }
 
   again() {
     this.isShowAnswer = false;
-    this.onAgain.emit(true);
+    this.againEmitter.emit(true);
   }
 
 }

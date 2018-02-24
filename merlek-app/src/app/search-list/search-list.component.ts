@@ -1,20 +1,20 @@
 import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
-export class SearchLogic { 
+export class SearchLogic {
 
-  static OR = new SearchLogic("OR");
-  static AND = new SearchLogic("AND");
+  static OR = new SearchLogic('OR');
+  static AND = new SearchLogic('AND');
 
   value: string;
-  
-  private constructor(logic:string) {
+
+  private constructor(logic: string) {
     this.value = logic;
   }
 
 
-  other() : SearchLogic {
-    if(this === SearchLogic.OR) {
+  other(): SearchLogic {
+    if (this === SearchLogic.OR) {
       return SearchLogic.AND;
     } else {
       return SearchLogic.OR;
@@ -23,19 +23,19 @@ export class SearchLogic {
 
 }
 
-export class SearchMatch { 
+export class SearchMatch {
 
-  static EXACT = new SearchMatch("EXACT");
-  static CONTAINS = new SearchMatch("CONTAINS");
+  static EXACT = new SearchMatch('EXACT');
+  static CONTAINS = new SearchMatch('CONTAINS');
 
   value: string;
-  
-  private constructor(match:string) {
+
+  private constructor(match: string) {
     this.value = match;
   }
 
-  other() : SearchMatch {
-    if(this === SearchMatch.EXACT) {
+  other(): SearchMatch {
+    if (this === SearchMatch.EXACT) {
       return SearchMatch.CONTAINS;
     } else {
       return SearchMatch.EXACT;
@@ -44,14 +44,14 @@ export class SearchMatch {
 
 }
 
-export class SearchEvent { 
+export class SearchEvent {
 
   search: string;
   match: SearchMatch;
   logic: SearchLogic;
 
-  
-  constructor(search:string,match:SearchMatch,logic:SearchLogic) {
+
+  constructor(search: string, match: SearchMatch, logic: SearchLogic) {
     this.search = search;
     this.match = match;
     this.logic = logic;
@@ -76,13 +76,13 @@ export class SearchListComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute) {}
 
   emitChange(): void {
-    let search = new SearchEvent(this.search,this.match,this.logic);
+    const search = new SearchEvent(this.search, this.match, this.logic);
     this.change.emit(search);
   }
 
   ngOnInit() {
-    let params = this.activatedRoute.snapshot.queryParams;
-    if(params.filter){
+    const params = this.activatedRoute.snapshot.queryParams;
+    if (params.filter) {
       this.search = params.filter;
     }
 

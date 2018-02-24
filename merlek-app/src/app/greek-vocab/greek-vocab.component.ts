@@ -5,17 +5,18 @@ import {Observable} from 'rxjs/Observable';
 import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 
 import {GreekVocab} from './greekVocab';
-import {DataGridComponent} from '../data-grid/data-grid.component'
+import {DataGridComponent} from '../data-grid/data-grid.component';
 
 @Component({
   selector: 'app-greek-vocab',
-  template:`<div class="row justify-content-center">
+  template: `<div class="row justify-content-center">
               <h1>Greek Vocab</h1>
             </div>
             <div class="row justify-content-center">
             <p>
               <b>Tags:</b>
-              <button *ngFor="let tag of tags" type="button" class="btn btn-sm mx-1 btn-outline-secondary" placement="top" triggers="mouseenter:mouseleave"
+              <button *ngFor="let tag of tags" type="button"
+                class="btn btn-sm mx-1 btn-outline-secondary" placement="top" triggers="mouseenter:mouseleave"
                 popoverTitle="{{tag.tag}}" ngbPopover="{{tag.description}}">
                 {{tag.tag}}
               </button>
@@ -49,7 +50,7 @@ export class GreekVocabComponent implements OnInit {
       display: 'English', variable: 'English', filter: 'text'
     }, {
       display: 'Notes', variable: 'Notes', filter: 'text'
-    },{
+    }, {
       display: 'Freq', variable: 'Frequency', filter: 'number'
     }, {
       display: 'Type', variable: 'Type', filter: 'text'
@@ -61,16 +62,16 @@ export class GreekVocabComponent implements OnInit {
   sorting: any = null;
   // {
   //   column: 'Frequency',
-  //   descending: true 
+  //   descending: true
   // };
 
   tags = [
-    {tag:"BBG", description:"Basics of Biblical Greek (Mounce)"},
-    {tag:"Croy", description:"A Primer of Biblical Greek (Croy)"},
-    {tag:"Mz",description:"Lexical Aides for Students of New Testament Greek (Metzger)"},
+    {tag: 'BBG', description: 'Basics of Biblical Greek (Mounce)'},
+    {tag: 'Croy', description: 'A Primer of Biblical Greek (Croy)'},
+    {tag: 'Mz', description: 'Lexical Aides for Students of New Testament Greek (Metzger)'},
   ];
 
-  @ViewChild(DataGridComponent) dataGrid: DataGridComponent
+  @ViewChild(DataGridComponent) dataGrid: DataGridComponent;
 
   constructor(private http: HttpClient) {}
 
@@ -87,9 +88,9 @@ export class GreekVocabComponent implements OnInit {
       );
   }
 
-  private shuffle(array:any[]): any[] {
+  private shuffle(array: any[]): any[] {
    for (let i = array.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
+        const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
   return array;

@@ -8,9 +8,9 @@ import {DataGridUtil} from './data-grid.util';
 import {Format} from './format';
 import {OrderBy} from './orderby';
 import {Filter} from './filter';
-import {SearchLogic} from '../search-list/search-list.component'
-import {SearchEvent} from '../search-list/search-list.component'
-import {SearchMatch} from '../search-list/search-list.component'
+import {SearchLogic} from '../search-list/search-list.component';
+import {SearchEvent} from '../search-list/search-list.component';
+import {SearchMatch} from '../search-list/search-list.component';
 
 
 export interface GridAction {
@@ -103,10 +103,10 @@ export class DataGridComponent implements OnInit, OnChanges {
   }
 
   convertSorting(): string[] {
-    let sort = []
+    const sort = [];
     if (this.sort) {
       sort.push(this.sort.descending ? '-' + this.sort.column : this.sort.column);
-      sort.push("+Greek");
+      sort.push('+Greek');
     }
     return sort;
   }
@@ -137,7 +137,7 @@ export class DataGridComponent implements OnInit, OnChanges {
   getTransformedData() {
     return this.orderBy.transform(
       this.filter.transform(this.data, this.search, this.filterIgnore)
-      ,this.convertSorting());
+      , this.convertSorting());
   }
 
   exportToCSV() {
@@ -154,13 +154,13 @@ export class DataGridComponent implements OnInit, OnChanges {
     DataGridUtil.downloadcsv(exprtcsv, this.exportFileName);
   }
 
-  setPageSize(value:number) {
+  setPageSize(value: number) {
     this.pageSize = value;
   }
 
   pdataRange(): any[] {
-    let arr = [];
-    for (var i = 10; i < this.pdata.length; i = i*2) {
+    const arr = [];
+    for (let i = 10; i < this.pdata.length; i = i * 2) {
       arr.push(i);
     }
     arr.push(this.pdata.length);
