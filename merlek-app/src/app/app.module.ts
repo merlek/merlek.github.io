@@ -30,6 +30,9 @@ import { FlashCardFooterComponent } from './flash-cards/flash-card-footer.compon
 import { ThemeComponent } from './theme/theme.component';
 import { HebrewWeakVerbsComponent } from './hebrew/weak-verbs/weak-verbs.component';
 import { GutturalsComponent } from './hebrew/weak-verbs/gutturals/gutturals.component';
+import { DageshForteComponent } from './hebrew/weak-verbs/gutturals/dagesh-forte/dagesh-forte.component';
+import { SewaComponent } from './hebrew/weak-verbs/gutturals/sewa/sewa.component';
+import { AClassComponent } from './hebrew/weak-verbs/gutturals/a-class/a-class.component';
 
 
 @NgModule({
@@ -54,6 +57,9 @@ import { GutturalsComponent } from './hebrew/weak-verbs/gutturals/gutturals.comp
     ThemeComponent,
     HebrewWeakVerbsComponent,
     GutturalsComponent,
+    DageshForteComponent,
+    SewaComponent,
+    AClassComponent,
   ],
   imports: [
     AppRoutingModule,
