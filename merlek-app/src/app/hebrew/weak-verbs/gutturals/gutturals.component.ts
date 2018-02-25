@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GutturalsComponent implements OnInit {
 
-  public isCollapsed = true;
+  public isCollapsed = false;
 
   constructor() { }
 

@@ -6,10 +6,18 @@
 @import 'scss/_variables.scss';
 //@import 'scss/_variables_darkly.scss';
 
+@import "~bootstrap/scss/bootstrap";
+//@import 'scss/_bootswatch.scss';
+@import 'scss/_tables.scss';
+
 body {
 	/* Margin bottom by footer height */
 	// margin-bottom: 60px;
 	padding-top: 3.5rem;
+}
+
+h1 {
+  margin-bottom: 3.5rem;
 }
 
 .btn,
@@ -49,6 +57,4 @@ body {
   color: $red;
 }
 
-@import "~bootstrap/scss/bootstrap";
-//@import 'scss/_bootswatch.scss';
-@import 'scss/_tables.scss';
+
