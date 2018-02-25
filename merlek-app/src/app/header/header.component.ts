@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 export class Nav {
 
@@ -57,10 +57,11 @@ export class HeaderComponent implements OnInit {
       new Nav('Transliterate', '/transliterate'),
       new Nav('Complete Qal', '/complete-qal'),
       new Nav('Stem Synopsis', '/stem-synopsis'),
+      new Nav('Weak Verbs', '/weak-verbs'),
     ]),
   ];
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
   }
