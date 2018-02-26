@@ -58,7 +58,6 @@ file = './assets/hebrew-vocab.json';
 
   ngOnInit(): void {
     this.getData();
-    this.dataGrid.onResize();
   }
 
   getData(): void {

@@ -48,7 +48,6 @@ export class DataGridComponent implements OnInit, OnChanges {
   pdata: any[] = this.data;
   search: SearchEvent;
   searchTitle = 'Search:';
-  tableHeight = this.calculateTableHeight();
   page = 0;
   pageSize = 10;
 
@@ -64,24 +63,6 @@ export class DataGridComponent implements OnInit, OnChanges {
       this.pdata = this.data;
     }
     this.criteriaChange(changes);
-  }
-
-  calculateTableHeight(): number {
-    const e = document.getElementsByTagName('table')[0];
-    const p = document.getElementsByTagName('pagination-controls')[0];
-    let top = 198;
-    let bottom = 46;
-    if (e) {
-      top = e.getBoundingClientRect().top;
-    }
-    if (p) {
-      bottom = p.clientHeight;
-    }
-    return window.innerHeight - top - bottom;
-  }
-
-  onResize(event?: Event) {
-    this.tableHeight = this.calculateTableHeight();
   }
 
   selectedClass(columnName: string): any {
@@ -131,7 +112,6 @@ export class DataGridComponent implements OnInit, OnChanges {
       }
       this.pdata = this.getTransformedData();
     }
-    this.onResize();
   }
 
   getTransformedData() {
