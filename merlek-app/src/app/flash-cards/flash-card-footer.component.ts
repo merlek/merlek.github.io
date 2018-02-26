@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@angular/core';
-import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -23,11 +23,11 @@ export class FlashCardFooterComponent implements OnInit {
 
   @Input() isShowAnswer = false;
 
-  @Output() showAnswerEmitter: EventEmitter<any> = new EventEmitter();
-  @Output() nextEmitter: EventEmitter<any> = new EventEmitter();
-  @Output() againEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() showAnswerEvent: EventEmitter<any> = new EventEmitter();
+  @Output() nextEvent: EventEmitter<any> = new EventEmitter();
+  @Output() againEvent: EventEmitter<any> = new EventEmitter();
 
-  constructor(public activeModal: NgbActiveModal) {}
+  constructor(public activeModal: NgbActiveModal) { }
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
@@ -42,21 +42,21 @@ export class FlashCardFooterComponent implements OnInit {
     }
   }
 
-  ngOnInit() {  }
+  ngOnInit() { }
 
   showAnswer() {
     this.isShowAnswer = true;
-    this.showAnswerEmitter.emit(true);
+    this.showAnswerEvent.emit(true);
   }
 
   next() {
     this.isShowAnswer = false;
-    this.nextEmitter.emit(true);
+    this.nextEvent.emit(true);
   }
 
   again() {
     this.isShowAnswer = false;
-    this.againEmitter.emit(true);
+    this.againEvent.emit(true);
   }
 
 }

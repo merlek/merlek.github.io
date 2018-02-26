@@ -3,7 +3,9 @@
 	<div class="card">
 		<div class="front">
 			<div class="font-size-1_5">
-				<span *ngIf="item.Article" class="font-size-0_8 opacity-75" [innerHTML]="item.Article+'&nbsp;'"></span><a target="_blank" href="http://www.perseus.tufts.edu/hopper/morph?la=greek&l={{item.Greek}}" [innerHTML]="item.Greek"></a><span *ngIf="item.Declension" class="font-size-0_8 opacity-75" [innerHTML]="'&nbsp;'+item.Declension"></span>
+				<span *ngIf="item.Article" class="font-size-0_8 opacity-75" [innerHTML]="item.Article+'&nbsp;'"></span>
+				<a target="_blank" href="http://www.perseus.tufts.edu/hopper/morph?la=greek&l={{item.Greek}}" [innerHTML]="item.Greek"></a>
+				<span *ngIf="item.Declension" class="font-size-0_8 opacity-75" [innerHTML]="'&nbsp;'+item.Declension"></span>
 			</div>
 		</div>
 		<div class="back">
@@ -18,4 +20,4 @@
 		</div>
 	</div>
 </div>
-<app-flash-card-footer (onShowAnswer)="showAnswer()" (onNext)="next()" (onAgain)="again()" ></app-flash-card-footer>
+<app-flash-card-footer (showAnswerEvent)="showAnswer()" (nextEvent)="next()" (againEvent)="again()"></app-flash-card-footer>
