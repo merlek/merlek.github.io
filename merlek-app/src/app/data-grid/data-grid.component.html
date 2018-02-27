@@ -1,71 +1,63 @@
-<!-- <div class="container"> -->
-	<div class="row justify-content-center">
-		<div class="col-sm-12 col-md-8 col-lg-6" *ngIf="isShowFilter && data">
-			<app-search-list [title]="searchTitle"
-				(change)="criteriaChange($event)"></app-search-list>
-		</div>
-		<ng-container *ngFor="let hdrbtn of hdrbtns">
-			<div class="col-1" *ngIf="data">
-			<button *ngIf="!hdrbtn.ishide" type="button" class="btn btn-primary"
-				(click)="click(hdrbtn,null)">{{hdrbtn.title}}</button>
-			</div>
-		</ng-container>
-		<div class="col-12 col-sm-8 col-md-6 col-lg-4" *ngIf="data">
-			<app-flash-cards *ngIf="flashCardsType && (pdata!=null && pdata.length>0)" [data]="pdata" [cardType]="flashCardsType"></app-flash-cards>
-			<button *ngIf='isExportToCSV && (pdata!=null && pdata.length>0)'
-				type="button" class="btn btn-secondary mx-1"
-				(click)="exportToCSV()">Export to CSV</button>
-		</div>
+<div class="row justify-content-center">
+	<div class="col-sm-12 col-md-8 col-lg-6" *ngIf="isShowFilter && data">
+		<app-search-list [title]="searchTitle" (change)="criteriaChange($event)"></app-search-list>
 	</div>
-	<div class="row justify-content-center">
-		<div class="table-responsive-sm">
-			<table class="table table-hover table-sortable"
-				*ngIf='pdata ; else loadingScreen;'>
-				<thead>
-					<tr>
-						<th *ngFor="let column of columns"
-							[class]="selectedClass(column.variable)"
-							(click)="changeSorting(column.variable)">{{column.display}}</th>
-						<ng-container *ngFor="let btn of gridbtns">
+	<ng-container *ngFor="let hdrbtn of hdrbtns">
+		<div class="col-1" *ngIf="data">
+			<button *ngIf="!hdrbtn.ishide" type="button" class="btn btn-primary" (click)="click(hdrbtn,null)">{{hdrbtn.title}}</button>
+		</div>
+	</ng-container>
+	<div class="col-12 col-sm-8 col-md-6 col-lg-4" *ngIf="data">
+		<app-flash-cards *ngIf="flashCardsType && (pdata!=null && pdata.length>0)" [data]="pdata" [cardType]="flashCardsType"></app-flash-cards>
+		<button *ngIf='isExportToCSV && (pdata!=null && pdata.length>0)' type="button" class="btn btn-secondary mx-1" (click)="exportToCSV()">Export to CSV</button>
+	</div>
+</div>
+<div class="row justify-content-center">
+	<div class="table-responsive-sm">
+		<table class="table table-hover table-sortable" *ngIf='pdata ; else loadingScreen;'>
+			<thead>
+				<tr>
+					<th *ngFor="let column of columns" [class]="selectedClass(column.variable)" (click)="changeSorting(column.variable)">
+						<div style="display:inline-flex">
+							{{column.display}}&nbsp;
+							<i class="fas fa-sort" data-fa-transform="down-3"></i>
+							<i class="fas fa-sort-up" data-fa-transform="down-3"></i>
+							<i class="fas fa-sort-down" data-fa-transform="down-3"></i>
+						</div>
+					</th>
+					<ng-container *ngFor="let btn of gridbtns">
 						<td *ngIf="!btn.ishide"></td>
-						</ng-container>
-					</tr>
-				</thead>
-				<tbody>
-					<tr *ngFor="let row of pdata | paginate: {itemsPerPage: pageSize, currentPage:page, id: '1'}; let i = index">
-						<td *ngFor="let column of columns"
-						[class]="column.class ? column.class : '' "
-						[innerHTML]="row[column.variable] | format : column.filter"></td>
-						<ng-container *ngFor="let btn of gridbtns">
+					</ng-container>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let row of pdata | paginate: {itemsPerPage: pageSize, currentPage:page, id: '1'}; let i = index">
+					<td *ngFor="let column of columns" [class]="column.class ? column.class : '' " [innerHTML]="row[column.variable] | format : column.filter"></td>
+					<ng-container *ngFor="let btn of gridbtns">
 						<td *ngIf="!btn.ishide">
-							<button type="button" class="btn btn-primary"
-								(click)="click(btn,row)">{{btn.title}}</button>
+							<button type="button" class="btn btn-primary" (click)="click(btn,row)">{{btn.title}}</button>
 						</td>
-						</ng-container>
-					</tr>
-				</tbody>
-			</table>
-			<div *ngIf='data && data.length === 0' class="alert alert-info"
-				role="alert">No record found!</div>
-			<ng-template #loadingScreen>
-				<div class="alert alert-info" role="alert">
-					<i class="fas fa-spinner fa-pulse"></i> loading...
+					</ng-container>
+				</tr>
+			</tbody>
+		</table>
+		<div *ngIf='data && data.length === 0' class="alert alert-info" role="alert">No record found!</div>
+		<ng-template #loadingScreen>
+			<div class="alert alert-info" role="alert">
+				<i class="fas fa-spinner fa-pulse"></i> loading...
+			</div>
+		</ng-template>
+	</div>
+</div>
+<div class="row justify-content-center">
+	<pagination-controls (pageChange)="page = $event" id="1" class="data-pagination" maxSize="5" directionLinks="true" autoHide="true">
+	</pagination-controls>
+	<div *ngIf="pdata" ngbDropdown placement="top-right" class="d-inline-block">
+		<button class="btn btn-sm btn-outline-secondary" id="pagingDropdown" ngbDropdownToggle>Page Size: {{pageSize
+			< pdata.length ? pageSize : pdata.length}}</button>
+				<div ngbDropdownMenu aria-labelledby="pagingDropdown">
+					<button *ngFor="let i of pdataRange()" class="dropdown-item" (click)="setPageSize(i)">{{i}}</button>
 				</div>
-			</ng-template>
-		</div>
 	</div>
-	<div class="row justify-content-center">
-		<pagination-controls (pageChange)="page = $event" id="1" class="data-pagination"
-													maxSize="5"
-													directionLinks="true"
-													autoHide="true">
-		</pagination-controls>
-    <div *ngIf="pdata" ngbDropdown placement="top-right" class="d-inline-block">
-      <button class="btn btn-sm btn-outline-secondary" id="pagingDropdown" ngbDropdownToggle>Page Size: {{pageSize < pdata.length ? pageSize : pdata.length}}</button>
-      <div ngbDropdownMenu aria-labelledby="pagingDropdown">
-        <button *ngFor="let i of pdataRange()" class="dropdown-item" (click)="setPageSize(i)">{{i}}</button>
-      </div>
-  	</div>
 
-	</div>
-<!-- </div> -->
+</div>

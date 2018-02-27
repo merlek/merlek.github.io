@@ -1,0 +1,53 @@
+<div class="card">
+  <button type="button" class="btn btn-primary btn-lg btn-block" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+    aria-controls="collapseExample">
+    Lamed-Heh
+  </button>
+  <div class="card-body" id="collapseExample" [ngbCollapse]="isCollapsed">
+    <ngb-tabset class="text-center" justify="fill">
+      <ngb-tab id="sufformative-rules">
+        <ng-template ngbTabTitle>
+          <h6>Sufformative Rules</h6>
+        </ng-template>
+        <ng-template ngbTabContent>
+          <div class="pt-3">
+            <ngb-tabset class="text-center" justify="fill">
+              <ngb-tab id="no-sufformative">
+                <ng-template ngbTabTitle>
+                  <h6>No Sufformative</h6>
+                </ng-template>
+                <ng-template ngbTabContent>
+                  <app-no-sufformative></app-no-sufformative>
+                </ng-template>
+              </ngb-tab>
+              <ngb-tab id="consonantal-sufformative">
+                <ng-template ngbTabTitle>
+                  <h6>Consonantal Sufformative</h6>
+                </ng-template>
+                <ng-template ngbTabContent>
+                  <app-consonantal-sufformative></app-consonantal-sufformative>
+                </ng-template>
+              </ngb-tab>
+              <ngb-tab id="vocalic-sufformative">
+                <ng-template ngbTabTitle>
+                  <h6>Vocalic Sufformative</h6>
+                </ng-template>
+                <ng-template ngbTabContent>
+                  <app-vocalic-sufformative></app-vocalic-sufformative>
+                </ng-template>
+              </ngb-tab>
+            </ngb-tabset>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab id="anomalies">
+        <ng-template ngbTabTitle>
+          <h6>Anomalies</h6>
+        </ng-template>
+        <ng-template ngbTabContent>
+          <app-sewa></app-sewa>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+  </div>
+</div>

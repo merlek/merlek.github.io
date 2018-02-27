@@ -33,6 +33,12 @@ import { GutturalsComponent } from './hebrew/weak-verbs/gutturals/gutturals.comp
 import { DageshForteComponent } from './hebrew/weak-verbs/gutturals/dagesh-forte/dagesh-forte.component';
 import { SewaComponent } from './hebrew/weak-verbs/gutturals/sewa/sewa.component';
 import { AClassComponent } from './hebrew/weak-verbs/gutturals/a-class/a-class.component';
+import { LamedHehComponent } from './hebrew/weak-verbs/lamed-heh/lamed-heh.component';
+import { NoSufformativeComponent } from './hebrew/weak-verbs/lamed-heh/no-sufformative/no-sufformative.component';
+import {
+  ConsonantalSufformativeComponent
+} from './hebrew/weak-verbs/lamed-heh/consonantal-sufformative/consonantal-sufformative.component';
+import { VocalicSufformativeComponent } from './hebrew/weak-verbs/lamed-heh/vocalic-sufformative/vocalic-sufformative.component';
 
 
 @NgModule({
@@ -60,6 +66,10 @@ import { AClassComponent } from './hebrew/weak-verbs/gutturals/a-class/a-class.c
     DageshForteComponent,
     SewaComponent,
     AClassComponent,
+    LamedHehComponent,
+    NoSufformativeComponent,
+    ConsonantalSufformativeComponent,
+    VocalicSufformativeComponent,
   ],
   imports: [
     AppRoutingModule,

@@ -48,13 +48,16 @@ h1 {
   display: inline-flex;
 }
 
-.vowel::after {
+.vowel::before {
   color: $body-color;
+  content: '\25CC';
+}
+
+.vowel-transparent::before {
+  color: transparent;
   content: '\25CC';
 }
 
 .red {
   color: $red;
 }
-
-
