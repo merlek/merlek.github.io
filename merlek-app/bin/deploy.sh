@@ -11,7 +11,7 @@ npm run build # Generate the bundled Javascript and CSS
 mv dist/* ../
 
 git add -A
-if $(git commit -am Deploy); then # Commit the changes, if any
+if $(git commit -m 'Deploy'); then # Commit the changes, if any
   echo 'Changes Committed'
 fi
 
