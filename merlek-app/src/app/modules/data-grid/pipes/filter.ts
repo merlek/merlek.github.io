@@ -1,7 +1,7 @@
 import { PipeTransform, Pipe, Injectable } from '@angular/core';
-import { SearchLogic } from '../search-list/search-list.component';
-import { SearchMatch } from '../search-list/search-list.component';
-import { SearchEvent } from '../search-list/search-list.component';
+import { SearchLogic } from '../components/search-list/search-list.component';
+import { SearchMatch } from '../components/search-list/search-list.component';
+import { SearchEvent } from '../components/search-list/search-list.component';
 
 @Pipe({
   name: 'filter'

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { HebrewVocab } from 'app/hebrew/vocab/hebrewVocab';
+import { HebrewVocab } from 'app/routes/+hebrew/components/vocab/hebrewVocab';
 
 @Component({
   selector: 'app-hebrew-flash-cards',

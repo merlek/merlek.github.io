@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { GreekVocab } from 'app/routes/greek-vocab/greekVocab';
+import { GreekVocab } from 'app/routes/+greek-vocab/greekVocab';
 
 @Component({
   selector: 'app-greek-flash-cards',

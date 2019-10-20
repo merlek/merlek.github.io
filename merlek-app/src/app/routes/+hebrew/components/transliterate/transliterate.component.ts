@@ -1,6 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {TransliteratorService} from '../transliterator.service';
-
+import { Component, OnInit } from '@angular/core';
+import { TransliteratorService } from '../../services/transliterator.service';
 
 @Component({
   selector: 'app-transliterate',
@@ -20,8 +19,7 @@ export class TransliterateComponent implements OnInit {
 
   update(hebrew: string): void {
     if (hebrew) {
-      this.transliteratedText =
-        this.translitService.transliterateWord(hebrew);
+      this.transliteratedText = this.translitService.transliterateWord(hebrew);
     } else {
       this.transliteratedText = '';
     }
@@ -31,5 +29,4 @@ export class TransliterateComponent implements OnInit {
   //   Transliterate.SYLLABIFY = $('#syllabify-checkbox:checked').val();
   //   updateTransliteratedText();
   // });
-
 }

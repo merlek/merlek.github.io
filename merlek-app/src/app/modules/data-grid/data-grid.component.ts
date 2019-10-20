@@ -6,7 +6,7 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-import { SearchEvent } from './search-list/search-list.component';
+import { SearchEvent } from './components/search-list/search-list.component';
 import { DataGridUtil } from './data-grid.util';
 import { Filter } from './pipes/filter';
 import { Format } from './pipes/format';
