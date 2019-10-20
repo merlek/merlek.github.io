@@ -34,6 +34,7 @@ import { NoSufformativeComponent } from './hebrew/weak-verbs/lamed-heh/no-suffor
 import { VocalicSufformativeComponent } from './hebrew/weak-verbs/lamed-heh/vocalic-sufformative/vocalic-sufformative.component';
 import { HebrewWeakVerbsComponent } from './hebrew/weak-verbs/weak-verbs.component';
 import { SearchListComponent } from './search-list/search-list.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { SearchListComponent } from './search-list/search-list.component';
     LamedHehComponent,
     NoSufformativeComponent,
     ConsonantalSufformativeComponent,
-    VocalicSufformativeComponent
+    VocalicSufformativeComponent,
+    HomeComponent
   ],
   imports: [
     AppRoutingModule,

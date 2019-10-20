@@ -9,9 +9,11 @@ import { HebrewStemSynopsisComponent } from './hebrew/stem-synopsis/hebrew-stem-
 import { HebrewVocabComponent } from './hebrew/vocab/hebrew-vocab.component';
 import { HebrewWeakVerbsComponent } from './hebrew/weak-verbs/weak-verbs.component';
 import { ThemeComponent } from './routes/+theme/theme.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/greek-vocab', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
   { path: 'hebrew/transliterate', component: TransliterateComponent },
   { path: 'hebrew/vocab', component: HebrewVocabComponent },
   { path: 'hebrew/complete-qal', component: HebrewCompleteQalComponent },
