@@ -6,17 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AppRoutingModule } from './/app-routing.module';
 import { AppComponent } from './app.component';
-import { DataGridComponent } from './data-grid/data-grid.component';
-import { Filter } from './data-grid/filter';
-import { Format } from './data-grid/format';
-import { OrderBy } from './data-grid/orderby';
-import { FlashCardFooterComponent } from './flash-cards/flash-card-footer.component';
-import { FlashCardHeaderComponent } from './flash-cards/flash-card-header.component';
-import { FlashCardsComponent } from './flash-cards/flash-cards.component';
-import { GreekFlashCardsComponent } from './flash-cards/greek/greek-flash-cards.component';
-import { HebrewFlashCardsComponent } from './flash-cards/hebrew/hebrew-flash-cards.component';
-import { GreekVocabComponent } from './greek-vocab/greek-vocab.component';
-import { HeaderComponent } from './header/header.component';
+import { HeaderComponent } from './components/header/header.component';
 import { HebrewCompleteQalComponent } from './hebrew/complete-qal/hebrew-complete-qal.component';
 import { LetterService } from './hebrew/letter.service';
 import { HebrewStemSynopsisComponent } from './hebrew/stem-synopsis/hebrew-stem-synopsis.component';
@@ -33,28 +23,17 @@ import { LamedHehComponent } from './hebrew/weak-verbs/lamed-heh/lamed-heh.compo
 import { NoSufformativeComponent } from './hebrew/weak-verbs/lamed-heh/no-sufformative/no-sufformative.component';
 import { VocalicSufformativeComponent } from './hebrew/weak-verbs/lamed-heh/vocalic-sufformative/vocalic-sufformative.component';
 import { HebrewWeakVerbsComponent } from './hebrew/weak-verbs/weak-verbs.component';
-import { SearchListComponent } from './search-list/search-list.component';
 import { HomeComponent } from './home/home.component';
+import { DataGridModule } from './modules/data-grid/data-grid.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DataGridComponent,
-    Filter,
-    FlashCardsComponent,
-    Format,
-    GreekFlashCardsComponent,
-    GreekVocabComponent,
     HeaderComponent,
     HebrewCompleteQalComponent,
     HebrewStemSynopsisComponent,
-    OrderBy,
-    SearchListComponent,
     TransliterateComponent,
     HebrewVocabComponent,
-    HebrewFlashCardsComponent,
-    FlashCardHeaderComponent,
-    FlashCardFooterComponent,
     HebrewWeakVerbsComponent,
     GutturalsComponent,
     DageshForteComponent,
@@ -69,12 +48,12 @@ import { HomeComponent } from './home/home.component';
   imports: [
     AppRoutingModule,
     BrowserModule,
+    DataGridModule,
     FormsModule,
     HttpClientModule,
     NgxPaginationModule,
     NgbModule
   ],
-  entryComponents: [GreekFlashCardsComponent, HebrewFlashCardsComponent],
   providers: [TransliteratorService, LetterService],
   bootstrap: [AppComponent]
 })

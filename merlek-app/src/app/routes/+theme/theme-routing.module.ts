@@ -8,4 +8,4 @@ const routes: Routes = [{ path: '', component: ThemeComponent }];
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class BootRoutingModule {}
+export class ThemeRoutingModule {}

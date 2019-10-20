@@ -1,22 +1,22 @@
-import {Component, Input, OnInit, OnChanges, Output, EventEmitter} from '@angular/core';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-
-import {Observable, of} from 'rxjs';
-
-import {DataGridUtil} from './data-grid.util';
-import {Format} from './format';
-import {OrderBy} from './orderby';
-import {Filter} from './filter';
-import {SearchLogic} from '../search-list/search-list.component';
-import {SearchEvent} from '../search-list/search-list.component';
-import {SearchMatch} from '../search-list/search-list.component';
-
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output
+} from '@angular/core';
+import { SearchEvent } from './search-list/search-list.component';
+import { DataGridUtil } from './data-grid.util';
+import { Filter } from './pipes/filter';
+import { Format } from './pipes/format';
+import { OrderBy } from './pipes/orderby';
 
 export interface GridAction {
   action: string;
   values: {
-    key: string,
-    value: string
+    key: string;
+    value: string;
   }[];
 }
 
@@ -26,7 +26,6 @@ export interface GridAction {
   styleUrls: ['./data-grid.component.scss']
 })
 export class DataGridComponent implements OnInit, OnChanges {
-
   // Input Variables
   @Input() columns: any[];
   @Input() data: any[];
@@ -65,7 +64,9 @@ export class DataGridComponent implements OnInit, OnChanges {
   }
 
   selectedClass(columnName: string): any {
-    return this.sort && columnName === this.sort.column ? 'sort-' + this.sort.descending : false;
+    return this.sort && columnName === this.sort.column
+      ? 'sort-' + this.sort.descending
+      : false;
   }
 
   changeSorting(columnName: string): void {
@@ -85,7 +86,9 @@ export class DataGridComponent implements OnInit, OnChanges {
   convertSorting(): string[] {
     const sort = [];
     if (this.sort) {
-      sort.push(this.sort.descending ? '-' + this.sort.column : this.sort.column);
+      sort.push(
+        this.sort.descending ? '-' + this.sort.column : this.sort.column
+      );
       sort.push('+Greek');
     }
     return sort;
@@ -98,7 +101,7 @@ export class DataGridComponent implements OnInit, OnChanges {
     if (row != null) {
       keyds.values = [];
       btn.keys.forEach((key: any) => {
-        keyds.values.push({key: key, value: row[key]});
+        keyds.values.push({ key: key, value: row[key] });
       });
     }
     this.btnclick.emit(keyds);
@@ -115,8 +118,9 @@ export class DataGridComponent implements OnInit, OnChanges {
 
   getTransformedData() {
     return this.orderBy.transform(
-      this.filter.transform(this.data, this.search, this.filterIgnore)
-      , this.convertSorting());
+      this.filter.transform(this.data, this.search, this.filterIgnore),
+      this.convertSorting()
+    );
   }
 
   exportToCSV() {
@@ -125,7 +129,10 @@ export class DataGridComponent implements OnInit, OnChanges {
       const obj = new Object();
       const frmt = new Format();
       for (let i = 0; i < this.columns.length; i++) {
-        const transfrmVal = frmt.transform(x[this.columns[i].variable], this.columns[i].filter);
+        const transfrmVal = frmt.transform(
+          x[this.columns[i].variable],
+          this.columns[i].filter
+        );
         obj[this.columns[i].display] = transfrmVal;
       }
       exprtcsv.push(obj);
@@ -145,5 +152,4 @@ export class DataGridComponent implements OnInit, OnChanges {
     arr.push(this.pdata.length);
     return arr;
   }
-
 }

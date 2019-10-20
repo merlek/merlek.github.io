@@ -1,18 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
-
-import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {HebrewVocab} from '../../hebrew/vocab/hebrewVocab';
+import { Component, Input, OnInit } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { GreekVocab } from 'app/routes/greek-vocab/greekVocab';
 
 @Component({
-  selector: 'app-hebrew-flash-cards',
-  templateUrl: './hebrew-flash-cards.component.html',
+  selector: 'app-greek-flash-cards',
+  templateUrl: './greek-flash-cards.component.html',
   styleUrls: ['../flash-cards.scss']
 })
-export class HebrewFlashCardsComponent implements OnInit {
+export class GreekFlashCardsComponent implements OnInit {
+  @Input() data: GreekVocab[];
 
-  @Input() data: HebrewVocab[];
-
-  item: HebrewVocab;
+  item: GreekVocab;
   isShowAnswer = false;
 
   constructor(public activeModal: NgbActiveModal) {}
@@ -37,5 +35,4 @@ export class HebrewFlashCardsComponent implements OnInit {
     this.data.push(this.item);
     this.next();
   }
-
 }

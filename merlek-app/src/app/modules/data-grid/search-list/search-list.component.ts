@@ -1,8 +1,7 @@
-import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 export class SearchLogic {
-
   static OR = new SearchLogic('OR');
   static AND = new SearchLogic('AND');
 
@@ -12,7 +11,6 @@ export class SearchLogic {
     this.value = logic;
   }
 
-
   other(): SearchLogic {
     if (this === SearchLogic.OR) {
       return SearchLogic.AND;
@@ -20,11 +18,9 @@ export class SearchLogic {
       return SearchLogic.OR;
     }
   }
-
 }
 
 export class SearchMatch {
-
   static EXACT = new SearchMatch('EXACT');
   static CONTAINS = new SearchMatch('CONTAINS');
 
@@ -41,31 +37,25 @@ export class SearchMatch {
       return SearchMatch.EXACT;
     }
   }
-
 }
 
 export class SearchEvent {
-
   search: string;
   match: SearchMatch;
   logic: SearchLogic;
-
 
   constructor(search: string, match: SearchMatch, logic: SearchLogic) {
     this.search = search;
     this.match = match;
     this.logic = logic;
   }
-
 }
 
 @Component({
   selector: 'app-search-list',
-  templateUrl: './search-list.component.html',
-  styleUrls: ['./search-list.component.css']
+  templateUrl: './search-list.component.html'
 })
 export class SearchListComponent implements OnInit {
-
   search: string;
   logic = SearchLogic.OR;
   match = SearchMatch.EXACT;

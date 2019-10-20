@@ -1,29 +1,29 @@
-@import '../../../scss/_variables';
+@import 'scss/_variables';
 
 tr {
-  > th:first-child {
+  >th:first-child {
     border-right: 2px solid black;
   }
 
-  > *:nth-child(5) {
+  >*:nth-child(5) {
     border-right: 2px solid black;
-  	text-align: center;
-  	font-style: italic;
-  	color: #ccc;
+    text-align: center;
+    font-style: italic;
+    color: #ccc;
   }
 
-  > *:nth-child(6) {
-  	text-align: center;
-  	border-right: 2px solid black;
+  >*:nth-child(6) {
+    text-align: center;
+    border-right: 2px solid black;
   }
 }
 
-tr:nth-child(6) > * {
+tr:nth-child(6)>* {
   border-top: 2px solid black;
 }
 
 .bordertop {
-	border-top: 2px solid black;
+  border-top: 2px solid black;
 }
 
 .borderbottom {
@@ -32,5 +32,5 @@ tr:nth-child(6) > * {
 }
 
 .tense-form {
-	color: $red;
+  color: $red;
 }

@@ -4,7 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
 import { HebrewVocab } from './hebrewVocab';
-import { DataGridComponent } from '../../data-grid/data-grid.component';
+import { DataGridComponent } from 'app/modules/data-grid/data-grid.component';
 
 @Component({
   selector: 'app-hebrew-vocab',

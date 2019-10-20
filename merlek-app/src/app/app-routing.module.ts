@@ -1,14 +1,11 @@
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-
-import { TransliterateComponent } from './hebrew/transliterate/transliterate.component';
-import { GreekVocabComponent } from './greek-vocab/greek-vocab.component';
 import { HebrewCompleteQalComponent } from './hebrew/complete-qal/hebrew-complete-qal.component';
 import { HebrewStemSynopsisComponent } from './hebrew/stem-synopsis/hebrew-stem-synopsis.component';
+import { TransliterateComponent } from './hebrew/transliterate/transliterate.component';
 import { HebrewVocabComponent } from './hebrew/vocab/hebrew-vocab.component';
 import { HebrewWeakVerbsComponent } from './hebrew/weak-verbs/weak-verbs.component';
-import { ThemeComponent } from './routes/+theme/theme.component';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
@@ -19,7 +16,13 @@ const routes: Routes = [
   { path: 'hebrew/complete-qal', component: HebrewCompleteQalComponent },
   { path: 'hebrew/stem-synopsis', component: HebrewStemSynopsisComponent },
   { path: 'hebrew/weak-verbs', component: HebrewWeakVerbsComponent },
-  { path: 'greek-vocab', component: GreekVocabComponent },
+  {
+    path: 'greek-vocab',
+    loadChildren: () =>
+      import('./routes/greek-vocab/greek-vocab.module').then(
+        m => m.GreekVocabModule
+      )
+  },
   {
     path: 'theme',
     loadChildren: () =>

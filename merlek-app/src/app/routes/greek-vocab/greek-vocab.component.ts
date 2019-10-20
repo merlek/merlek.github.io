@@ -1,43 +1,12 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { DataGridComponent } from '../data-grid/data-grid.component';
 import { GreekVocab } from './greekVocab';
+import { DataGridComponent } from 'app/modules/data-grid/data-grid.component';
 
 @Component({
   selector: 'app-greek-vocab',
-  template: `
-    <div class="row justify-content-center">
-      <h1>Greek Vocab</h1>
-    </div>
-    <div class="row justify-content-center">
-      <p>
-        <b>Tags:</b>
-        <button
-          *ngFor="let tag of tags"
-          type="button"
-          class="btn btn-sm mx-1 btn-outline-secondary"
-          placement="top"
-          triggers="mouseenter:mouseleave"
-          popoverTitle="{{ tag.tag }}"
-          ngbPopover="{{ tag.description }}"
-        >
-          {{ tag.tag }}
-        </button>
-      </p>
-    </div>
-    <app-data-grid
-      [columns]="columns"
-      [data]="vocab"
-      [sort]="sorting"
-      [isShowFilter]="true"
-      [isExportToCSV]="true"
-      [flashCardsType]="'greek'"
-      [exportFileName]="exportFileName"
-      [filterIgnore]="filterIgnore"
-    >
-    </app-data-grid>
-  `
+  templateUrl: './greek-vocab.component.html'
 })
 export class GreekVocabComponent implements OnInit {
   file = './assets/greek-vocab.json';
