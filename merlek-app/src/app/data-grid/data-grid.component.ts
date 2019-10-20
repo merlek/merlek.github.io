@@ -1,8 +1,7 @@
 import {Component, Input, OnInit, OnChanges, Output, EventEmitter} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 
-import {Observable} from 'rxjs/Observable';
-import {of} from 'rxjs/observable/of';
+import {Observable, of} from 'rxjs';
 
 import {DataGridUtil} from './data-grid.util';
 import {Format} from './format';

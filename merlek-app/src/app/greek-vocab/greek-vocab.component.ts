@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {HttpErrorResponse} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 
 import {GreekVocab} from './greekVocab';
@@ -71,7 +71,7 @@ export class GreekVocabComponent implements OnInit {
     {tag: 'Mz', description: 'Lexical Aides for Students of New Testament Greek (Metzger)'},
   ];
 
-  @ViewChild(DataGridComponent) dataGrid: DataGridComponent;
+  @ViewChild(DataGridComponent, { static: true }) dataGrid: DataGridComponent;
 
   constructor(private http: HttpClient) {}
 

@@ -1,36 +1,39 @@
 @import '../../scss/_variables.scss';
 
-.table-sortable > thead > tr {
-    > th {
-        cursor: pointer;
-        position: relative;
-        background-image: none;
+.table-sortable>thead>tr {
+  >th {
+    cursor: pointer;
+    position: relative;
+    background-image: none;
 
-        .fa-sort{
-            color: #ddd;
-        }
-        .fa-sort-up,
-        .fa-sort-down {
-            color: #767676;
-            display: none;
-        }
+    .fa-sort {
+      color: #ddd;
     }
 
-    > th.sort-false  .fa-sort,
-    > th.sort-true  .fa-sort, {
-        display: none;
+    .fa-sort-up,
+    .fa-sort-down {
+      color: #767676;
+      display: none;
     }
-    > th.sort-false .fa-sort-up {
-        display: inline;
-    }
-    > th.sort-true .fa-sort-down {
-        display: inline;
-    }
+  }
+
+  >th.sort-false .fa-sort,
+  >th.sort-true .fa-sort {
+    display: none;
+  }
+
+  >th.sort-false .fa-sort-up {
+    display: inline;
+  }
+
+  >th.sort-true .fa-sort-down {
+    display: inline;
+  }
 }
 
 .table-btn {
-    background-color: #428bca;
-    color: white;
+  background-color: #428bca;
+  color: white;
 }
 
 .table-responsive,
@@ -42,7 +45,6 @@
   border: 1px solid #dee2e6;
 }
 
-.data-pagination /deep/ .ngx-pagination .current {
-    background: $primary;
+.data-pagination ::ng-deep .ngx-pagination .current {
+  background: $primary;
 }
-

@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {HttpErrorResponse} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 
 import {HebrewVocab} from './hebrewVocab';
@@ -52,7 +52,7 @@ file = './assets/hebrew-vocab.json';
     descending: true
   };
 
-  @ViewChild(DataGridComponent) dataGrid: DataGridComponent;
+  @ViewChild(DataGridComponent, { static: true }) dataGrid: DataGridComponent;
 
   constructor(private http: HttpClient) {}
 

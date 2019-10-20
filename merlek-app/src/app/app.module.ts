@@ -35,11 +35,9 @@ import { SewaComponent } from './hebrew/weak-verbs/gutturals/sewa/sewa.component
 import { AClassComponent } from './hebrew/weak-verbs/gutturals/a-class/a-class.component';
 import { LamedHehComponent } from './hebrew/weak-verbs/lamed-heh/lamed-heh.component';
 import { NoSufformativeComponent } from './hebrew/weak-verbs/lamed-heh/no-sufformative/no-sufformative.component';
-import {
-  ConsonantalSufformativeComponent
-} from './hebrew/weak-verbs/lamed-heh/consonantal-sufformative/consonantal-sufformative.component';
+// tslint:disable-next-line:max-line-length
+import { ConsonantalSufformativeComponent } from './hebrew/weak-verbs/lamed-heh/consonantal-sufformative/consonantal-sufformative.component';
 import { VocalicSufformativeComponent } from './hebrew/weak-verbs/lamed-heh/vocalic-sufformative/vocalic-sufformative.component';
-
 
 @NgModule({
   declarations: [
@@ -69,7 +67,7 @@ import { VocalicSufformativeComponent } from './hebrew/weak-verbs/lamed-heh/voca
     LamedHehComponent,
     NoSufformativeComponent,
     ConsonantalSufformativeComponent,
-    VocalicSufformativeComponent,
+    VocalicSufformativeComponent
   ],
   imports: [
     AppRoutingModule,
@@ -77,13 +75,10 @@ import { VocalicSufformativeComponent } from './hebrew/weak-verbs/lamed-heh/voca
     FormsModule,
     HttpClientModule,
     NgxPaginationModule,
-    NgbModule.forRoot(),
+    NgbModule
   ],
-  entryComponents: [
-    GreekFlashCardsComponent,
-    HebrewFlashCardsComponent,
-  ],
+  entryComponents: [GreekFlashCardsComponent, HebrewFlashCardsComponent],
   providers: [TransliteratorService, LetterService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
