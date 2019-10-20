@@ -8,7 +8,7 @@ import { HebrewCompleteQalComponent } from './hebrew/complete-qal/hebrew-complet
 import { HebrewStemSynopsisComponent } from './hebrew/stem-synopsis/hebrew-stem-synopsis.component';
 import { HebrewVocabComponent } from './hebrew/vocab/hebrew-vocab.component';
 import { HebrewWeakVerbsComponent } from './hebrew/weak-verbs/weak-verbs.component';
-import { ThemeComponent } from './theme/theme.component';
+import { ThemeComponent } from './routes/+theme/theme.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/greek-vocab', pathMatch: 'full' },
@@ -18,7 +18,11 @@ const routes: Routes = [
   { path: 'hebrew/stem-synopsis', component: HebrewStemSynopsisComponent },
   { path: 'hebrew/weak-verbs', component: HebrewWeakVerbsComponent },
   { path: 'greek-vocab', component: GreekVocabComponent },
-  { path: 'theme', component: ThemeComponent },
+  {
+    path: 'theme',
+    loadChildren: () =>
+      import('./routes/+theme/theme.module').then(m => m.ThemeModule)
+  }
 ];
 
 @NgModule({
@@ -26,4 +30,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
