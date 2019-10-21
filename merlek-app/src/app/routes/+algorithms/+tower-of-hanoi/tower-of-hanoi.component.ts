@@ -7,7 +7,7 @@ import { TowerOfHanoi } from './tower-of-hanoi';
   styleUrls: ['./tower-of-hanoi.component.scss']
 })
 export class TowerOfHanoiComponent implements OnInit {
-  algorithm: any;
+  algorithm: TowerOfHanoi;
   constructor() {}
   ngOnInit() {
     const canvas3 = <HTMLCanvasElement>(

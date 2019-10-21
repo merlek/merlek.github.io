@@ -22,13 +22,11 @@ class Peg {
     const x = this.x + this.width / 2;
     let y = this.y + this.height;
     this.diskIds.forEach(diskId => {
-      if (diskId) {
-        const disk = disks[diskId];
-        disk.centerX = x;
-        disk.y = y - disk.height;
-        disk.draw(ctx);
-        y -= disk.height;
-      }
+      const disk = disks[diskId];
+      disk.centerX = x;
+      disk.y = y - disk.height;
+      disk.draw(ctx);
+      y -= disk.height;
     });
   }
 }
@@ -82,8 +80,8 @@ export class TowerOfHanoi {
   private readonly canvasHeight: number; // height of the canvas
   private readonly pegs: Peg[] = [];
   private readonly disks: Disk[] = [];
-  private readonly n = 10;
-  private readonly interval = 500;
+  private readonly n = 5;
+  private readonly interval = (30 * 1000) / ((Math.pow(2, this.n) - 1) * 2);
   private frames: Frame[] = [];
   private frameNumber = 0;
 
@@ -98,7 +96,7 @@ export class TowerOfHanoi {
 
     // Setup Pegs
     const pegWidth = 5;
-    const pegHeight = 200;
+    const pegHeight = (this.canvasHeight * 3) / 4;
     const pegX = this.canvasWidth / 4;
     const pegY = this.canvasHeight - pegHeight;
     this.pegs.push(
@@ -109,7 +107,7 @@ export class TowerOfHanoi {
 
     // Setup Disks
     const diskWidth = this.canvasWidth / 4;
-    const diskHeight = 10;
+    const diskHeight = pegHeight / this.n;
     for (let i = 0; i < this.n; i++) {
       this.disks.push(
         new Disk(i, (diskWidth * (this.n - i)) / this.n, diskHeight)
@@ -128,28 +126,32 @@ export class TowerOfHanoi {
    * Draw step of the animation
    */
   draw() {
+    this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+
+    // Step
     const frame = this.frames[this.frameNumber++];
-    if (frame) {
-      this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+    this.stepFrame(frame);
 
-      // Draw
-      this.pegs.forEach(peg => {
-        peg.draw(this.ctx, this.disks);
-      });
+    // Draw
+    this.pegs.forEach(peg => {
+      peg.draw(this.ctx, this.disks);
+    });
 
-      // Step
-      for (let i = 0; i < this.pegs.length; i++) {
-        const peg = frame.pegs[i];
-        this.pegs[peg.id].diskIds = peg.diskIds;
-      }
-
-      this.disks.forEach(disk => {
-        disk.selected = disk.id === frame.selectedDiskId;
-      });
-
-      // window.requestAnimationFrame(() => this.draw());
+    // window.requestAnimationFrame(() => this.draw());
+    if (this.frameNumber < this.frames.length) {
       window.setTimeout(() => this.draw(), this.interval);
     }
+  }
+
+  stepFrame(frame: Frame) {
+    for (let i = 0; i < this.pegs.length; i++) {
+      const peg = frame.pegs[i];
+      this.pegs[peg.id].diskIds = peg.diskIds;
+    }
+
+    this.disks.forEach(disk => {
+      disk.selected = disk.id === frame.selectedDiskId;
+    });
   }
 
   hanoi(n: number, src: Peg, dst: Peg, tmp: Peg) {
@@ -166,6 +168,14 @@ export class TowerOfHanoi {
 
       this.hanoi(n - 1, tmp, dst, src);
     }
+  }
+
+  getProgress(): number {
+    return this.frameNumber / 2;
+  }
+
+  getMax(): number {
+    return this.frames.length / 2;
   }
 
   addFrame(diskN: number, src: Peg, dst: Peg, tmp: Peg) {

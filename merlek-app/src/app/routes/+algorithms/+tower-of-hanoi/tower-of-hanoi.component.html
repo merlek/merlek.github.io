@@ -3,20 +3,26 @@
 </div>
 
 <div class="row justify-content-center">
-  <p>
-    <a href="https://en.wikipedia.org/wiki/Tower_of_Hanoi" target="_blank"
-      >Wikipedia: Tower of Hanoi.</a
-    >The objective of the puzzle is to move the entire stack of disks to another
-    rod, obeying the following simple rules:
-  </p>
-  <ol>
-    <li>Only one disk can be moved at a time.</li>
-    <li>
-      Each move consists of taking the upper disk from one of the stacks and
-      placing it on top of another stack or on an empty rod.
-    </li>
-    <li>No larger disk may be placed on top of a smaller disk.</li>
-  </ol>
+  <div class="col">
+    <p>
+      <a href="https://en.wikipedia.org/wiki/Tower_of_Hanoi" target="_blank"
+        >Wikipedia: Tower of Hanoi.</a
+      >The objective of the puzzle is to move the entire stack of disks to
+      another rod, obeying the following simple rules:
+    </p>
+    <ol>
+      <li>Only one disk can be moved at a time.</li>
+      <li>
+        Each move consists of taking the upper disk from one of the stacks and
+        placing it on top of another stack or on an empty rod.
+      </li>
+      <li>No larger disk may be placed on top of a smaller disk.</li>
+    </ol>
+    <p>
+      The minimal number of moves required to solve is
+      <var>2 <sup>n</sup> − 1</var>, where <var>n</var> is the number of disks
+    </p>
+  </div>
 </div>
 <div class="row justify-content-center">
   <div class="jumbotron">
@@ -26,19 +32,33 @@
       width="600"
       height="300"
     ></canvas>
+    <progressbar
+      [animate]="false"
+      [value]="algorithm.getProgress()"
+      [max]="algorithm.getMax()"
+      type="success"
+      >{{ algorithm.getProgress() }} / {{ algorithm.getMax() }}</progressbar
+    >
   </div>
 </div>
 <div class="row justify-content-center">
-  <h2>Pseudocode</h2>
-  <pre><code>hanoi(n: number, src: Peg, dst: Peg, tmp: Peg) {{ '{' }}
-    if (n &gt; 0) {{ '{' }}
-      this.hanoi(n - 1, src, tmp, dst);
-    
-      // move disk n from src to dst
-      const diskN = src.diskIds.pop();
-      dst.diskIds.push(diskN);
-    
-      this.hanoi(n - 1, tmp, dst, src);
-    {{ '}' }}
-  {{ '}' }}</code></pre>
+  <div class="col">
+    <h2>Pseudocode</h2>
+    <br />
+    <div>
+      <pre><code>
+hanoi(n: number, src: Peg, dst: Peg, tmp: Peg) {{ '{' }}
+  if (n &gt; 0) {{ '{' }}
+    this.hanoi(n - 1, src, tmp, dst);
+  
+    // move disk n from src to dst
+    const diskN = src.diskIds.pop();
+    dst.diskIds.push(diskN);
+  
+    this.hanoi(n - 1, tmp, dst, src);
+  {{ '}' }}
+{{ '}' }}
+</code></pre>
+    </div>
+  </div>
 </div>
