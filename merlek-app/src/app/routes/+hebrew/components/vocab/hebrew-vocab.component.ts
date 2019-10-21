@@ -8,22 +8,7 @@ import { DataGridComponent } from 'app/modules/data-grid/data-grid.component';
 
 @Component({
   selector: 'app-hebrew-vocab',
-  template: `
-    <div class="row justify-content-center">
-      <h1>Hebrew Vocab</h1>
-    </div>
-    <app-data-grid
-      [columns]="columns"
-      [data]="vocab"
-      [sort]="sorting"
-      [isShowFilter]="true"
-      [isExportToCSV]="true"
-      [flashCardsType]="'hebrew'"
-      [exportFileName]="exportFileName"
-      [filterIgnore]="filterIgnore"
-    >
-    </app-data-grid>
-  `
+  templateUrl: './hebrew-vocab.component.html'
 })
 export class HebrewVocabComponent implements OnInit {
   file = './assets/hebrew-vocab.json';

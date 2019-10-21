@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DataGridModule } from 'app/modules/data-grid/data-grid.module';
+import { TabsModule } from 'ngx-bootstrap';
 import { HebrewCompleteQalComponent } from './components/complete-qal/hebrew-complete-qal.component';
 import { HebrewStemSynopsisComponent } from './components/stem-synopsis/hebrew-stem-synopsis.component';
 import { TransliterateComponent } from './components/transliterate/transliterate.component';
@@ -18,23 +19,25 @@ import { NoSufformativeComponent } from './components/weak-verbs/lamed-heh/no-su
 import { VocalicSufformativeComponent } from './components/weak-verbs/lamed-heh/vocalic-sufformative/vocalic-sufformative.component';
 import { HebrewWeakVerbsComponent } from './components/weak-verbs/weak-verbs.component';
 import { HebrewRoutingModule } from './hebrew-routing.module';
+import { HebrewTabComponent } from './components/hebrew-tab/hebrew-tab.component';
 import { LetterService } from './services/letter.service';
 import { TransliteratorService } from './services/transliterator.service';
 
 @NgModule({
   declarations: [
+    AClassComponent,
+    ConsonantalSufformativeComponent,
+    DageshForteComponent,
+    GutturalsComponent,
     HebrewCompleteQalComponent,
+    HebrewTabComponent,
     HebrewStemSynopsisComponent,
-    TransliterateComponent,
     HebrewVocabComponent,
     HebrewWeakVerbsComponent,
-    GutturalsComponent,
-    DageshForteComponent,
-    SewaComponent,
-    AClassComponent,
     LamedHehComponent,
     NoSufformativeComponent,
-    ConsonantalSufformativeComponent,
+    SewaComponent,
+    TransliterateComponent,
     VocalicSufformativeComponent
   ],
   imports: [
@@ -42,7 +45,8 @@ import { TransliteratorService } from './services/transliterator.service';
     DataGridModule,
     FormsModule,
     HebrewRoutingModule,
-    NgbModule
+    NgbModule,
+    TabsModule.forRoot()
   ],
   providers: [TransliteratorService, LetterService]
 })

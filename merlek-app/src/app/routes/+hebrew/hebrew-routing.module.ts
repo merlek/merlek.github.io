@@ -5,8 +5,10 @@ import { HebrewStemSynopsisComponent } from './components/stem-synopsis/hebrew-s
 import { TransliterateComponent } from './components/transliterate/transliterate.component';
 import { HebrewVocabComponent } from './components/vocab/hebrew-vocab.component';
 import { HebrewWeakVerbsComponent } from './components/weak-verbs/weak-verbs.component';
+import { HebrewTabComponent } from './components/hebrew-tab/hebrew-tab.component';
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'vocab' },
   { path: 'transliterate', component: TransliterateComponent },
   { path: 'vocab', component: HebrewVocabComponent },
   { path: 'complete-qal', component: HebrewCompleteQalComponent },

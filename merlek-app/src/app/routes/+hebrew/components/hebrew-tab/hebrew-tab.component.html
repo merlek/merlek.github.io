@@ -1,0 +1,8 @@
+<tabset
+  ><tab
+    *ngFor="let tab of tabs"
+    [heading]="tab.name"
+    [active]="tab.active"
+    (selectTab)="onSelect(tab.path)"
+  ></tab
+></tabset>

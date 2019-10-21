@@ -1,0 +1,15 @@
+<app-hebrew-tab selectedTab="vocab"></app-hebrew-tab>
+<div class="row justify-content-center">
+  <h1>Hebrew Vocab</h1>
+</div>
+<app-data-grid
+  [columns]="columns"
+  [data]="vocab"
+  [sort]="sorting"
+  [isShowFilter]="true"
+  [isExportToCSV]="true"
+  [flashCardsType]="'hebrew'"
+  [exportFileName]="exportFileName"
+  [filterIgnore]="filterIgnore"
+>
+</app-data-grid>

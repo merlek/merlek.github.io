@@ -1,130 +1,139 @@
+<app-hebrew-tab selectedTab="complete-qal"></app-hebrew-tab>
 <div class="row justify-content-center">
-  <h1>{{title}}</h1>
+  <h1>{{ title }}</h1>
 </div>
-<div class='row justify-content-center'>
-  <div class='form-group'>
+<div class="row justify-content-center">
+  <div class="form-group">
     <div class="custom-control custom-checkbox">
-      <input class='custom-control-input' type='checkbox' [checked]='vowels' (change)='vowels = !vowels' id='vowelsCheck'>
-      <label class='custom-control-label' for='vowelsCheck'>Vowels</label>
+      <input
+        class="custom-control-input"
+        type="checkbox"
+        [checked]="vowels"
+        (change)="vowels = !vowels"
+        id="vowelsCheck"
+      />
+      <label class="custom-control-label" for="vowelsCheck">Vowels</label>
     </div>
   </div>
 </div>
-<div class='row justify-content-center'>
-  <div class='table-responsive-md'>
-    <table class='table'>
+<div class="row justify-content-center">
+  <div class="table-responsive-md">
+    <table class="table">
       <thead>
         <tr>
-          <th scope='col'>PGN</th>
-          <th scope='col'>Perfect</th>
-          <th scope='col'>Imperfect</th>
-          <th scope='col'>Volitives</th>
-          <th scope='col'></th>
-          <th scope='col'></th>
+          <th scope="col">PGN</th>
+          <th scope="col">Perfect</th>
+          <th scope="col">Imperfect</th>
+          <th scope="col">Volitives</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
           <th scope="col"></th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <th scope='row'>3ms</th>
+          <th scope="row">3ms</th>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ָ</span>
+              <span [class.tense-form]="vowels">ָ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ַ</span>
+              <span [class.tense-form]="vowels">ַ</span>
               <span>ל</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
-              <span [class.tense-form]='vowels'>יִ</span>
+              <span [class.tense-form]="vowels">יִ</span>
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ֹ</span>
+              <span [class.tense-form]="vowels">ֹ</span>
               <span>ל</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
-              <span [class.tense-form]='vowels'>יִ</span>
+              <span [class.tense-form]="vowels">יִ</span>
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ֹ</span>
-              <span>ל</span>
-            </div>
-          </td>
-          <td>Jussive</td>
-          <td></td>
-          <th scope='col' colspan="2" style='border-bottom:inherit'>Infinitives</th>
-        </tr>
-        <tr>
-          <th scope='row'>3fs</th>
-          <td>
-            <div class="hebrew">
-              <span>ק</span>
-              <span [class.tense-form]='vowels'>ָֽ</span>
-              <span>ט</span>
-              <span [class.tense-form]='vowels'>ְ</span>
-              <span>ל</span>
-              <span [class.tense-form]='vowels'>ָה</span>
-            </div>
-          </td>
-          <td>
-            <div class="hebrew">
-              <span [class.tense-form]='vowels'>תִּ</span>
-              <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
-              <span>ט</span>
-              <span [class.tense-form]='vowels'>ֹ</span>
-              <span>ל</span>
-            </div>
-          </td>
-          <td>
-            <div class="hebrew">
-              <span [class.tense-form]='vowels'>תִּ</span>
-              <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
-              <span>ט</span>
-              <span [class.tense-form]='vowels'>ֹ</span>
+              <span [class.tense-form]="vowels">ֹ</span>
               <span>ל</span>
             </div>
           </td>
           <td>Jussive</td>
           <td></td>
-          <th scope='col' class='borderbottom'>Construct</th>
-          <th scope='col' class='borderbottom'>Absolute</th>
+          <th scope="col" colspan="2" style="border-bottom:inherit">
+            Infinitives
+          </th>
         </tr>
         <tr>
-          <th scope='row'>2ms</th>
+          <th scope="row">3fs</th>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ָ</span>
+              <span [class.tense-form]="vowels">ָֽ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ַ֫</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>ְתָּ</span>
+              <span [class.tense-form]="vowels">ָה</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
-              <span [class.tense-form]='vowels'>תִּ</span>
+              <span [class.tense-form]="vowels">תִּ</span>
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ֹ</span>
+              <span [class.tense-form]="vowels">ֹ</span>
+              <span>ל</span>
+            </div>
+          </td>
+          <td>
+            <div class="hebrew">
+              <span [class.tense-form]="vowels">תִּ</span>
+              <span>ק</span>
+              <span [class.tense-form]="vowels">ְ</span>
+              <span>ט</span>
+              <span [class.tense-form]="vowels">ֹ</span>
+              <span>ל</span>
+            </div>
+          </td>
+          <td>Jussive</td>
+          <td></td>
+          <th scope="col" class="borderbottom">Construct</th>
+          <th scope="col" class="borderbottom">Absolute</th>
+        </tr>
+        <tr>
+          <th scope="row">2ms</th>
+          <td>
+            <div class="hebrew">
+              <span>ק</span>
+              <span [class.tense-form]="vowels">ָ</span>
+              <span>ט</span>
+              <span [class.tense-form]="vowels">ַ֫</span>
+              <span>ל</span>
+              <span [class.tense-form]="vowels">ְתָּ</span>
+            </div>
+          </td>
+          <td>
+            <div class="hebrew">
+              <span [class.tense-form]="vowels">תִּ</span>
+              <span>ק</span>
+              <span [class.tense-form]="vowels">ְ</span>
+              <span>ט</span>
+              <span [class.tense-form]="vowels">ֹ</span>
               <span>ל</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ֹ</span>
+              <span [class.tense-form]="vowels">ֹ</span>
               <span>ל</span>
             </div>
           </td>
@@ -133,365 +142,365 @@
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ֹ</span>
+              <span [class.tense-form]="vowels">ֹ</span>
               <span>ל</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ָ</span>
+              <span [class.tense-form]="vowels">ָ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>וֹ</span>
+              <span [class.tense-form]="vowels">וֹ</span>
               <span>ל</span>
             </div>
           </td>
         </tr>
         <tr>
-          <th scope='row'>2fs</th>
+          <th scope="row">2fs</th>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ָ</span>
+              <span [class.tense-form]="vowels">ָ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ַ</span>
+              <span [class.tense-form]="vowels">ַ</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>ְתְּ</span>
+              <span [class.tense-form]="vowels">ְתְּ</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
-              <span [class.tense-form]='vowels'>תִּ</span>
+              <span [class.tense-form]="vowels">תִּ</span>
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>ִי</span>
+              <span [class.tense-form]="vowels">ִי</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ִ</span>
+              <span [class.tense-form]="vowels">ִ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>ִי</span>
+              <span [class.tense-form]="vowels">ִי</span>
             </div>
           </td>
           <td>Imperative</td>
           <td></td>
-          <th colspan='2' class='bordertop'>Participles</th>
+          <th colspan="2" class="bordertop">Participles</th>
         </tr>
         <tr>
-          <th scope='row'>1cs</th>
+          <th scope="row">1cs</th>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ָ</span>
+              <span [class.tense-form]="vowels">ָ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ַ֫</span>
+              <span [class.tense-form]="vowels">ַ֫</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>ְתִּי</span>
+              <span [class.tense-form]="vowels">ְתִּי</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
-              <span [class.tense-form]='vowels'>אֶ</span>
+              <span [class.tense-form]="vowels">אֶ</span>
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ֹ</span>
+              <span [class.tense-form]="vowels">ֹ</span>
               <span>ל</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
-              <span [class.tense-form]='vowels'>אֶ</span>
+              <span [class.tense-form]="vowels">אֶ</span>
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>ָה</span>
+              <span [class.tense-form]="vowels">ָה</span>
             </div>
           </td>
           <td>Cohortative</td>
           <td></td>
-          <th scope='col' class='borderbottom'>Active</th>
-          <th scope='col' class='borderbottom'>Passive</th>
+          <th scope="col" class="borderbottom">Active</th>
+          <th scope="col" class="borderbottom">Passive</th>
         </tr>
         <tr>
-          <th scope='row'>3mp</th>
+          <th scope="row">3mp</th>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ָֽ</span>
+              <span [class.tense-form]="vowels">ָֽ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>וּ</span>
+              <span [class.tense-form]="vowels">וּ</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
-              <span [class.tense-form]='vowels'>יִ</span>
+              <span [class.tense-form]="vowels">יִ</span>
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>וּ</span>
+              <span [class.tense-form]="vowels">וּ</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
-              <span [class.tense-form]='vowels'>יִ</span>
+              <span [class.tense-form]="vowels">יִ</span>
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>וּ</span>
+              <span [class.tense-form]="vowels">וּ</span>
             </div>
           </td>
           <td>Jussive</td>
-          <th scope='row'>ms</th>
+          <th scope="row">ms</th>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ֹ</span>
+              <span [class.tense-form]="vowels">ֹ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ֵ</span>
+              <span [class.tense-form]="vowels">ֵ</span>
               <span>ל</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ָ</span>
+              <span [class.tense-form]="vowels">ָ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>וּ</span>
+              <span [class.tense-form]="vowels">וּ</span>
               <span>ל</span>
             </div>
           </td>
         </tr>
         <tr>
-          <th scope='row'>3fp</th>
+          <th scope="row">3fp</th>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ָֽ</span>
+              <span [class.tense-form]="vowels">ָֽ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>וּ</span>
+              <span [class.tense-form]="vowels">וּ</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
-              <span [class.tense-form]='vowels'>תִּ</span>
+              <span [class.tense-form]="vowels">תִּ</span>
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ֹ֫</span>
+              <span [class.tense-form]="vowels">ֹ֫</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>ְנָה</span>
+              <span [class.tense-form]="vowels">ְנָה</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
-              <span [class.tense-form]='vowels'>תִּ</span>
+              <span [class.tense-form]="vowels">תִּ</span>
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ֹ֫</span>
+              <span [class.tense-form]="vowels">ֹ֫</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>ְנָ</span>
+              <span [class.tense-form]="vowels">ְנָ</span>
             </div>
           </td>
           <td>Jussive</td>
-          <th scope='row'>fs</th>
+          <th scope="row">fs</th>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ֹ</span>
+              <span [class.tense-form]="vowels">ֹ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>ָה</span>
+              <span [class.tense-form]="vowels">ָה</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>וּ</span>
+              <span [class.tense-form]="vowels">וּ</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>ָה</span>
+              <span [class.tense-form]="vowels">ָה</span>
             </div>
           </td>
         </tr>
         <tr>
-          <th scope='row'>2mp</th>
+          <th scope="row">2mp</th>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ַ</span>
+              <span [class.tense-form]="vowels">ַ</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>ְתֶּם</span>
+              <span [class.tense-form]="vowels">ְתֶּם</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
-              <span [class.tense-form]='vowels'>תִּ</span>
+              <span [class.tense-form]="vowels">תִּ</span>
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>וּ</span>
+              <span [class.tense-form]="vowels">וּ</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ִ</span>
+              <span [class.tense-form]="vowels">ִ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>וּ</span>
+              <span [class.tense-form]="vowels">וּ</span>
             </div>
           </td>
           <td>Imperative</td>
-          <th scope='row'>fs</th>
+          <th scope="row">fs</th>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ֹ</span>
+              <span [class.tense-form]="vowels">ֹ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ֶ֫</span>
+              <span [class.tense-form]="vowels">ֶ֫</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>ֶת</span>
+              <span [class.tense-form]="vowels">ֶת</span>
             </div>
           </td>
           <td></td>
         </tr>
         <tr>
-          <th scope='row'>2fp</th>
+          <th scope="row">2fp</th>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ַ</span>
+              <span [class.tense-form]="vowels">ַ</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>ְתֶּן</span>
+              <span [class.tense-form]="vowels">ְתֶּן</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
-              <span [class.tense-form]='vowels'>תִּ</span>
+              <span [class.tense-form]="vowels">תִּ</span>
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ֹ֫</span>
+              <span [class.tense-form]="vowels">ֹ֫</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>ְנָה</span>
+              <span [class.tense-form]="vowels">ְנָה</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ֹ֫</span>
+              <span [class.tense-form]="vowels">ֹ֫</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>ְנָה</span>
+              <span [class.tense-form]="vowels">ְנָה</span>
             </div>
           </td>
           <td>Imperative</td>
-          <th scope='row'>mp</th>
+          <th scope="row">mp</th>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ֹ</span>
+              <span [class.tense-form]="vowels">ֹ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>ִים</span>
+              <span [class.tense-form]="vowels">ִים</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>וּ</span>
+              <span [class.tense-form]="vowels">וּ</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>ִים</span>
+              <span [class.tense-form]="vowels">ִים</span>
             </div>
           </td>
         </tr>
         <tr>
-          <th scope='row'>1cp</th>
+          <th scope="row">1cp</th>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ָ</span>
+              <span [class.tense-form]="vowels">ָ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ַ֫</span>
+              <span [class.tense-form]="vowels">ַ֫</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>ְנוּ</span>
+              <span [class.tense-form]="vowels">ְנוּ</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
-              <span [class.tense-form]='vowels'>נִ</span>
+              <span [class.tense-form]="vowels">נִ</span>
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ֹ</span>
+              <span [class.tense-form]="vowels">ֹ</span>
               <span>ל</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
-              <span [class.tense-form]='vowels'>נִ</span>
+              <span [class.tense-form]="vowels">נִ</span>
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>ָה</span>
+              <span [class.tense-form]="vowels">ָה</span>
             </div>
           </td>
           <td>Cohortative</td>
-          <th scope='row'>fp</th>
+          <th scope="row">fp</th>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ֹ</span>
+              <span [class.tense-form]="vowels">ֹ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>וֹת</span>
+              <span [class.tense-form]="vowels">וֹת</span>
             </div>
           </td>
           <td>
             <div class="hebrew">
               <span>ק</span>
-              <span [class.tense-form]='vowels'>ְ</span>
+              <span [class.tense-form]="vowels">ְ</span>
               <span>ט</span>
-              <span [class.tense-form]='vowels'>וּ</span>
+              <span [class.tense-form]="vowels">וּ</span>
               <span>ל</span>
-              <span [class.tense-form]='vowels'>וֹת</span>
+              <span [class.tense-form]="vowels">וֹת</span>
             </div>
           </td>
         </tr>

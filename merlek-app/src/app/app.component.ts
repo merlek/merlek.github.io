@@ -1,14 +1,18 @@
 import { Component } from '@angular/core';
-
+import { Nav } from './components/header/header.component';
 
 @Component({
   selector: 'app-root',
-  template: ` <app-header [title]="title"></app-header>
-              <main class="container" role="main">
-                <router-outlet></router-outlet>
-              </main>`,
+  templateUrl: './app.component.html'
 })
-
 export class AppComponent {
   title = 'merlek.github.io';
+
+  navs = [
+    new Nav('Languages', 'languages', [
+      new Nav('Greek Vocab', 'greek-vocab'),
+      new Nav('Hebrew', 'hebrew')
+    ]),
+    new Nav('Algorithms', 'algorithms')
+  ];
 }
