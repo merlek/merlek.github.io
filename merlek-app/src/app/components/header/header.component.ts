@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class Nav {
   name: string;
   path: string;
-  children: Nav[];
+  children?: Nav[];
 
   constructor(name: string, path: string, children?: Nav[]) {
     this.name = name;
@@ -22,15 +22,18 @@ export class HeaderComponent implements OnInit {
 
   @Input()
   title: string;
-  navs = [
-    new Nav('Greek Vocab', '/greek-vocab'),
-    new Nav('Hebrew', '/hebrew', [
-      new Nav('Vocab', '/vocab'),
-      new Nav('Transliterate', '/transliterate'),
-      new Nav('Complete Qal', '/complete-qal'),
-      new Nav('Stem Synopsis', '/stem-synopsis'),
-      new Nav('Weak Verbs', '/weak-verbs')
-    ])
+  navs: Nav[] = [
+    new Nav('Languages', 'languages', [
+      new Nav('Greek Vocab', 'greek-vocab'),
+      new Nav('Hebrew', 'hebrew', [
+        new Nav('Vocab', 'vocab'),
+        new Nav('Transliterate', 'transliterate'),
+        new Nav('Complete Qal', 'complete-qal'),
+        new Nav('Stem Synopsis', 'stem-synopsis'),
+        new Nav('Weak Verbs', 'weak-verbs')
+      ])
+    ]),
+    new Nav('Algorithms', 'algorithms')
   ];
 
   constructor() {}

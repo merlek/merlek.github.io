@@ -7,7 +7,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   {
-    path: 'greek-vocab',
+    path: 'languages/greek-vocab',
     loadChildren: () =>
       import('./routes/+greek-vocab/greek-vocab.module').then(
         m => m.GreekVocabModule
@@ -15,7 +15,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'hebrew',
+    path: 'languages/hebrew',
     loadChildren: () =>
       import('./routes/+hebrew/hebrew.module').then(m => m.HebrewModule)
   },

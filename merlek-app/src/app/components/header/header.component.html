@@ -31,14 +31,17 @@
         class="nav-item"
         [routerLinkActive]="['active']"
       >
-        <a *ngIf="!nav.children" class="nav-link" routerLink="{{ nav.path }}">{{
-          nav.name
-        }}</a>
+        <a
+          *ngIf="!nav.children"
+          class="nav-link"
+          routerLink="/{{ nav.path }}"
+          >{{ nav.name }}</a
+        >
         <a
           *ngIf="nav.children"
           ngbDropdownToggle
           class="nav-link"
-          id="navbarDropdown"
+          id="{{ nav.path }}"
           role="button"
           data-toggle="dropdown"
           aria-haspopup="true"
@@ -48,13 +51,13 @@
         <div
           ngbDropdownMenu
           class="dropdown-menu"
-          aria-labelledby="navbarDropdown"
+          [attr.aria-labelledby]="nav.path"
         >
           <a
             *ngFor="let child of nav.children"
             class="dropdown-item"
             [routerLinkActive]="['active']"
-            routerLink="{{ nav.path }}{{ child.path }}"
+            routerLink="/{{ nav.path }}/{{ child.path }}"
             >{{ child.name }}</a
           >
         </div>
