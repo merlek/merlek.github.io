@@ -23,6 +23,13 @@ const routes: Routes = [
     path: 'theme',
     loadChildren: () =>
       import('./routes/+theme/theme.module').then(m => m.ThemeModule)
+  },
+  {
+    path: 'algorithms/tower-of-hanoi',
+    loadChildren: () =>
+      import('./routes/+algorithms/+tower-of-hanoi/tower-of-hanoi.module').then(
+        m => m.TowerOfHanoiModule
+      )
   }
 ];
 

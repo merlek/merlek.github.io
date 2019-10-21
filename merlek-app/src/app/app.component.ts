@@ -13,6 +13,8 @@ export class AppComponent {
       new Nav('Greek Vocab', 'greek-vocab'),
       new Nav('Hebrew', 'hebrew')
     ]),
-    new Nav('Algorithms', 'algorithms')
+    new Nav('Algorithms', 'algorithms', [
+      new Nav('Tower of Hanoi', 'tower-of-hanoi')
+    ])
   ];
 }
