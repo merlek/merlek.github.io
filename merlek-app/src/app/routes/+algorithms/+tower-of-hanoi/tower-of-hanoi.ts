@@ -2,10 +2,10 @@ class Peg {
   public diskIds: number[] = [];
   constructor(
     public readonly id: number,
-    public x = 100,
-    public y = 100,
-    private readonly width = 5,
-    private readonly height = 100,
+    public x: number,
+    public y: number,
+    private readonly width: number,
+    private readonly height: number,
     private readonly color = 'black'
   ) {}
 
@@ -34,11 +34,11 @@ class Peg {
 class Disk {
   public y = 0;
   public centerX = 0;
-  public selected = false;
+  public selected = true;
   constructor(
     public readonly id: number,
-    public readonly width = 200,
-    public readonly height = 10,
+    public readonly width: number,
+    public readonly height: number,
     public readonly color = 'orange'
   ) {}
 
@@ -75,15 +75,18 @@ interface Frame {
 }
 
 export class TowerOfHanoi {
+  public readonly maxN = 10;
+  public n = 5;
+  public fps = 2; // (30 * 1000) / ((Math.pow(2, this.n) - 1) * 2);
+
   private readonly ctx: CanvasRenderingContext2D; // HTML Canvas's 2D context
   private readonly canvasWidth: number; // width of the canvas
   private readonly canvasHeight: number; // height of the canvas
-  private readonly pegs: Peg[] = [];
-  private readonly disks: Disk[] = [];
-  private readonly n = 5;
-  private readonly interval = (30 * 1000) / ((Math.pow(2, this.n) - 1) * 2);
+  private pegs: Peg[] = [];
+  private disks: Disk[] = [];
   private frames: Frame[] = [];
   private frameNumber = 0;
+  private timeout: number;
 
   /**
    * Creates a new animation and sets properties of the animation
@@ -94,6 +97,12 @@ export class TowerOfHanoi {
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
 
+    this.setup();
+
+    this.draw();
+  }
+
+  private setup() {
     // Setup Pegs
     const pegWidth = 5;
     const pegHeight = (this.canvasHeight * 3) / 4;
@@ -107,7 +116,7 @@ export class TowerOfHanoi {
 
     // Setup Disks
     const diskWidth = this.canvasWidth / 4;
-    const diskHeight = pegHeight / this.n;
+    const diskHeight = (pegHeight * 0.95) / this.n;
     for (let i = 0; i < this.n; i++) {
       this.disks.push(
         new Disk(i, (diskWidth * (this.n - i)) / this.n, diskHeight)
@@ -117,44 +126,48 @@ export class TowerOfHanoi {
 
     this.disks[0].selected = true;
 
-    this.hanoi(this.n, this.pegs[0], this.pegs[2], this.pegs[1]);
+    this.addFrame(this.n, this.pegs[0], this.pegs[2], this.pegs[1]);
 
-    window.requestAnimationFrame(() => this.draw()); // start the animation when the window is ready
+    this.hanoi(this.n, this.pegs[0], this.pegs[2], this.pegs[1]);
   }
 
   /**
    * Draw step of the animation
    */
-  draw() {
+  private draw() {
     this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 
     // Step
-    const frame = this.frames[this.frameNumber++];
-    this.stepFrame(frame);
+    this.stepFrame();
 
     // Draw
     this.pegs.forEach(peg => {
       peg.draw(this.ctx, this.disks);
     });
 
-    // window.requestAnimationFrame(() => this.draw());
     if (this.frameNumber < this.frames.length) {
-      window.setTimeout(() => this.draw(), this.interval);
+      this.timeout = window.setTimeout(() => this.draw(), 1000 / this.fps);
     }
   }
 
-  stepFrame(frame: Frame) {
+  private stepFrame() {
+    const frame = this.frames[this.frameNumber++];
+
     for (let i = 0; i < this.pegs.length; i++) {
       const peg = frame.pegs[i];
       this.pegs[peg.id].diskIds = peg.diskIds;
     }
-
     this.disks.forEach(disk => {
-      disk.selected = disk.id === frame.selectedDiskId;
+      disk.selected =
+        disk.id === frame.selectedDiskId ||
+        this.frameNumber === 1 ||
+        this.frameNumber >= this.frames.length;
     });
+
+    return frame;
   }
 
-  hanoi(n: number, src: Peg, dst: Peg, tmp: Peg) {
+  private hanoi(n: number, src: Peg, dst: Peg, tmp: Peg) {
     if (n > 0) {
       this.hanoi(n - 1, src, tmp, dst);
 
@@ -170,15 +183,7 @@ export class TowerOfHanoi {
     }
   }
 
-  getProgress(): number {
-    return this.frameNumber / 2;
-  }
-
-  getMax(): number {
-    return this.frames.length / 2;
-  }
-
-  addFrame(diskN: number, src: Peg, dst: Peg, tmp: Peg) {
+  private addFrame(diskN: number, src: Peg, dst: Peg, tmp: Peg) {
     const frame: Frame = {
       pegs: [
         { id: src.id, diskIds: Array.from(src.diskIds) },
@@ -188,5 +193,31 @@ export class TowerOfHanoi {
       selectedDiskId: diskN
     };
     this.frames.push(frame);
+  }
+
+  public getProgress(): number {
+    // tslint:disable-next-line:no-bitwise
+    return (this.frameNumber / 2) | 0;
+  }
+
+  public getMax(): number {
+    // tslint:disable-next-line:no-bitwise
+    return (this.frames.length / 2) | 0;
+  }
+
+  public reset() {
+    console.log('reset');
+    window.clearTimeout(this.timeout);
+
+    this.pegs = [];
+    this.disks = [];
+    this.frames = [];
+    this.frameNumber = 0;
+
+    // this.interval = (30 * 1000) / ((Math.pow(2, this.n) - 1) * 2);
+
+    this.setup();
+
+    this.draw();
   }
 }

@@ -19,7 +19,7 @@
       <li>No larger disk may be placed on top of a smaller disk.</li>
     </ol>
     <p>
-      The minimal number of moves required to solve is
+      The minimal number of moves required is
       <var>2 <sup>n</sup> − 1</var>, where <var>n</var> is the number of disks
     </p>
   </div>
@@ -39,6 +39,54 @@
       type="success"
       >{{ algorithm.getProgress() }} / {{ algorithm.getMax() }}</progressbar
     >
+    <form class="form">
+      <div class="form-row">
+        <div class="col">
+          <div class="form-group">
+            <label for="formControlRangeN">n={{ algorithm.n }}</label>
+            <input
+              id="formControlRangeN"
+              class="form-control-range"
+              type="range"
+              min="1"
+              [max]="10"
+              step="1"
+              [(ngModel)]="algorithm.n"
+              [ngModelOptions]="{ standalone: true }"
+              (change)="algorithm.reset()"
+            />
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="formControlRangeFps">
+              speed={{ algorithm.fps | number: '1.1-2' }} fps</label
+            >
+            <input
+              id="formControlRangeFps"
+              type="range"
+              class="form-control-range"
+              min="0.5"
+              [max]="30"
+              step="0.5"
+              [(ngModel)]="algorithm.fps"
+              [ngModelOptions]="{ standalone: true }"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="algorithm.reset()"
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
 <div class="row justify-content-center">
@@ -49,13 +97,13 @@
       <pre><code>
 hanoi(n: number, src: Peg, dst: Peg, tmp: Peg) {{ '{' }}
   if (n &gt; 0) {{ '{' }}
-    this.hanoi(n - 1, src, tmp, dst);
+    hanoi(n - 1, src, tmp, dst);
   
     // move disk n from src to dst
     const diskN = src.diskIds.pop();
     dst.diskIds.push(diskN);
   
-    this.hanoi(n - 1, tmp, dst, src);
+    hanoi(n - 1, tmp, dst, src);
   {{ '}' }}
 {{ '}' }}
 </code></pre>

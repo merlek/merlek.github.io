@@ -9,4 +9,4 @@ const routes: Routes = [{ path: '', component: TowerOfHanoiComponent }];
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TowerOfHanoiRoutingModule { }
+export class TowerOfHanoiRoutingModule {}
