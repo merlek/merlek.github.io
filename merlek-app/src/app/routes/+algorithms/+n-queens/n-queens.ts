@@ -1,13 +1,19 @@
-type Coordinates = { x: number; y: number } & {
-  [key: string]: number;
-};
+import queenImageBase64 from './queen-image-base64';
 
 class Board {
+  private static queenImage: HTMLImageElement = new Image();
+  private static initialized = false;
+
   private readonly x: number;
   private readonly y: number;
   private readonly squareSide: number;
   private readonly boardSide: number;
 
+  private static initialize() {
+    Board.queenImage = new Image();
+    Board.queenImage.src = queenImageBase64;
+    Board.initialized = true;
+  }
   constructor(
     private readonly canvasWidth: number,
     private readonly canvasHeight: number,
@@ -18,6 +24,10 @@ class Board {
 
     this.x = canvasWidth / 2 - this.boardSide / 2;
     this.y = 0;
+
+    if (!Board.initialized) {
+      Board.initialize();
+    }
   }
 
   drawBoard(ctx: CanvasRenderingContext2D) {
@@ -54,35 +64,42 @@ class Board {
     ctx.save();
 
     if (solution) {
-      ctx.fillStyle = 'gold';
-    } else {
-      ctx.fillStyle = 'white';
+      ctx.fillStyle = 'rgb(255, 255, 102, 0.9)';
     }
-    ctx.strokeStyle = 'black';
 
     queens.forEach((x, y) => {
-      this.drawQueen(ctx, x, y);
+      if (solution) {
+        this.drawQueenCircle(ctx, x, y);
+      }
+      this.drawQueenImage(ctx, x, y);
     });
 
     ctx.restore();
   }
-  private drawQueen(ctx: CanvasRenderingContext2D, x: number, y: number) {
+  private drawQueenImage(ctx: CanvasRenderingContext2D, x: number, y: number) {
     ctx.beginPath();
 
+    const w = this.squareSide * 0.9;
+    const i = this.x + (this.squareSide - w) / 2 + x * this.squareSide;
+    const j = this.y + (this.squareSide - w) / 2 + y * this.squareSide;
+
+    ctx.drawImage(Board.queenImage, i, j, w, w);
+  }
+
+  private drawQueenCircle(ctx: CanvasRenderingContext2D, x: number, y: number) {
+    ctx.beginPath();
+
+    const i = this.x + this.squareSide / 2 + x * this.squareSide;
+    const j = this.y + this.squareSide / 2 + y * this.squareSide;
+    const r = this.squareSide / 2;
+
     // Draws a ball
-    ctx.arc(
-      this.x + this.squareSide / 2 + x * this.squareSide,
-      this.y + this.squareSide / 2 + y * this.squareSide,
-      (this.squareSide / 2) * 0.9,
-      0,
-      Math.PI * 2,
-      true
-    );
+    ctx.arc(i, j, r, 0, Math.PI * 2, true);
     ctx.closePath();
 
     // Colors and fills the ball
     ctx.fill();
-    ctx.stroke();
+    // ctx.stroke();
   }
 }
 
