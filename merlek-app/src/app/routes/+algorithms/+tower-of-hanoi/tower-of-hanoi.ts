@@ -49,16 +49,25 @@ class Disk {
 
     const lingrad = ctx.createLinearGradient(
       x,
-      this.y,
+      this.y + this.height,
       this.centerX + this.width / 2,
-      this.y + this.height
+      this.y
     );
-    lingrad.addColorStop(0, this.selected ? this.color : 'grey');
+
+    lingrad.addColorStop(0, 'grey');
+    lingrad.addColorStop(0.5, this.color);
     lingrad.addColorStop(1, 'white');
 
     ctx.fillStyle = lingrad;
     ctx.fillRect(x, this.y, this.width, this.height);
-    ctx.strokeStyle = 'black';
+
+    if (this.selected) {
+      ctx.lineWidth = 5;
+      ctx.strokeStyle = 'gold';
+    } else {
+      ctx.strokeStyle = 'black';
+    }
+
     ctx.strokeRect(x, this.y, this.width, this.height);
 
     ctx.restore();
@@ -119,7 +128,12 @@ export class TowerOfHanoi {
     const diskHeight = (pegHeight * 0.95) / this.n;
     for (let i = 0; i < this.n; i++) {
       this.disks.push(
-        new Disk(i, (diskWidth * (this.n - i)) / this.n, diskHeight)
+        new Disk(
+          i,
+          (diskWidth * (this.n - i)) / this.n,
+          diskHeight,
+          'hsl(' + (i / this.n) * 360 + ',100%,50%)'
+        )
       );
       this.pegs[0].diskIds.push(i);
     }
@@ -208,15 +222,12 @@ export class TowerOfHanoi {
   }
 
   public reset() {
-    console.log('reset');
     window.clearTimeout(this.timeout);
 
     this.pegs = [];
     this.disks = [];
     this.frames = [];
     this.frameNumber = 0;
-
-    // this.interval = (30 * 1000) / ((Math.pow(2, this.n) - 1) * 2);
 
     this.setup();
 
