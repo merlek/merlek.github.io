@@ -26,12 +26,20 @@
 </div>
 <div class="row justify-content-center">
   <div class="jumbotron">
-    <canvas
-      id="tower-of-hanoi"
-      style="border: 1px solid;"
-      width="600"
-      height="300"
-    ></canvas>
+    <div id="stage">
+      <canvas
+        id="game-layer"
+        style="border: 1px solid;"
+        width="600"
+        height="300"
+      ></canvas>
+      <canvas
+        id="background-layer"
+        style="border: 1px solid;"
+        width="600"
+        height="300"
+      ></canvas>
+    </div>
     <progressbar
       [animate]="false"
       [value]="algorithm.getProgress()"

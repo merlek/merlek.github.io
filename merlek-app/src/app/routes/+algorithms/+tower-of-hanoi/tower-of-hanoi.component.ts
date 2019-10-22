@@ -10,7 +10,10 @@ export class TowerOfHanoiComponent implements OnInit {
   algorithm: TowerOfHanoi;
   constructor() {}
   ngOnInit() {
-    const canvas = <HTMLCanvasElement>document.getElementById('tower-of-hanoi');
-    this.algorithm = new TowerOfHanoi(canvas);
+    const gameCanvas = <HTMLCanvasElement>document.getElementById('game-layer');
+    const backgroundCanvas = <HTMLCanvasElement>(
+      document.getElementById('background-layer')
+    );
+    this.algorithm = new TowerOfHanoi(gameCanvas, backgroundCanvas);
   }
 }

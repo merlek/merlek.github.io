@@ -5,19 +5,36 @@ class Peg {
     public x: number,
     public y: number,
     private readonly width: number,
-    private readonly height: number,
-    private readonly color = 'black'
+    private readonly height: number
   ) {}
 
-  draw(ctx: CanvasRenderingContext2D, disks: Disk[]) {
+  draw(ctx: CanvasRenderingContext2D) {
     // Draw Peg
     ctx.save();
 
-    ctx.fillStyle = this.color;
+    // ctx.fillStyle = this.color;
+    // ctx.fillRect(this.x, this.y, this.width, this.height);
+
+    const lingrad = ctx.createLinearGradient(
+      this.x,
+      this.y,
+      this.x + this.width / 2,
+      this.y
+    );
+
+    lingrad.addColorStop(0, 'black');
+    lingrad.addColorStop(1, '#8B4513');
+
+    ctx.fillStyle = lingrad;
     ctx.fillRect(this.x, this.y, this.width, this.height);
 
-    ctx.restore();
+    ctx.strokeStyle = 'black';
+    ctx.strokeRect(this.x, this.y, this.width, this.height);
 
+    ctx.restore();
+  }
+
+  drawDisks(ctx: CanvasRenderingContext2D, disks: Disk[]) {
     // Draw Disks
     const x = this.x + this.width / 2;
     let y = this.y + this.height;
@@ -65,9 +82,9 @@ class Disk {
       ctx.lineWidth = 5;
       ctx.strokeStyle = 'gold';
     } else {
+      ctx.lineWidth = 1;
       ctx.strokeStyle = 'black';
     }
-
     ctx.strokeRect(x, this.y, this.width, this.height);
 
     ctx.restore();
@@ -88,7 +105,8 @@ export class TowerOfHanoi {
   public n = 5;
   public fps = 2; // (30 * 1000) / ((Math.pow(2, this.n) - 1) * 2);
 
-  private readonly ctx: CanvasRenderingContext2D; // HTML Canvas's 2D context
+  private readonly backgroundCtx: CanvasRenderingContext2D;
+  private readonly gameCtx: CanvasRenderingContext2D;
   private readonly canvasWidth: number; // width of the canvas
   private readonly canvasHeight: number; // height of the canvas
   private pegs: Peg[] = [];
@@ -101,10 +119,12 @@ export class TowerOfHanoi {
    * Creates a new animation and sets properties of the animation
    * @param canvas the HTML Canvas on which to draw
    */
-  constructor(canvas: HTMLCanvasElement) {
-    this.ctx = canvas.getContext('2d');
-    this.canvasWidth = canvas.width;
-    this.canvasHeight = canvas.height;
+  constructor(gameCanvas: HTMLCanvasElement, backgroundCanvas) {
+    this.backgroundCtx = backgroundCanvas.getContext('2d');
+    this.canvasWidth = backgroundCanvas.width;
+    this.canvasHeight = backgroundCanvas.height;
+
+    this.gameCtx = gameCanvas.getContext('2d');
 
     this.setup();
 
@@ -122,6 +142,10 @@ export class TowerOfHanoi {
       new Peg(1, pegX * 2, pegY, pegWidth, pegHeight),
       new Peg(2, pegX * 3, pegY, pegWidth, pegHeight)
     );
+
+    this.pegs.forEach(peg => {
+      peg.draw(this.backgroundCtx);
+    });
 
     // Setup Disks
     const diskWidth = this.canvasWidth / 4;
@@ -149,14 +173,14 @@ export class TowerOfHanoi {
    * Draw step of the animation
    */
   private draw() {
-    this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+    this.gameCtx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 
     // Step
     this.stepFrame();
 
     // Draw
     this.pegs.forEach(peg => {
-      peg.draw(this.ctx, this.disks);
+      peg.drawDisks(this.gameCtx, this.disks);
     });
 
     if (this.frameNumber < this.frames.length) {
