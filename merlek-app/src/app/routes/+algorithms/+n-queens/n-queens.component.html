@@ -1,37 +1,40 @@
 <div class="row justify-content-center">
-  <h1>Tower of Hanoi</h1>
+  <h1>N Queens</h1>
 </div>
 
 <div class="row justify-content-center">
   <div class="col">
     <p>
-      <a href="https://en.wikipedia.org/wiki/Tower_of_Hanoi" target="_blank"
-        >Tower of Hanoi.</a
-      >The objective of the puzzle is to move the entire stack of disks to
-      another rod, obeying the following simple rules:
-    </p>
-    <ol>
-      <li>Only one disk can be moved at a time.</li>
-      <li>
-        Each move consists of taking the upper disk from one of the stacks and
-        placing it on top of another stack or on an empty rod.
-      </li>
-      <li>No larger disk may be placed on top of a smaller disk.</li>
-    </ol>
-    <p>
-      The minimal number of moves required is
-      <var>2 <sup>n</sup> − 1</var>, where <var>n</var> is the number of disks
+      <a
+        href="https://en.wikipedia.org/wiki/Eight_queens_puzzle"
+        target="_blank"
+        >N Queens</a
+      >
+      is the problem of placing <var>n</var> chess queens on an
+      <var>n</var>×<var>n</var> chessboard so that no two queens threaten each
+      other; thus, a solution requires that no two queens share the same row,
+      column, or diagonal. Solutions exist for all natural numbers
+      <var>n</var> with the exception of <var>n&nbsp;=&nbsp;2</var> and
+      <var>n&nbsp;=&nbsp;3</var>.
     </p>
   </div>
 </div>
 <div class="row justify-content-center">
   <div class="jumbotron">
-    <canvas
-      id="tower-of-hanoi"
-      style="border: 1px solid;"
-      width="600"
-      height="300"
-    ></canvas>
+    <div id="stage">
+      <canvas
+        id="game-layer"
+        style="border: 1px solid;"
+        width="600"
+        height="300"
+      ></canvas>
+      <canvas
+        id="background-layer"
+        style="border: 1px solid;"
+        width="600"
+        height="300"
+      ></canvas>
+    </div>
     <progressbar
       [animate]="false"
       [value]="algorithm.getProgress()"
@@ -48,8 +51,8 @@
               id="formControlRangeN"
               class="form-control-range"
               type="range"
-              min="1"
-              [max]="10"
+              min="4"
+              max="10"
               step="1"
               [(ngModel)]="algorithm.n"
               [ngModelOptions]="{ standalone: true }"
@@ -67,7 +70,7 @@
               type="range"
               class="form-control-range"
               min="0.5"
-              [max]="30"
+              max="60"
               step="0.5"
               [(ngModel)]="algorithm.fps"
               [ngModelOptions]="{ standalone: true }"
@@ -95,16 +98,28 @@
     <br />
     <div>
       <pre><code>
-hanoi(n: number, src: Peg, dst: Peg, tmp: Peg) {{ '{' }}
-  if (n &gt; 0) {{ '{' }}
-    hanoi(n - 1, src, tmp, dst);
-  
-    // move disk n from src to dst
-    const diskN = src.diskIds.pop();
-    dst.diskIds.push(diskN);
-  
-    hanoi(n - 1, tmp, dst, src);
+placeQueens( queens: number[] = [], r: number = 0, solutions: number[][] = [] ) {{ '{' }}
+  if (r === n) {{ '{' }}
+    solutions.add([queens]);
+  {{ '}' }} else {{ '{' }}
+    for (let x = 0; x &lt; n; x++) {{ '{' }}
+      let legal = true;
+      for (let y = 0; y &lt; r; y++) {{ '{' }}
+        if (
+          queens[y] === x ||
+          queens[y] === x + r - y ||
+          queens[y] === x - r + y
+        ) {{ '{' }}
+          legal = false;
+        {{ '}' }}
+      {{ '}' }}
+      if (legal) {{ '{' }}
+        queens[r] = x;
+        placeQueens(queens, r + 1, solutions);
+      {{ '}' }}
+    {{ '}' }}
   {{ '}' }}
+  return solutions;
 {{ '}' }}
 </code></pre>
     </div>

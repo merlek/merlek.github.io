@@ -147,6 +147,8 @@ export class TowerOfHanoi {
 
     if (this.frameNumber < this.frames.length) {
       this.timeout = window.setTimeout(() => this.draw(), 1000 / this.fps);
+      // TODO change to requestAnimationFrame
+      // https://developer.mozilla.org/en-US/docs/Games/Techniques/Efficient_animation_for_web_games
     }
   }
 

@@ -30,6 +30,13 @@ const routes: Routes = [
       import('./routes/+algorithms/+tower-of-hanoi/tower-of-hanoi.module').then(
         m => m.TowerOfHanoiModule
       )
+  },
+  {
+    path: 'algorithms/n-queens',
+    loadChildren: () =>
+      import('./routes/+algorithms/+n-queens/n-queens.module').then(
+        m => m.NQueensModule
+      )
   }
 ];
 

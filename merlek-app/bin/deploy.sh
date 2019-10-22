@@ -18,6 +18,7 @@ fi
 git push origin master # Deploy to Heroku
 git checkout develop # Checkout master again
 git merge master --no-edit # Merge in the master branch without prompting
+git push origin develop
 
 set +o errexit # Exit on error
 
