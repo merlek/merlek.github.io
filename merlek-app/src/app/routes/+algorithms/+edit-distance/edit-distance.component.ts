@@ -1,0 +1,22 @@
+import { Component, OnInit } from '@angular/core';
+import { NQueens } from '../+n-queens/n-queens';
+
+@Component({
+  selector: 'app-edit-distance',
+  templateUrl: './edit-distance.component.html',
+  styleUrls: ['./edit-distance.component.scss']
+})
+export class EditDistanceComponent implements OnInit {
+  algorithm: EditDistance.EditDistanceCalculator;
+  constructor() {}
+  ngOnInit() {
+    const gameCanvas = <HTMLCanvasElement>document.getElementById('game-layer');
+    const backgroundCanvas = <HTMLCanvasElement>(
+      document.getElementById('background-layer')
+    );
+
+    // this.algorithm = new EditDistance.EditDistanceCalculator();
+
+    // this.algorithm = new NQueens(gameCanvas, backgroundCanvas);
+  }
+}

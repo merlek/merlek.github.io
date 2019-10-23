@@ -101,7 +101,6 @@ interface Frame {
 }
 
 export class TowerOfHanoi {
-  public readonly maxN = 10;
   public n = 5;
   public fps = 2; // (30 * 1000) / ((Math.pow(2, this.n) - 1) * 2);
 

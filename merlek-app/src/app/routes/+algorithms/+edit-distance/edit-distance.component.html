@@ -1,0 +1,124 @@
+<div class="row justify-content-center">
+  <h1>Edit Distance</h1>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col">
+    <p>
+      <a href="https://en.wikipedia.org/wiki/Edit_distance" target="_blank"
+        >Edit distance.</a
+      >
+      in computational linguistics and computer science, is a way of quantifying
+      how dissimilar two strings (e.g., words) are to one another by counting
+      the minimum number of operations required to transform one string into the
+      other. The three possible operations are insertion, deletion, and
+      substitution.
+    </p>
+  </div>
+</div>
+<div class="row justify-content-center">
+  <div class="jumbotron">
+    <div id="stage">
+      <canvas
+        id="game-layer"
+        style="border: 1px solid;"
+        width="600"
+        height="300"
+      ></canvas>
+      <canvas
+        id="background-layer"
+        style="border: 1px solid;"
+        width="600"
+        height="300"
+      ></canvas>
+    </div>
+    <progressbar
+      [animate]="false"
+      [value]="algorithm.getProgress()"
+      [max]="algorithm.getMax()"
+      type="success"
+      >{{ algorithm.getProgress() }} / {{ algorithm.getMax() }}</progressbar
+    >
+    <form class="form">
+      <div class="form-row">
+        <div class="col">
+          <div class="form-group">
+            <label for="formControlRangeN">n={{ algorithm.n }}</label>
+            <input
+              id="formControlRangeN"
+              class="form-control-range"
+              type="range"
+              min="4"
+              max="10"
+              step="1"
+              [(ngModel)]="algorithm.n"
+              [ngModelOptions]="{ standalone: true }"
+              (change)="algorithm.reset()"
+            />
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="formControlRangeFps">
+              speed={{ algorithm.fps | number: '1.1-2' }} fps</label
+            >
+            <input
+              id="formControlRangeFps"
+              type="range"
+              class="form-control-range"
+              min="0.5"
+              max="60"
+              step="0.5"
+              [(ngModel)]="algorithm.fps"
+              [ngModelOptions]="{ standalone: true }"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="algorithm.reset()"
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row justify-content-center">
+  <div class="col">
+    <h2>Pseudocode</h2>
+    <br />
+    <div>
+      <pre><code>
+placeQueens( queens: number[] = [], r: number = 0, solutions: number[][] = [] ) {{ '{' }}
+  if (r === n) {{ '{' }}
+    solutions.add([queens]);
+  {{ '}' }} else {{ '{' }}
+    for (let x = 0; x &lt; n; x++) {{ '{' }}
+      let legal = true;
+      for (let y = 0; y &lt; r; y++) {{ '{' }}
+        if (
+          queens[y] === x ||
+          queens[y] === x + r - y ||
+          queens[y] === x - r + y
+        ) {{ '{' }}
+          legal = false;
+        {{ '}' }}
+      {{ '}' }}
+      if (legal) {{ '{' }}
+        queens[r] = x;
+        placeQueens(queens, r + 1, solutions);
+      {{ '}' }}
+    {{ '}' }}
+  {{ '}' }}
+  return solutions;
+{{ '}' }}
+</code></pre>
+    </div>
+  </div>
+</div>

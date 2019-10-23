@@ -109,9 +109,8 @@ interface Frame {
 }
 
 export class NQueens {
-  public readonly maxN = 10;
   public n = 8;
-  public fps = 2;
+  public fps = this.n * 6;
 
   private readonly backgroundCtx: CanvasRenderingContext2D; // HTML Canvas's 2D context
   private readonly gameCtx: CanvasRenderingContext2D; // HTML Canvas's 2D context
@@ -198,7 +197,7 @@ export class NQueens {
     solutions: number[][] = []
   ): number[][] {
     if (r === this.n) {
-      solutions.push(Object.assign([], queens));
+      solutions.push(Array.from(queens));
       for (let index = 0; index < this.n; index++) {
         this.addFrame(queens, true);
       }
@@ -206,6 +205,8 @@ export class NQueens {
       queens.fill(undefined, r, this.n);
       for (let x = 0; x < this.n; x++) {
         let legal = true;
+        // queens[r] = x;
+        // this.addFrame(queens, false);
         for (let y = 0; y < r; y++) {
           if (
             queens[y] === x ||
@@ -227,7 +228,7 @@ export class NQueens {
 
   private addFrame(queens: number[], solution: boolean) {
     const frame: Frame = {
-      queens: Object.assign([], queens),
+      queens: Array.from(queens),
       solution
     };
     this.frames.push(frame);
