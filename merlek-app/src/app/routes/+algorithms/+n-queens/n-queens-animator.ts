@@ -1,6 +1,7 @@
+import { NQueensAnimation } from './n-queens-animation-builder';
 import queenImageBase64 from './queen-image-base64';
 
-class Board {
+class BoardAnimator {
   private static queenImage: HTMLImageElement = new Image();
   private static initialized = false;
 
@@ -10,9 +11,9 @@ class Board {
   private readonly boardSide: number;
 
   private static initialize() {
-    Board.queenImage = new Image();
-    Board.queenImage.src = queenImageBase64;
-    Board.initialized = true;
+    BoardAnimator.queenImage = new Image();
+    BoardAnimator.queenImage.src = queenImageBase64;
+    BoardAnimator.initialized = true;
   }
   constructor(
     private readonly canvasWidth: number,
@@ -25,8 +26,8 @@ class Board {
     this.x = canvasWidth / 2 - this.boardSide / 2;
     this.y = 0;
 
-    if (!Board.initialized) {
-      Board.initialize();
+    if (!BoardAnimator.initialized) {
+      BoardAnimator.initialize();
     }
   }
 
@@ -83,7 +84,7 @@ class Board {
     const i = this.x + (this.squareSide - w) / 2 + x * this.squareSide;
     const j = this.y + (this.squareSide - w) / 2 + y * this.squareSide;
 
-    ctx.drawImage(Board.queenImage, i, j, w, w);
+    ctx.drawImage(BoardAnimator.queenImage, i, j, w, w);
   }
 
   private drawQueenCircle(ctx: CanvasRenderingContext2D, x: number, y: number) {
@@ -103,31 +104,19 @@ class Board {
   }
 }
 
-interface Frame {
-  queens: number[];
-  solution: boolean;
-}
-
-export class NQueens {
-  public n = 8;
-  public fps = this.n * 6;
-
+export class NQueensAnimator {
+  public fps = 30;
   private readonly backgroundCtx: CanvasRenderingContext2D; // HTML Canvas's 2D context
   private readonly gameCtx: CanvasRenderingContext2D; // HTML Canvas's 2D context
   private readonly canvasWidth: number; // width of the canvas
   private readonly canvasHeight: number; // height of the canvas
-  private board: Board;
-  private frames: Frame[] = [];
+  private nQueensAnimation: NQueensAnimation;
+  private boardAnimator: BoardAnimator;
   private frameNumber = 0;
   private solutionCount = 0;
-  private solutionTotal = 0;
   private lastFrameSolution = false;
   private timeout: number;
 
-  /**
-   * Creates a new animation and sets properties of the animation
-   * @param canvas the HTML Canvas on which to draw
-   */
   constructor(
     gameCanvas: HTMLCanvasElement,
     backgroundCanvas: HTMLCanvasElement
@@ -137,26 +126,24 @@ export class NQueens {
     this.canvasHeight = backgroundCanvas.height;
 
     this.gameCtx = gameCanvas.getContext('2d');
+  }
 
-    this.setup();
-
-    this.draw();
+  public startAnimation(nQueensAnimation: NQueensAnimation) {
+    this.nQueensAnimation = nQueensAnimation;
+    this.reset();
   }
 
   private setup() {
     // Setup Board
     const boardWidth = this.canvasWidth;
     const boardHeight = this.canvasHeight;
-    this.board = new Board(boardWidth, boardHeight, this.n);
+    this.boardAnimator = new BoardAnimator(
+      boardWidth,
+      boardHeight,
+      this.nQueensAnimation.numberOfQueens
+    );
 
-    this.board.drawBoard(this.backgroundCtx);
-
-    // Setup Queens
-    this.addFrame([], false);
-
-    const solutions = this.placeQueens();
-    this.solutionTotal = solutions.length;
-    this.solutionCount = 0;
+    this.boardAnimator.drawBoard(this.backgroundCtx);
   }
 
   /**
@@ -169,9 +156,9 @@ export class NQueens {
     const frame = this.stepFrame();
 
     // Draw
-    this.board.drawQueens(this.gameCtx, frame.queens, frame.solution);
+    this.boardAnimator.drawQueens(this.gameCtx, frame.queens, frame.solution);
 
-    if (this.frameNumber < this.frames.length) {
+    if (this.frameNumber < this.nQueensAnimation.animationFrames.length) {
       this.timeout = window.setTimeout(() => this.draw(), 1000 / this.fps);
       // TODO change to requestAnimationFrame
       // https://developer.mozilla.org/en-US/docs/Games/Techniques/Efficient_animation_for_web_games
@@ -179,7 +166,7 @@ export class NQueens {
   }
 
   private stepFrame() {
-    const frame = this.frames[this.frameNumber++];
+    const frame = this.nQueensAnimation.animationFrames[this.frameNumber++];
     if (frame.solution) {
       if (!this.lastFrameSolution) {
         this.solutionCount++;
@@ -191,69 +178,29 @@ export class NQueens {
     return frame;
   }
 
-  placeQueens(
-    queens: number[] = [],
-    r: number = 0,
-    solutions: number[][] = []
-  ): number[][] {
-    if (r === this.n) {
-      solutions.push(Array.from(queens));
-      for (let index = 0; index < this.n; index++) {
-        this.addFrame(queens, true);
-      }
-    } else {
-      queens.fill(undefined, r, this.n);
-      for (let x = 0; x < this.n; x++) {
-        let legal = true;
-        // queens[r] = x;
-        // this.addFrame(queens, false);
-        for (let y = 0; y < r; y++) {
-          if (
-            queens[y] === x ||
-            queens[y] === x + r - y ||
-            queens[y] === x - r + y
-          ) {
-            legal = false;
-          }
-        }
-        if (legal) {
-          queens[r] = x;
-          this.addFrame(queens, false);
-          this.placeQueens(queens, r + 1, solutions);
-        }
-      }
-    }
-    return solutions;
-  }
-
-  private addFrame(queens: number[], solution: boolean) {
-    const frame: Frame = {
-      queens: Array.from(queens),
-      solution
-    };
-    this.frames.push(frame);
-  }
-
   public getProgress(): number {
-    // tslint:disable-next-line:no-bitwise
-    // return (this.frameNumber / 2) | 0;
     return this.solutionCount;
   }
 
   public getMax(): number {
-    // tslint:disable-next-line:no-bitwise
-    // return (this.frames.length / 2) | 0;
-    return this.solutionTotal;
+    return this.nQueensAnimation.solutionsTotal;
+  }
+
+  public destroy() {
+    if (this.timeout) {
+      window.clearTimeout(this.timeout);
+    }
   }
 
   public reset() {
-    window.clearTimeout(this.timeout);
+    if (this.timeout) {
+      window.clearTimeout(this.timeout);
+    }
 
-    this.frames = [];
     this.frameNumber = 0;
+    this.solutionCount = 0;
 
     this.setup();
-
     this.draw();
   }
 }
