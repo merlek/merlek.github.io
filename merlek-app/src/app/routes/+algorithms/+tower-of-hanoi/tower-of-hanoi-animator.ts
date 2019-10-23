@@ -1,4 +1,9 @@
-class Peg {
+import {
+  TowerOfHanoiFrame,
+  TowerOfHanoiAnimation
+} from './tower-of-hanoi-animation-builder';
+
+class PegAnimator {
   public diskIds: number[] = [];
   constructor(
     public readonly id: number,
@@ -34,7 +39,7 @@ class Peg {
     ctx.restore();
   }
 
-  drawDisks(ctx: CanvasRenderingContext2D, disks: Disk[]) {
+  drawDisks(ctx: CanvasRenderingContext2D, disks: DiskAnimator[]) {
     // Draw Disks
     const x = this.x + this.width / 2;
     let y = this.y + this.height;
@@ -48,7 +53,7 @@ class Peg {
   }
 }
 
-class Disk {
+class DiskAnimator {
   public y = 0;
   public centerX = 0;
   public selected = true;
@@ -91,81 +96,71 @@ class Disk {
   }
 }
 
-interface Frame {
-  pegs: [
-    { id: number; diskIds: number[] },
-    { id: number; diskIds: number[] },
-    { id: number; diskIds: number[] }
-  ];
-  selectedDiskId: number;
-}
-
-export class TowerOfHanoi {
-  public n = 5;
-  public fps = 2; // (30 * 1000) / ((Math.pow(2, this.n) - 1) * 2);
+export class TowerOfHanoiAnimator {
+  public fps = 2;
 
   private readonly backgroundCtx: CanvasRenderingContext2D;
   private readonly gameCtx: CanvasRenderingContext2D;
   private readonly canvasWidth: number; // width of the canvas
   private readonly canvasHeight: number; // height of the canvas
-  private pegs: Peg[] = [];
-  private disks: Disk[] = [];
-  private frames: Frame[] = [];
+  private towerOfHanoiAnimation: TowerOfHanoiAnimation;
+  private pegAnimators: PegAnimator[] = [];
+  private diskAnimators: DiskAnimator[] = [];
   private frameNumber = 0;
   private timeout: number;
 
-  /**
-   * Creates a new animation and sets properties of the animation
-   * @param canvas the HTML Canvas on which to draw
-   */
-  constructor(gameCanvas: HTMLCanvasElement, backgroundCanvas) {
+  constructor(
+    gameCanvas: HTMLCanvasElement,
+    backgroundCanvas: HTMLCanvasElement
+  ) {
     this.backgroundCtx = backgroundCanvas.getContext('2d');
     this.canvasWidth = backgroundCanvas.width;
     this.canvasHeight = backgroundCanvas.height;
 
     this.gameCtx = gameCanvas.getContext('2d');
+  }
 
-    this.setup();
-
-    this.draw();
+  public startAnimation(towerOfHanoiAnimation: TowerOfHanoiAnimation) {
+    this.towerOfHanoiAnimation = towerOfHanoiAnimation;
+    this.reset();
   }
 
   private setup() {
     // Setup Pegs
-    const pegWidth = 5;
+    const pegWidth = this.canvasWidth / 120;
     const pegHeight = (this.canvasHeight * 3) / 4;
     const pegX = this.canvasWidth / 4;
     const pegY = this.canvasHeight - pegHeight;
-    this.pegs.push(
-      new Peg(0, pegX * 1, pegY, pegWidth, pegHeight),
-      new Peg(1, pegX * 2, pegY, pegWidth, pegHeight),
-      new Peg(2, pegX * 3, pegY, pegWidth, pegHeight)
+    this.pegAnimators.push(
+      new PegAnimator(0, pegX * 1, pegY, pegWidth, pegHeight),
+      new PegAnimator(1, pegX * 2, pegY, pegWidth, pegHeight),
+      new PegAnimator(2, pegX * 3, pegY, pegWidth, pegHeight)
     );
 
-    this.pegs.forEach(peg => {
+    this.pegAnimators.forEach(peg => {
       peg.draw(this.backgroundCtx);
     });
 
     // Setup Disks
     const diskWidth = this.canvasWidth / 4;
-    const diskHeight = (pegHeight * 0.95) / this.n;
-    for (let i = 0; i < this.n; i++) {
-      this.disks.push(
-        new Disk(
+    const diskHeight =
+      (pegHeight * 0.95) / this.towerOfHanoiAnimation.numberOfDisks;
+    for (let i = 0; i < this.towerOfHanoiAnimation.numberOfDisks; i++) {
+      this.diskAnimators.push(
+        new DiskAnimator(
           i,
-          (diskWidth * (this.n - i)) / this.n,
+          (diskWidth * (this.towerOfHanoiAnimation.numberOfDisks - i)) /
+            this.towerOfHanoiAnimation.numberOfDisks,
           diskHeight,
-          'hsl(' + (i / this.n) * 360 + ',100%,50%)'
+          'hsl(' +
+            (i / this.towerOfHanoiAnimation.numberOfDisks) * 360 +
+            ',100%,50%)'
         )
       );
-      this.pegs[0].diskIds.push(i);
+      this.pegAnimators[0].diskIds.push(i);
     }
 
-    this.disks[0].selected = true;
-
-    this.addFrame(this.n, this.pegs[0], this.pegs[2], this.pegs[1]);
-
-    this.hanoi(this.n, this.pegs[0], this.pegs[2], this.pegs[1]);
+    this.diskAnimators[0].selected = true;
   }
 
   /**
@@ -178,11 +173,11 @@ export class TowerOfHanoi {
     this.stepFrame();
 
     // Draw
-    this.pegs.forEach(peg => {
-      peg.drawDisks(this.gameCtx, this.disks);
+    this.pegAnimators.forEach(peg => {
+      peg.drawDisks(this.gameCtx, this.diskAnimators);
     });
 
-    if (this.frameNumber < this.frames.length) {
+    if (this.frameNumber < this.towerOfHanoiAnimation.animationFrames.length) {
       this.timeout = window.setTimeout(() => this.draw(), 1000 / this.fps);
       // TODO change to requestAnimationFrame
       // https://developer.mozilla.org/en-US/docs/Games/Techniques/Efficient_animation_for_web_games
@@ -190,48 +185,21 @@ export class TowerOfHanoi {
   }
 
   private stepFrame() {
-    const frame = this.frames[this.frameNumber++];
+    const frame = this.towerOfHanoiAnimation.animationFrames[
+      this.frameNumber++
+    ];
 
-    for (let i = 0; i < this.pegs.length; i++) {
-      const peg = frame.pegs[i];
-      this.pegs[peg.id].diskIds = peg.diskIds;
+    for (let i = 0; i < this.pegAnimators.length; i++) {
+      this.pegAnimators[i].diskIds = frame.pegs[i];
     }
-    this.disks.forEach(disk => {
+    this.diskAnimators.forEach(disk => {
       disk.selected =
         disk.id === frame.selectedDiskId ||
         this.frameNumber === 1 ||
-        this.frameNumber >= this.frames.length;
+        this.frameNumber >= this.towerOfHanoiAnimation.animationFrames.length;
     });
 
     return frame;
-  }
-
-  private hanoi(n: number, src: Peg, dst: Peg, tmp: Peg) {
-    if (n > 0) {
-      this.hanoi(n - 1, src, tmp, dst);
-
-      // move disk n from src to dst
-      const diskN = src.diskIds[src.diskIds.length - 1];
-      this.addFrame(diskN, src, dst, tmp);
-
-      src.diskIds.pop();
-      dst.diskIds.push(diskN);
-      this.addFrame(diskN, src, dst, tmp);
-
-      this.hanoi(n - 1, tmp, dst, src);
-    }
-  }
-
-  private addFrame(diskN: number, src: Peg, dst: Peg, tmp: Peg) {
-    const frame: Frame = {
-      pegs: [
-        { id: src.id, diskIds: Array.from(src.diskIds) },
-        { id: dst.id, diskIds: Array.from(dst.diskIds) },
-        { id: tmp.id, diskIds: Array.from(tmp.diskIds) }
-      ],
-      selectedDiskId: diskN
-    };
-    this.frames.push(frame);
   }
 
   public getProgress(): number {
@@ -241,19 +209,25 @@ export class TowerOfHanoi {
 
   public getMax(): number {
     // tslint:disable-next-line:no-bitwise
-    return (this.frames.length / 2) | 0;
+    return (this.towerOfHanoiAnimation.animationFrames.length / 2) | 0;
   }
 
   public reset() {
-    window.clearTimeout(this.timeout);
+    if (this.timeout) {
+      window.clearTimeout(this.timeout);
+    }
 
-    this.pegs = [];
-    this.disks = [];
-    this.frames = [];
+    this.pegAnimators = [];
+    this.diskAnimators = [];
     this.frameNumber = 0;
 
     this.setup();
-
     this.draw();
+  }
+
+  public destroy() {
+    if (this.timeout) {
+      window.clearTimeout(this.timeout);
+    }
   }
 }
