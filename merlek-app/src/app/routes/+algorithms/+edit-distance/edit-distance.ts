@@ -27,13 +27,13 @@ namespace EditDistance {
     isDelete(edit: number[][]): boolean {
       return this.v === edit[this.i - 1][this.j] + 1;
     }
-    isSub<T>(edit: number[][], src: T[], dst: T[]): boolean {
+    isSub<T>(edit: number[][], src: string | T[], dst: string | T[]): boolean {
       return (
         src[this.i] !== dst[this.j] &&
         this.v === edit[this.i - 1][this.j - 1] + 1
       );
     }
-    isKeep<T>(edit: number[][], src: T[], dst: T[]): boolean {
+    isKeep<T>(edit: number[][], src: string | T[], dst: string | T[]): boolean {
       return (
         src[this.i] === dst[this.j] && this.v === edit[this.i - 1][this.j - 1]
       );
@@ -44,13 +44,17 @@ namespace EditDistance {
     hasDelete(edit: number[][]): boolean {
       return this.v === edit[this.i + 1][this.j] - 1;
     }
-    hasSub<T>(edit: number[][], src: T[], dst: T[]): boolean {
+    hasSub<T>(edit: number[][], src: string | T[], dst: string | T[]): boolean {
       return (
         src[this.i + 1] !== dst[this.j + 1] &&
         this.v === edit[this.i + 1][this.j + 1] - 1
       );
     }
-    hasKeep<T>(edit: number[][], src: T[], dst: T[]): boolean {
+    hasKeep<T>(
+      edit: number[][],
+      src: string | T[],
+      dst: string | T[]
+    ): boolean {
       return (
         src[this.i + 1] === dst[this.j + 1] &&
         this.v === edit[this.i + 1][this.j + 1]
@@ -97,7 +101,7 @@ namespace EditDistance {
       return this.edit != null;
     }
 
-    public toEditPair(src: any[], dst: any[]): EditPair {
+    public toEditPair(src: string | any[], dst: string | any[]): EditPair {
       switch (this.edit) {
         case 'insert':
           return [' ', dst[this.j + 1]];

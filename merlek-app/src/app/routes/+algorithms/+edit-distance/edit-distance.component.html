@@ -68,28 +68,31 @@
     <br />
     <div>
       <pre><code>
-placeQueens( queens: number[] = [], r: number = 0, solutions: number[][] = [] ) {{ '{' }}
-  if (r === n) {{ '{' }}
-    solutions.add([queens]);
-  {{ '}' }} else {{ '{' }}
-    for (let x = 0; x &lt; n; x++) {{ '{' }}
-      let legal = true;
-      for (let y = 0; y &lt; r; y++) {{ '{' }}
-        if (
-          queens[y] === x ||
-          queens[y] === x + r - y ||
-          queens[y] === x - r + y
-        ) {{ '{' }}
-          legal = false;
-        {{ '}' }}
-      {{ '}' }}
-      if (legal) {{ '{' }}
-        queens[r] = x;
-        placeQueens(queens, r + 1, solutions);
-      {{ '}' }}
+editDistance(src: string, dst: string): number[][] {{ '{' }}
+  const edit: number[][] = [];
+
+  const m = src.length - 1;
+  const n = dst.length - 1;
+
+  edit[0] = [];
+  for (let j = 0; j &lt;= n; j++) {{ '{' }}
+    edit[0][j] = j;
+  {{ '}' }}
+  for (let i = 1; i &lt;= m; i++) {{ '{' }}
+    edit[i] = [];
+    edit[i][0] = i;
+    for (let j = 1; j &lt;= n; j++) {{ '{' }}
+      const ins = edit[i][j - 1] + 1;
+      const del = edit[i - 1][j] + 1;
+      let rep = edit[i - 1][j - 1];
+      if (src[i] !== dst[j]) {{ '{' }}
+        rep += 1;
+      }
+      edit[i][j] = Math.min(ins, del, rep);
     {{ '}' }}
   {{ '}' }}
-  return solutions;
+
+  return edit[m][n];
 {{ '}' }}
 </code></pre>
     </div>

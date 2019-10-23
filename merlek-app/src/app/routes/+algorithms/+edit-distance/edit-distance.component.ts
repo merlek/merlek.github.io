@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NQueens } from '../+n-queens/n-queens';
 
 @Component({
   selector: 'app-edit-distance',

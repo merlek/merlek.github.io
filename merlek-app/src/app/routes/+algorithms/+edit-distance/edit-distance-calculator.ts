@@ -1,22 +1,21 @@
 namespace EditDistance {
   export class EditDistanceCalculator {
-    constructor(src: string = 'ALGORITHM', dst: string = 'ALTRUISTIC') {
-      this.src = Array.from(src);
-      this.dst = Array.from(dst);
-
-      this.src = [String.fromCharCode(0)].concat(this.src);
-      this.dst = [String.fromCharCode(0)].concat(this.dst);
+    protected src: string;
+    protected dst: string;
+    protected n: number;
+    protected m: number;
+    constructor(
+      srcInput: string = 'ALGORITHM',
+      dstInput: string = 'ALTRUISTIC'
+    ) {
+      this.src = String.fromCharCode(0).concat(srcInput);
+      this.dst = String.fromCharCode(0).concat(dstInput);
 
       this.m = this.src.length - 1;
       this.n = this.dst.length - 1;
       console.log(this.src, this.m);
       console.log(this.dst, this.n);
     }
-    protected src: string[];
-    protected dst: string[];
-    protected n: number;
-    protected m: number;
-
     protected static newAncestors(
       node: EditSequenceNode,
       ancestorsPathList: PathList = [[]]
