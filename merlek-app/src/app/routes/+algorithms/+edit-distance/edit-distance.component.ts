@@ -15,8 +15,6 @@ export class EditDistanceComponent implements OnInit {
       document.getElementById('background-layer')
     );
 
-    // this.algorithm = new EditDistance.EditDistanceCalculator();
-
-    // this.algorithm = new NQueens(gameCanvas, backgroundCanvas);
+    this.algorithm = new EditDistance.EditDistanceCalculator();
   }
 }
