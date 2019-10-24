@@ -138,8 +138,6 @@ export class EditDistanceAnimator {
       return p;
     }, Array.of([], [], []));
 
-    console.log(edits[0].join(''));
-
     this.wordAnimator = new WordAnimator(
       this.canvasWidth,
       this.canvasHeight,

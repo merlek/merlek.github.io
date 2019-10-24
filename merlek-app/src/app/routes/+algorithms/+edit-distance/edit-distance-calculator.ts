@@ -17,8 +17,6 @@ export class EditDistanceCalculator {
 
     this.m = this.src.length - 1;
     this.n = this.dst.length - 1;
-    console.log(this.src, this.m);
-    console.log(this.dst, this.n);
   }
   protected static newAncestors(
     node: EditSequenceNode,
