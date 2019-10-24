@@ -37,19 +37,31 @@ export abstract class EditNode {
     );
   }
   hasInsert(edit: number[][]): boolean {
-    return this.v === edit[this.i][this.j + 1] - 1;
+    return (
+      this.i < edit.length &&
+      this.j + 1 < edit[0].length &&
+      this.v === edit[this.i][this.j + 1] - 1
+    );
   }
   hasDelete(edit: number[][]): boolean {
-    return this.v === edit[this.i + 1][this.j] - 1;
+    return (
+      this.i + 1 < edit.length &&
+      this.j < edit[0].length &&
+      this.v === edit[this.i + 1][this.j] - 1
+    );
   }
   hasSub<T>(edit: number[][], src: string | T[], dst: string | T[]): boolean {
     return (
+      this.i + 1 < edit.length &&
+      this.j + 1 < edit[0].length &&
       src[this.i + 1] !== dst[this.j + 1] &&
       this.v === edit[this.i + 1][this.j + 1] - 1
     );
   }
   hasKeep<T>(edit: number[][], src: string | T[], dst: string | T[]): boolean {
     return (
+      this.i + 1 < edit.length &&
+      this.j + 1 < edit[0].length &&
       src[this.i + 1] === dst[this.j + 1] &&
       this.v === edit[this.i + 1][this.j + 1]
     );
