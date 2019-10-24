@@ -1,28 +1,42 @@
-import { EditPair } from './edit-distance';
+import { EditPair, Edit } from './edit-distance';
 
 class WordAnimator {
   private static readonly fontBase = 600 / 10;
   private static readonly fontSize = 70;
   private readonly x: number;
-  private readonly y: number;
+  private y: number;
   private readonly letterSize: number;
 
+  private colorMap = {
+    insert: 'yellow',
+    delete: 'red',
+    substitute: '#A4DBEC',
+    keep: 'white'
+  };
+
   constructor(
-    private readonly position: 0 | 1,
     private readonly canvasWidth: number,
     private readonly canvasHeight: number,
-    private readonly word: string | any[]
+    private readonly srcWord: string | any[],
+    private readonly dstWord: string | any[],
+    private readonly edits: string[]
   ) {
+    if (this.srcWord.length !== this.dstWord.length) {
+      throw new Error(
+        'Word lengths differ: srcWord.length=' +
+          this.srcWord.length +
+          ', dstWord.length=' +
+          this.dstWord.length
+      );
+    }
+    // 'words' here should have the same length
     this.letterSize = Math.min(
-      this.canvasWidth / this.word.length,
+      this.canvasWidth / this.srcWord.length,
+      this.canvasWidth / this.dstWord.length,
       this.canvasHeight / 2
     );
 
-    this.x = this.canvasWidth / 2 - (this.letterSize * this.word.length) / 2;
-    this.y =
-      this.canvasHeight / 4 -
-      this.letterSize / 2 +
-      (this.position * this.canvasHeight) / 2;
+    this.x = this.canvasWidth / 2 - (this.letterSize * this.srcWord.length) / 2;
   }
 
   private getFont() {
@@ -33,16 +47,22 @@ class WordAnimator {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
+    this.setY(0);
+    this.drawWord(ctx, this.srcWord);
+    this.setY(1);
+    this.drawWord(ctx, this.dstWord);
+  }
+  drawWord(ctx: CanvasRenderingContext2D, word: string | any[]) {
     // Draw Board
     ctx.save();
 
-    ctx.fillStyle = '#A4DBEC';
     ctx.strokeStyle = 'black';
 
-    for (let i = 0; i < this.word.length; i++) {
+    for (let i = 0; i < word.length; i++) {
       const x = this.x + this.letterSize * i;
       const y = this.y;
       const w = this.letterSize;
+      ctx.fillStyle = this.colorMap[this.edits[i]] || 'black';
       ctx.fillRect(x, y, w, w);
       ctx.strokeRect(x, y, w, w);
     }
@@ -55,14 +75,21 @@ class WordAnimator {
     // const text = ctx.measureText(this.word[0]); // TextMetrics object
     // console.log(text);
 
-    for (let i = 0; i < this.word.length; i++) {
+    for (let i = 0; i < word.length; i++) {
       const x = this.x + this.letterSize * i + this.letterSize / 2;
       const y = this.y + this.letterSize * 0.9;
       const w = this.letterSize;
-      ctx.fillText(this.word[i], x, y, w);
+      ctx.fillText(word[i], x, y, w);
     }
 
     ctx.restore();
+  }
+
+  private setY(position: 0 | 1) {
+    this.y =
+      this.canvasHeight / 4 -
+      this.letterSize / 2 +
+      (position * this.canvasHeight) / 2;
   }
 }
 
@@ -102,7 +129,7 @@ export class EditDistanceAnimator {
     // let word2 = '';
     // let edits = [];
 
-    const edits = this.editDistanceAnimation.reduce((p, c) => {
+    const edits = this.editDistanceAnimation.reduce<string[][]>((p, c) => {
       if (c) {
         p[0].push(c.src);
         p[1].push(c.dst);
@@ -114,22 +141,12 @@ export class EditDistanceAnimator {
     console.log(edits[0].join(''));
 
     this.wordAnimator = new WordAnimator(
-      0,
       this.canvasWidth,
       this.canvasHeight,
-      edits[0].join('')
+      edits[0].join(''),
+      edits[1].join(''),
+      edits[2]
     );
-
-    this.wordAnimator.draw(this.backgroundCtx);
-
-    this.wordAnimator = new WordAnimator(
-      1,
-      this.canvasWidth,
-      this.canvasHeight,
-      edits[1].join('')
-    );
-
-    this.wordAnimator.draw(this.backgroundCtx);
   }
 
   /**
@@ -137,12 +154,11 @@ export class EditDistanceAnimator {
    */
   private draw() {
     this.gameCtx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-
     // Step
     // const frame = this.stepFrame();
 
     // Draw
-    // this.boardAnimator.drawQueens(this.gameCtx, frame.queens, frame.solution);
+    this.wordAnimator.draw(this.gameCtx);
 
     // if (this.frameNumber < this.editDistanceAnimation.animationFrames.length) {
     //   this.timeout = window.setTimeout(() => this.draw(), 1000 / this.fps);

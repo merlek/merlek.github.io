@@ -42,6 +42,9 @@
               class="form-control"
               id="srcString"
               placeholder="ALGORITHM"
+              [(ngModel)]="src"
+              [ngModelOptions]="{ standalone: true }"
+              (change)="reset()"
             />
           </div>
         </div>
@@ -55,6 +58,9 @@
               class="form-control"
               id="dstString"
               placeholder="ALTRUISTIC"
+              [(ngModel)]="dst"
+              [ngModelOptions]="{ standalone: true }"
+              (change)="reset()"
             />
           </div>
         </div>

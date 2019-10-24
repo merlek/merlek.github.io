@@ -1,9 +1,9 @@
 import {
-  EditSequenceNode,
-  PathList,
   EditPair,
   EditSequenceEndNode,
-  EditTreeNode
+  EditSequenceNode,
+  EditTreeNode,
+  PathList
 } from './edit-distance';
 
 export class EditDistanceCalculator {
@@ -79,7 +79,7 @@ export class EditDistanceCalculator {
 
     if (node.isEqual(this.m, this.n)) {
       return EditDistanceCalculator.newAncestors(node, ancestorsPathList);
-    } else if (i >= this.m || j >= this.n) {
+    } else if (i > this.m || j > this.n) {
       return undefined;
     }
 
@@ -165,7 +165,7 @@ export class EditDistanceCalculator {
 
     if (node.isEqual(this.m, this.n)) {
       return node;
-    } else if (i >= this.m || j >= this.n) {
+    } else if (i > this.m || j > this.n) {
       return undefined;
     }
 

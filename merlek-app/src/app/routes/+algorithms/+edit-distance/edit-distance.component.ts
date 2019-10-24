@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EditDistanceAnimator } from './edit-distance-animator';
 import { EditDistanceCalculator } from './edit-distance-calculator';
+import { EditSequenceNode, PathList } from './edit-distance';
 
 @Component({
   selector: 'app-edit-distance',
@@ -9,6 +10,10 @@ import { EditDistanceCalculator } from './edit-distance-calculator';
 })
 export class EditDistanceComponent implements OnInit {
   animator: EditDistanceAnimator;
+
+  src: string;
+  dst: string;
+
   constructor() {}
   ngOnInit() {
     const gameCanvas = <HTMLCanvasElement>document.getElementById('game-layer');
@@ -16,10 +21,15 @@ export class EditDistanceComponent implements OnInit {
       document.getElementById('background-layer')
     );
 
-    const ed = new EditDistanceCalculator();
-    console.log(ed.editSequence());
-
     this.animator = new EditDistanceAnimator(gameCanvas, backgroundCanvas);
-    this.animator.startAnimation(ed.editSequence()[0]);
+    this.animator.startAnimation(
+      new EditDistanceCalculator().editSequence()[0]
+    );
+  }
+
+  reset() {
+    this.animator.startAnimation(
+      new EditDistanceCalculator(this.src, this.dst).editSequence()[0]
+    );
   }
 }
