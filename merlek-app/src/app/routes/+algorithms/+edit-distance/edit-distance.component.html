@@ -24,22 +24,11 @@
     </div>
 
     <form class="form">
-      <div class="row justify-content-center mt-1">
-        <div class="col">
-          <progressbar
-            [animate]="false"
-            [value]="animator.getProgress()"
-            [max]="animator.getMax()"
-            type="success"
-            >{{ animator.getProgress() }} / {{ animator.getMax() }}</progressbar
-          >
-        </div>
-      </div>
       <div class="row justify-content-center align-items-center mt-1">
         <div class="col-2">
           <div class="form-group">
             <button
-              class="btn btn-dark float-left"
+              class="btn btn-dark float-right"
               type="button"
               (click)="animator.previous()"
             >
@@ -47,6 +36,29 @@
             </button>
           </div>
         </div>
+        <div class="col-8">
+          <progressbar
+            [animate]="false"
+            [value]="animator.getProgress() + 1"
+            [max]="animator.getMax()"
+            type="success"
+            >{{ animator.getProgress() + 1 }} /
+            {{ animator.getMax() }}</progressbar
+          >
+        </div>
+        <div class="col-2">
+          <div class="form-group">
+            <button
+              class="btn btn-dark float-left"
+              type="button"
+              (click)="animator.next()"
+            >
+              <i class="fas fa-forward"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
         <div class="col-4">
           <div class="input-group">
             <div class="input-group-prepend">
@@ -62,17 +74,6 @@
               [ngModelOptions]="{ standalone: true }"
               disabled
             />
-          </div>
-        </div>
-        <div class="col-2">
-          <div class="form-group">
-            <button
-              class="btn btn-dark float-right"
-              type="button"
-              (click)="animator.next()"
-            >
-              <i class="fas fa-forward"></i>
-            </button>
           </div>
         </div>
       </div>
