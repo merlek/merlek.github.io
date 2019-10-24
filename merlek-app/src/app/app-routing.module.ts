@@ -37,6 +37,13 @@ const routes: Routes = [
       import('./routes/+algorithms/+n-queens/n-queens.module').then(
         m => m.NQueensModule
       )
+  },
+  {
+    path: 'algorithms/edit-distance',
+    loadChildren: () =>
+      import('./routes/+algorithms/+edit-distance/edit-distance.module').then(
+        m => m.EditDistanceModule
+      )
   }
 ];
 

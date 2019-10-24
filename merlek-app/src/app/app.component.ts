@@ -15,7 +15,8 @@ export class AppComponent {
     ]),
     new Nav('Algorithms', 'algorithms', [
       new Nav('Tower of Hanoi', 'tower-of-hanoi'),
-      new Nav('N Queens', 'n-queens')
+      new Nav('N Queens', 'n-queens'),
+      new Nav('Edit Distance', 'edit-distance')
     ])
   ];
 }
