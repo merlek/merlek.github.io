@@ -4,7 +4,7 @@
   min-height: 24rem;
 }
 
-/deep/ table {
+::ng-deep table {
   margin: 1rem auto;
 }
 
@@ -20,6 +20,7 @@ a {
 .opacity-50 {
   opacity: 0.5;
 }
+
 .opacity-75 {
   opacity: 0.75;
 }
@@ -27,12 +28,15 @@ a {
 .font-size-2_5 {
   font-size: 2.5em;
 }
+
 .font-size-1_5 {
   font-size: 1.5em;
 }
+
 .font-size-0_8 {
   font-size: .8em;
 }
+
 .font-size-0_7 {
   font-size: .7em;
 }

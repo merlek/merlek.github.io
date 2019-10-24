@@ -101,7 +101,7 @@ export class EditDistanceAnimator {
   private readonly gameCtx: CanvasRenderingContext2D; // HTML Canvas's 2D context
   private readonly canvasWidth: number; // width of the canvas
   private readonly canvasHeight: number; // height of the canvas
-  private editDistanceAnimation: EditPair[];
+  private editDistanceAnimation: EditPair[][];
   private wordAnimator: WordAnimator;
   private frameNumber = 0;
   private solutionCount = 0;
@@ -119,7 +119,7 @@ export class EditDistanceAnimator {
     this.gameCtx = gameCanvas.getContext('2d');
   }
 
-  public startAnimation(editDistanceAnimation: EditPair[]) {
+  public startAnimation(editDistanceAnimation: EditPair[][]) {
     this.editDistanceAnimation = editDistanceAnimation;
     this.reset();
   }
@@ -129,7 +129,9 @@ export class EditDistanceAnimator {
     // let word2 = '';
     // let edits = [];
 
-    const edits = this.editDistanceAnimation.reduce<string[][]>((p, c) => {
+    const edits = this.editDistanceAnimation[this.solutionCount].reduce<
+      string[][]
+    >((p, c) => {
       if (c) {
         p[0].push(c.src);
         p[1].push(c.dst);
@@ -193,14 +195,29 @@ export class EditDistanceAnimator {
   }
 
   public reset() {
+    this.softReset();
+    this.solutionCount = 0;
+  }
+
+  public softReset() {
     if (this.timeout) {
       window.clearTimeout(this.timeout);
     }
 
     this.frameNumber = 0;
-    this.solutionCount = 0;
 
     this.setup();
     this.draw();
+  }
+
+  public previous() {
+    this.solutionCount =
+      (this.solutionCount - 1) % this.editDistanceAnimation.length;
+    this.softReset();
+  }
+  public next() {
+    this.solutionCount =
+      (this.solutionCount + 1) % this.editDistanceAnimation.length;
+    this.softReset();
   }
 }

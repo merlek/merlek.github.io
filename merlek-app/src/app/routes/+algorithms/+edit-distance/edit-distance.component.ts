@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { EditDistanceAnimator } from './edit-distance-animator';
 import { EditDistanceCalculator } from './edit-distance-calculator';
 import { EditSequenceNode, PathList } from './edit-distance';
@@ -8,11 +8,12 @@ import { EditSequenceNode, PathList } from './edit-distance';
   templateUrl: './edit-distance.component.html',
   styleUrls: ['./edit-distance.component.scss']
 })
-export class EditDistanceComponent implements OnInit {
+export class EditDistanceComponent implements OnInit, OnDestroy {
   animator: EditDistanceAnimator;
-
   src: string;
   dst: string;
+
+  distance: number;
 
   constructor() {}
   ngOnInit() {
@@ -22,14 +23,14 @@ export class EditDistanceComponent implements OnInit {
     );
 
     this.animator = new EditDistanceAnimator(gameCanvas, backgroundCanvas);
-    this.animator.startAnimation(
-      new EditDistanceCalculator().editSequence()[0]
-    );
+    this.reset();
   }
-
+  ngOnDestroy(): void {
+    this.animator.destroy();
+  }
   reset() {
-    this.animator.startAnimation(
-      new EditDistanceCalculator(this.src, this.dst).editSequence()[0]
-    );
+    const edc = new EditDistanceCalculator(this.src, this.dst);
+    this.distance = edc.editDistance();
+    this.animator.startAnimation(edc.editSequence());
   }
 }
