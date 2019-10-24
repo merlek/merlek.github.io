@@ -11,7 +11,7 @@ export class EditDistanceCalculator {
   protected dst: string;
   protected n: number;
   protected m: number;
-  constructor(srcInput: string = 'ALGORITHM', dstInput: string = 'ALTRUISTIC') {
+  constructor(srcInput: string = '', dstInput: string = '') {
     this.src = String.fromCharCode(0).concat(srcInput);
     this.dst = String.fromCharCode(0).concat(dstInput);
 

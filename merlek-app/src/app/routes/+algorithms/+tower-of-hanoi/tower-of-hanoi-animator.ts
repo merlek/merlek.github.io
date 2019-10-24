@@ -203,13 +203,11 @@ export class TowerOfHanoiAnimator {
   }
 
   public getProgress(): number {
-    // tslint:disable-next-line:no-bitwise
-    return (this.frameNumber / 2) | 0;
+    return Math.floor(this.frameNumber / 2);
   }
 
   public getMax(): number {
-    // tslint:disable-next-line:no-bitwise
-    return (this.towerOfHanoiAnimation.animationFrames.length / 2) | 0;
+    return Math.floor(this.towerOfHanoiAnimation.animationFrames.length / 2);
   }
 
   public reset() {

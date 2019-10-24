@@ -1,18 +1,25 @@
-import { EditPair, Edit } from './edit-distance';
+import { EditPair } from './edit-distance';
+import { EditDistanceBase64Images } from './edit-distance-base64-images';
+import { ImageLoader } from 'app/lib/image-loader';
 
 class WordAnimator {
+  private static readonly ImageLoader = new ImageLoader({
+    insert: EditDistanceBase64Images.plus,
+    delete: EditDistanceBase64Images.times,
+    substitute: EditDistanceBase64Images.exchange
+  });
+
+  private static readonly editColorMap = {
+    insert: '#D4EDDA',
+    delete: '#F8D7DA',
+    substitute: '#FFF3CD',
+    keep: 'white'
+  };
   private static readonly fontBase = 600 / 10;
   private static readonly fontSize = 70;
   private readonly x: number;
   private y: number;
   private readonly letterSize: number;
-
-  private colorMap = {
-    insert: 'yellow',
-    delete: 'red',
-    substitute: '#A4DBEC',
-    keep: 'white'
-  };
 
   constructor(
     private readonly canvasWidth: number,
@@ -39,61 +46,110 @@ class WordAnimator {
     this.x = this.canvasWidth / 2 - (this.letterSize * this.srcWord.length) / 2;
   }
 
-  private getFont() {
+  private static getFont(letterSize: number) {
     const ratio = WordAnimator.fontSize / WordAnimator.fontBase; // calc ratio
-    const size = this.letterSize * ratio; // this.canvasWidth * ratio; // get font size based on current width
-    // tslint:disable-next-line:no-bitwise
-    return (size | 0) + 'px sans-serif'; // set font
+    const size = letterSize * ratio; // this.canvasWidth * ratio; // get font size based on current width
+    return Math.floor(size) + 'px sans-serif'; // set font
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    this.setY(0);
+    const y0 = this.calcY(0);
+    const y1 = this.calcY(1);
+
+    this.y = y0;
     this.drawWord(ctx, this.srcWord);
-    this.setY(1);
+
+    this.drawEdits(ctx, y0 + this.letterSize, y1);
+
+    this.y = y1;
     this.drawWord(ctx, this.dstWord);
   }
   drawWord(ctx: CanvasRenderingContext2D, word: string | any[]) {
-    // Draw Board
     ctx.save();
 
     ctx.strokeStyle = 'black';
 
+    const w = this.letterSize;
+    let y = this.y;
+
     for (let i = 0; i < word.length; i++) {
-      const x = this.x + this.letterSize * i;
-      const y = this.y;
-      const w = this.letterSize;
-      ctx.fillStyle = this.colorMap[this.edits[i]] || 'black';
-      ctx.fillRect(x, y, w, w);
-      ctx.strokeRect(x, y, w, w);
+      if (this.edits[i] !== 'keep') {
+        const x = this.x + w * i;
+        ctx.fillStyle = WordAnimator.editColorMap[this.edits[i]] || 'black';
+        ctx.fillRect(x, y, w, w);
+        ctx.strokeRect(x, y, w, w);
+      }
     }
 
     ctx.fillStyle = 'black';
-    ctx.font = this.getFont();
+    ctx.font = WordAnimator.getFont(w);
     ctx.textAlign = 'center';
     ctx.textBaseline = 'alphabetic';
 
-    // const text = ctx.measureText(this.word[0]); // TextMetrics object
-    // console.log(text);
+    y = this.y + w * 0.9;
 
     for (let i = 0; i < word.length; i++) {
-      const x = this.x + this.letterSize * i + this.letterSize / 2;
-      const y = this.y + this.letterSize * 0.9;
-      const w = this.letterSize;
+      const x = this.x + w * i + w / 2;
       ctx.fillText(word[i], x, y, w);
     }
 
     ctx.restore();
   }
 
-  private setY(position: 0 | 1) {
-    this.y =
+  drawEdits(ctx: CanvasRenderingContext2D, y1: number, y2: number) {
+    // distance between top and bottom of words
+    const d = y2 - y1;
+    let w = Math.min(this.letterSize, d);
+    let y = y1 + (y2 - y1) / 2 - w / 2;
+
+    if (y1 <= y && y <= y2) {
+      // Draw Board
+      ctx.save();
+
+      ctx.strokeStyle = 'black';
+
+      for (let i = 0; i < this.edits.length; i++) {
+        if (this.edits[i] !== 'keep') {
+          const x =
+            this.x + this.letterSize * i + (this.letterSize / 2 - w / 2);
+          ctx.fillStyle = WordAnimator.editColorMap[this.edits[i]] || 'black';
+          ctx.fillRect(x, y, w, w);
+          ctx.strokeRect(x, y, w, w);
+        }
+      }
+
+      ctx.fillStyle = 'black';
+      ctx.font = WordAnimator.getFont(w);
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'alphabetic';
+
+      const scale = 0.9;
+      w = w * scale;
+      y = y + (w * (1 - scale)) / 2;
+
+      for (let i = 0; i < this.edits.length; i++) {
+        const edit = this.edits[i];
+        const x = this.x + this.letterSize * i + (this.letterSize / 2 - w / 2);
+
+        if (WordAnimator.ImageLoader.hasImage(edit)) {
+          WordAnimator.ImageLoader.onLoad(function(images) {
+            ctx.drawImage(images[edit], x, y, w, w);
+          });
+        }
+      }
+
+      ctx.restore();
+    }
+  }
+
+  private calcY(position: 0 | 1) {
+    return (
       this.canvasHeight / 4 -
       this.letterSize / 2 +
-      (position * this.canvasHeight) / 2;
+      (position * this.canvasHeight) / 2
+    );
   }
 }
-
-type EditDistanceAnimation = [string, string];
 
 export class EditDistanceAnimator {
   public fps = 30;
@@ -199,7 +255,7 @@ export class EditDistanceAnimator {
     this.solutionCount = 0;
   }
 
-  public softReset() {
+  private softReset() {
     if (this.timeout) {
       window.clearTimeout(this.timeout);
     }

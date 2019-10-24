@@ -1,20 +1,15 @@
 import { NQueensAnimation } from './n-queens-animation-builder';
 import queenImageBase64 from './queen-image-base64';
+import { ImageLoader } from 'app/lib/image-loader';
 
 class BoardAnimator {
-  private static queenImage: HTMLImageElement = new Image();
-  private static initialized = false;
-
+  private static readonly ImageLoader: ImageLoader = new ImageLoader({
+    queen: queenImageBase64
+  });
   private readonly x: number;
   private readonly y: number;
   private readonly squareSide: number;
   private readonly boardSide: number;
-
-  private static initialize() {
-    BoardAnimator.queenImage = new Image();
-    BoardAnimator.queenImage.src = queenImageBase64;
-    BoardAnimator.initialized = true;
-  }
   constructor(
     private readonly canvasWidth: number,
     private readonly canvasHeight: number,
@@ -25,10 +20,6 @@ class BoardAnimator {
 
     this.x = canvasWidth / 2 - this.boardSide / 2;
     this.y = 0;
-
-    if (!BoardAnimator.initialized) {
-      BoardAnimator.initialize();
-    }
   }
 
   drawBoard(ctx: CanvasRenderingContext2D) {
@@ -84,7 +75,9 @@ class BoardAnimator {
     const i = this.x + (this.squareSide - w) / 2 + x * this.squareSide;
     const j = this.y + (this.squareSide - w) / 2 + y * this.squareSide;
 
-    ctx.drawImage(BoardAnimator.queenImage, i, j, w, w);
+    BoardAnimator.ImageLoader.onLoad(function(images) {
+      ctx.drawImage(images['queen'], i, j, w, w);
+    });
   }
 
   private drawQueenCircle(ctx: CanvasRenderingContext2D, x: number, y: number) {

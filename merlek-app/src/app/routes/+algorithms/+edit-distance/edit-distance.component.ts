@@ -1,7 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EditDistanceAnimator } from './edit-distance-animator';
 import { EditDistanceCalculator } from './edit-distance-calculator';
-import { EditSequenceNode, PathList } from './edit-distance';
 
 @Component({
   selector: 'app-edit-distance',
@@ -29,7 +28,10 @@ export class EditDistanceComponent implements OnInit, OnDestroy {
     this.animator.destroy();
   }
   reset() {
-    const edc = new EditDistanceCalculator(this.src, this.dst);
+    const edc = new EditDistanceCalculator(
+      this.src || 'ALGORITHM',
+      this.dst || 'ALTRUISTIC'
+    );
     this.distance = edc.editDistance();
     this.animator.startAnimation(edc.editSequence());
   }
