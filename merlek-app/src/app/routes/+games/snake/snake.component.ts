@@ -8,6 +8,7 @@ import { State } from './snake';
   styleUrls: ['./snake.component.scss']
 })
 export class SnakeComponent implements OnInit, OnDestroy {
+  private _highScore = 0;
   animator: SnakeAnimator;
   constructor() {}
 
@@ -25,5 +26,14 @@ export class SnakeComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.animator.destroy();
+  }
+  get score() {
+    return this.animator.state.snake.length;
+  }
+  get highScore() {
+    if (this.score > this._highScore) {
+      this._highScore = this.score;
+    }
+    return this._highScore;
   }
 }

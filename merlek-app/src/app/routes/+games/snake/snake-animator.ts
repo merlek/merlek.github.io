@@ -1,7 +1,7 @@
 import { State, Direction } from './snake';
 
 export class SnakeAnimator {
-  public fps = 30;
+  public fps = 15;
   private readonly backgroundCtx: CanvasRenderingContext2D; // HTML Canvas's 2D context
   private readonly gameCtx: CanvasRenderingContext2D; // HTML Canvas's 2D context
   private readonly canvasWidth: number; // width of the canvas
@@ -10,7 +10,7 @@ export class SnakeAnimator {
   constructor(
     gameCanvas: HTMLCanvasElement,
     backgroundCanvas: HTMLCanvasElement,
-    private state: State = new State()
+    public state: State = new State()
   ) {
     this.backgroundCtx = backgroundCanvas.getContext('2d');
     this.canvasWidth = backgroundCanvas.width;
