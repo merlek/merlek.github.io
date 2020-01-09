@@ -1,7 +1,7 @@
 import { State, Direction } from './snake';
 
 export class SnakeAnimator {
-  public fps = 60;
+  public fps = 30;
   private readonly backgroundCtx: CanvasRenderingContext2D; // HTML Canvas's 2D context
   private readonly gameCtx: CanvasRenderingContext2D; // HTML Canvas's 2D context
   private readonly canvasWidth: number; // width of the canvas
@@ -23,7 +23,7 @@ export class SnakeAnimator {
     this.animationFrameId = window.requestAnimationFrame(this.update(0));
   }
   private update = (t1: DOMHighResTimeStamp) => (t2: DOMHighResTimeStamp) => {
-    if (t2 - t1 > this.fps) {
+    if (t2 - t1 > 1000 / this.fps) {
       this.state = this.state.next();
       this.draw();
       this.animationFrameId = window.requestAnimationFrame(this.update(t2));
@@ -38,7 +38,7 @@ export class SnakeAnimator {
 
     // draw snake
     this.gameCtx.fillStyle = 'rgb(0,200,50)';
-    this.state.snake.map(p =>
+    this.state.snake.forEach(p =>
       this.gameCtx.fillRect(this.x(p.x), this.y(p.y), this.x(1), this.y(1))
     );
 

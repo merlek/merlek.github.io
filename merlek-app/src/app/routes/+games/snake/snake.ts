@@ -18,8 +18,8 @@ export class Direction {
 
 export class State {
   constructor(
-    public readonly cols: number = 20,
-    public readonly rows: number = 14,
+    public readonly cols: number = 70,
+    public readonly rows: number = 50,
     public readonly moves: Point[] = [Direction.EAST],
     public readonly snake: Point[] = [],
     public readonly apple: Point = new Point(16, 2)
