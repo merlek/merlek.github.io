@@ -44,6 +44,11 @@ const routes: Routes = [
       import('./routes/+algorithms/+edit-distance/edit-distance.module').then(
         m => m.EditDistanceModule
       )
+  },
+  {
+    path: 'games/snake',
+    loadChildren: () =>
+      import('./routes/+games/snake/snake.module').then(m => m.SnakeModule)
   }
 ];
 

@@ -24,8 +24,6 @@ export class HeaderComponent implements OnInit {
   title: string;
   @Input()
   navs: Nav[];
-
   constructor() {}
-
   ngOnInit() {}
 }
