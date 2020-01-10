@@ -1,6 +1,6 @@
-import { SnakeGameState } from './snake-game-state';
-import { Directions, Point } from './point';
-import { Snake } from './snake';
+import { SnakeGameState } from '../core/snake-game-state';
+import { Directions, Point } from '../core/point';
+import { Snake } from '../core/snake';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 interface RoundedRectRadius {
