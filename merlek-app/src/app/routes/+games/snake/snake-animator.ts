@@ -11,8 +11,8 @@ interface RoundedRectRadius {
 }
 
 export class SnakeAnimator {
-  static readonly SNAKE_COLORS = ['rgb(0,200,50)', 'rgb(250,250,0)'];
-  static readonly APPLE_COLOR = 'rgb(255,50,0)';
+  static readonly SNAKE_COLORS = ['#00c832', '#c7c700'];
+  static readonly APPLE_COLOR = '#ff3200';
   static readonly BACKGROUND_COLOR = '#232323';
   static readonly CRASH_COLOR = 'rgb(255,0,0)';
   public fps = 10;
