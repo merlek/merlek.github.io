@@ -23,7 +23,8 @@ export class SnakeGameState {
       this.rows,
       [startingMove],
       startingPoint,
-      this.apple
+      this.apple,
+      [startingPoint]
     );
   }
   public isCrash(): boolean {

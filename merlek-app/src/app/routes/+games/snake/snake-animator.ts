@@ -10,6 +10,8 @@ export class SnakeAnimator {
   public fps = 10;
   private readonly backgroundCtx: CanvasRenderingContext2D; // HTML Canvas's 2D context
   private readonly gameCtx: CanvasRenderingContext2D; // HTML Canvas's 2D context
+  private readonly uiCtx: CanvasRenderingContext2D; // HTML Canvas's 2D context
+
   private readonly canvasWidth: number; // width of the canvas
   private readonly canvasHeight: number; // height of the canvas
   private animationFrameId: number;
@@ -17,36 +19,44 @@ export class SnakeAnimator {
   constructor(
     gameCanvas: HTMLCanvasElement,
     backgroundCanvas: HTMLCanvasElement,
+    uiCanvas: HTMLCanvasElement,
     public state: SnakeGameState = new SnakeGameState()
   ) {
-    this.backgroundCtx = backgroundCanvas.getContext('2d');
+    this.backgroundCtx = backgroundCanvas.getContext('2d', { alpha: false });
     this.canvasWidth = backgroundCanvas.width;
     this.canvasHeight = backgroundCanvas.height;
 
     this.gameCtx = gameCanvas.getContext('2d');
+    this.uiCtx = uiCanvas.getContext('2d');
   }
   public start(): void {
-    this.draw();
+    this.drawBackground();
+    this.drawGame();
+    this.pause();
     this.animationFrameId = window.requestAnimationFrame(this.update(0));
   }
   private update = (t1: DOMHighResTimeStamp) => (t2: DOMHighResTimeStamp) => {
-    if (t2 - t1 > 1000 / this.fps && !this.paused) {
-      this.state = this.state.next();
-      this.draw();
+    if (t2 - t1 > 1000 / this.fps) {
+      if (!this.paused) {
+        this.state = this.state.next();
+        this.drawGame();
+      }
+
       this.animationFrameId = window.requestAnimationFrame(this.update(t2));
     } else {
       this.animationFrameId = window.requestAnimationFrame(this.update(t1));
     }
   }
-  private draw(): void {
-    this.clearDrawing(this.gameCtx);
-    this.drawSnakes(this.gameCtx, this.state);
-    this.drawApple(this.gameCtx, this.state);
-    this.drawCrash(this.gameCtx, this.state);
+  private drawGame(ctx: CanvasRenderingContext2D = this.gameCtx): void {
+    this.clearDrawing(ctx);
+    this.drawSnakes(ctx, this.state);
+    this.drawApple(ctx, this.state);
+    if (this.state.isCrash()) {
+      this.drawCrash(ctx);
+    }
   }
   private clearDrawing(ctx: CanvasRenderingContext2D) {
-    ctx.fillStyle = SnakeAnimator.BACKGROUND_COLOR;
-    ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+    ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
   }
   private drawSnakes(ctx: CanvasRenderingContext2D, state: SnakeGameState) {
     ctx.save();
@@ -70,11 +80,65 @@ export class SnakeAnimator {
       this.y(1)
     );
   }
-  private drawCrash(ctx: CanvasRenderingContext2D, state: SnakeGameState) {
-    if (state.isCrash()) {
-      ctx.fillStyle = SnakeAnimator.CRASH_COLOR;
-      ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
-    }
+  private drawCrash(ctx: CanvasRenderingContext2D) {
+    this.drawBackground(ctx, SnakeAnimator.CRASH_COLOR);
+  }
+  private drawPaused(ctx: CanvasRenderingContext2D = this.uiCtx) {
+    ctx.save();
+
+    const x = this.canvasWidth / 2;
+    const y = this.canvasHeight / 2;
+
+    const w = this.canvasWidth / 4;
+    const h = this.canvasHeight / 8;
+
+    ctx.globalAlpha = 0.5;
+
+    ctx.fillStyle = 'grey'; // SnakeAnimator.BACKGROUND_COLOR;
+    this.fillRoundedRect(ctx, x - w / 2, y - h / 2, w, h);
+
+    ctx.globalAlpha = 1;
+
+    ctx.fillStyle = 'white';
+    ctx.font = '24px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('Paused', x, y);
+
+    ctx.restore();
+  }
+  drawBackground(
+    ctx: CanvasRenderingContext2D = this.backgroundCtx,
+    color: string = SnakeAnimator.BACKGROUND_COLOR
+  ) {
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+  }
+  private fillRoundedRect(
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    radius = 10
+  ) {
+    ctx.save();
+
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
+
+    ctx.fill();
+
+    ctx.restore();
   }
   public destroy(): void {
     if (this.animationFrameId) {
@@ -127,9 +191,14 @@ export class SnakeAnimator {
     return Math.round((y * this.canvasHeight) / this.state.rows);
   }
   public pause() {
-    this.paused = !this.paused;
+    if ((this.paused = !this.paused)) {
+      this.drawPaused();
+    } else {
+      this.clearDrawing(this.uiCtx);
+    }
   }
   public toggleTwoPlayers() {
     this.state = new SnakeGameState(!this.state.isTwoPlayers);
+    this.drawGame();
   }
 }

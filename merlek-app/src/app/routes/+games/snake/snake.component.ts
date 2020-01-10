@@ -14,12 +14,11 @@ export class SnakeComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit() {
-    const gameCanvas = <HTMLCanvasElement>document.getElementById('game-layer');
-    const backgroundCanvas = <HTMLCanvasElement>(
-      document.getElementById('background-layer')
+    this.animator = new SnakeAnimator(
+      <HTMLCanvasElement>document.getElementById('game-layer'),
+      <HTMLCanvasElement>document.getElementById('background-layer'),
+      <HTMLCanvasElement>document.getElementById('ui-layer')
     );
-
-    this.animator = new SnakeAnimator(gameCanvas, backgroundCanvas);
 
     window.addEventListener('keydown', e => {
       if (this.animator.keyEvent(e.key)) {
