@@ -18,8 +18,8 @@
 <div class="row justify-content-center">
   <div class="jumbotron">
     <div id="stage">
-      <canvas id="game-layer" width="700" height="500"></canvas>
-      <canvas id="background-layer" width="700" height="500"></canvas>
+      <canvas id="game-layer" width="600" height="600"></canvas>
+      <canvas id="background-layer" width="600" height="600"></canvas>
     </div>
 
     <form class="form">
@@ -57,26 +57,40 @@
           </div>
         </div>
       </div>
-      <div class="row justify-content-center align-items-center mt-1">
+      <div class="row justify-content-center mt-2">
         <div class="col-4">
           <div class="form-group">
-            <button
-              class="btn btn-dark"
-              type="button"
-              (click)="animator.pause()"
-              *ngIf="!animator.paused"
-            >
-              <i class="fas fa-pause"></i>
-            </button>
-            <button
-              class="btn btn-dark"
-              type="button"
-              (click)="animator.pause()"
-              *ngIf="animator.paused"
-            >
-              <i class="fas fa-play"></i>
-            </button>
+            <div class="custom-control custom-checkbox">
+              <input
+                class="custom-control-input"
+                type="checkbox"
+                [checked]="animator.state.isTwoPlayers"
+                (change)="animator.toggleTwoPlayers()"
+                id="twoPlayersCheck"
+              />
+              <label class="custom-control-label" for="twoPlayersCheck"
+                >Two players</label
+              >
+            </div>
           </div>
+        </div>
+        <div class="col-4">
+          <button
+            class="btn btn-dark"
+            type="button"
+            (click)="animator.pause()"
+            *ngIf="!animator.paused"
+          >
+            <i class="fas fa-pause"></i>
+          </button>
+          <button
+            class="btn btn-dark"
+            type="button"
+            (click)="animator.pause()"
+            *ngIf="animator.paused"
+          >
+            <i class="fas fa-play"></i>
+          </button>
         </div>
       </div>
     </form>

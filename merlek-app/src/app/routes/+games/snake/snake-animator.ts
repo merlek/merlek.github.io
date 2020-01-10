@@ -81,43 +81,44 @@ export class SnakeAnimator {
       window.cancelAnimationFrame(this.animationFrameId);
     }
   }
-  public keyEvent(key: string): void {
+  public keyEvent(key: string): boolean {
     switch (key) {
       // Game state
       case ' ':
         this.pause();
-        break;
+        return true;
       // Player one
       case 'w':
         this.state = this.state.enqueue(0, Directions.NORTH);
-        break;
+        return true;
       case 'a':
         this.state = this.state.enqueue(0, Directions.WEST);
-        break;
+        return true;
       case 's':
         this.state = this.state.enqueue(0, Directions.SOUTH);
-        break;
+        return true;
       case 'd':
         this.state = this.state.enqueue(0, Directions.EAST);
-        break;
+        return true;
       // Player two
-      case 'h':
+      case 'i':
       case 'ArrowUp':
         this.state = this.state.enqueue(1, Directions.NORTH);
-        break;
+        return true;
       case 'j':
       case 'ArrowLeft':
         this.state = this.state.enqueue(1, Directions.WEST);
-        break;
+        return true;
       case 'k':
       case 'ArrowDown':
         this.state = this.state.enqueue(1, Directions.SOUTH);
-        break;
+        return true;
       case 'l':
       case 'ArrowRight':
         this.state = this.state.enqueue(1, Directions.EAST);
-        break;
+        return true;
     }
+    return false;
   }
   private x(x: number) {
     return Math.round((x * this.canvasWidth) / this.state.cols);
@@ -127,5 +128,8 @@ export class SnakeAnimator {
   }
   public pause() {
     this.paused = !this.paused;
+  }
+  public toggleTwoPlayers() {
+    this.state = new SnakeGameState(!this.state.isTwoPlayers);
   }
 }

@@ -21,7 +21,11 @@ export class SnakeComponent implements OnInit, OnDestroy {
 
     this.animator = new SnakeAnimator(gameCanvas, backgroundCanvas);
 
-    window.addEventListener('keydown', e => this.animator.keyEvent(e.key));
+    window.addEventListener('keydown', e => {
+      if (this.animator.keyEvent(e.key)) {
+        e.preventDefault();
+      }
+    });
 
     this.animator.start();
 

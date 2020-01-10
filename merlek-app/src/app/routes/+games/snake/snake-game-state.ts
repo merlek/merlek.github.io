@@ -2,16 +2,19 @@ import { Direction, Point, Apple, Directions } from './point';
 import { Snake, rnd } from './snake';
 export class SnakeGameState {
   constructor(
-    public readonly cols: number = 35,
-    public readonly rows: number = 25,
+    public readonly isTwoPlayers = false,
+    public readonly cols: number = 24,
+    public readonly rows: number = 24,
     public readonly snakes: Snake[] = [],
-    public readonly apple: Apple = new Point(16, 2)
+    public readonly apple: Apple = new Point(20, 2)
   ) {
     if (this.snakes.length === 0) {
-      this.snakes = [
-        this.snakeFromState(Directions.EAST, new Point(2, 2)),
-        this.snakeFromState(Directions.WEST, new Point(this.rows - 2, 2))
-      ];
+      this.snakes = [this.snakeFromState(Directions.EAST, new Point(2, 2))];
+      if (this.isTwoPlayers) {
+        this.snakes.push(
+          this.snakeFromState(Directions.NORTH, new Point(20, 20))
+        );
+      }
     }
   }
   private snakeFromState(startingMove: Direction, startingPoint: Point): Snake {
@@ -37,7 +40,12 @@ export class SnakeGameState {
   }
   private nextSnakes(): Snake[] {
     return this.snakes.map((s, i, src) =>
-      s.next(this.cols, this.rows, this.apple, src[(i + 1) % src.length])
+      s.next(
+        this.cols,
+        this.rows,
+        this.apple,
+        src.length > 1 ? src[(i + 1) % src.length] : null
+      )
     );
   }
   private rndPos(): Point {
@@ -48,6 +56,7 @@ export class SnakeGameState {
   }
   public next(): SnakeGameState {
     return new SnakeGameState(
+      this.isTwoPlayers,
       this.cols,
       this.rows,
       this.nextSnakes(),
@@ -55,6 +64,7 @@ export class SnakeGameState {
     );
   }
   public enqueue(snakeId: number, move: Direction): SnakeGameState {
+    snakeId = snakeId % this.snakes.length;
     return this.merge({
       snakes: this.snakes.map((s, i) =>
         i === snakeId ? this.snakes[snakeId].enqueue(move) : s

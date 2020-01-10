@@ -1,4 +1,4 @@
-import { Direction, Point, Apple } from './point';
+import { Apple, Direction, Point } from './point';
 
 export const rnd = (min: number, max: number) =>
   Math.floor(Math.random() * max) + min;
@@ -12,18 +12,16 @@ export class Snake {
     public readonly start: Point,
     public readonly apple: Apple,
     public readonly snake: Point[] = []
-  ) {
-    // if (this.snake.length === 0) {
-    //   this.snake.push(this.start);
-    // }
-  }
+  ) {}
   willEat(): boolean {
     return this.nextHead().equals(this.apple);
   }
-  private willCrash(other: Snake): boolean {
+  private willCrash(other?: Snake): boolean {
     return (
       this.snake.some(p => p && this.nextHead().equals(p)) ||
-      other.snake.some(p => p && this.nextHead().equals(p))
+      (other &&
+        (other.snake.some(p => p && this.nextHead().equals(p)) ||
+          (this.snake[0] && this.snake[0].equals(other.snake[0]))))
     );
   }
   private validMove(move: Direction): boolean {
@@ -40,7 +38,7 @@ export class Snake {
           mod(this.rows)(this.snake[0].y + this.moves[0].y)
         );
   }
-  private nextSnake(other: Snake): Point[] {
+  private nextSnake(other?: Snake): Point[] {
     return this.willCrash(other)
       ? []
       : this.willEat()
@@ -60,7 +58,7 @@ export class Snake {
       other
     );
   }
-  next(cols: number, rows: number, apple: Apple, other: Snake): Snake {
+  next(cols: number, rows: number, apple: Apple, other?: Snake): Snake {
     return new Snake(
       cols,
       rows,
