@@ -13,15 +13,18 @@ export class Snake {
     public readonly apple: Apple,
     public readonly snake: Point[] = []
   ) {
-    if (this.snake.length === 0) {
-      this.snake.push(this.start);
-    }
+    // if (this.snake.length === 0) {
+    //   this.snake.push(this.start);
+    // }
   }
   willEat(): boolean {
     return this.nextHead().equals(this.apple);
   }
-  private willCrash(): boolean {
-    return this.snake.find(p => p && this.nextHead().equals(p)) != null;
+  private willCrash(other: Snake): boolean {
+    return (
+      this.snake.some(p => p && this.nextHead().equals(p)) ||
+      other.snake.some(p => p && this.nextHead().equals(p))
+    );
   }
   private validMove(move: Direction): boolean {
     return this.moves[0].x + move.x !== 0 || this.moves[0].y + move.y !== 0;
@@ -37,8 +40,8 @@ export class Snake {
           mod(this.rows)(this.snake[0].y + this.moves[0].y)
         );
   }
-  private nextSnake(): Point[] {
-    return this.willCrash()
+  private nextSnake(other: Snake): Point[] {
+    return this.willCrash(other)
       ? []
       : this.willEat()
       ? [this.nextHead()].concat(this.snake)
@@ -57,14 +60,14 @@ export class Snake {
       other
     );
   }
-  next(cols: number, rows: number, apple: Apple): Snake {
+  next(cols: number, rows: number, apple: Apple, other: Snake): Snake {
     return new Snake(
       cols,
       rows,
       this.nextMoves(),
       this.start,
       apple,
-      this.nextSnake()
+      this.nextSnake(other)
     );
   }
   enqueue(move: Direction): Snake {

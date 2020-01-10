@@ -36,7 +36,9 @@ export class SnakeGameState {
     return this.willEat() ? this.rndPos() : this.apple;
   }
   private nextSnakes(): Snake[] {
-    return this.snakes.map(s => s.next(this.cols, this.rows, this.apple));
+    return this.snakes.map((s, i, src) =>
+      s.next(this.cols, this.rows, this.apple, src[(i + 1) % src.length])
+    );
   }
   private rndPos(): Point {
     return new Point(rnd(0, this.cols - 1), rnd(0, this.rows - 1));
