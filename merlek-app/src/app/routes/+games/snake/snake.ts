@@ -16,11 +16,15 @@ export class Snake {
   willEat(): boolean {
     return this.nextHead().equals(this.apple);
   }
+  public inSnake(point: Point) {
+    return this.snake.some(p => p.equals(point));
+  }
   private willCrash(other?: Snake): boolean {
+    const nextHead = this.nextHead();
     return (
-      this.snake.some(p => p && this.nextHead().equals(p)) ||
+      this.inSnake(nextHead) ||
       (other &&
-        (other.snake.some(p => p && this.nextHead().equals(p)) ||
+        (other.inSnake(nextHead) ||
           (this.snake[0] && this.snake[0].equals(other.snake[0]))))
     );
   }

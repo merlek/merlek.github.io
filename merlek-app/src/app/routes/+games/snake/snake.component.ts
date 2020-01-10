@@ -47,4 +47,20 @@ export class SnakeComponent implements OnInit, OnDestroy {
   set highScore(v: number) {
     this._highScore = v;
   }
+
+  scaleCanvas() {
+    const stage = <HTMLCanvasElement>document.getElementById('stage');
+    const backgroundCanvas = <HTMLCanvasElement>(
+      document.getElementById('background-layer')
+    );
+
+    const scaleX = window.innerWidth / backgroundCanvas.width;
+    const scaleY = window.innerHeight / backgroundCanvas.height;
+
+    const scaleToFit = Math.min(scaleX, scaleY);
+    const scaleToCover = Math.max(scaleX, scaleY);
+
+    stage.style.transformOrigin = '0 0'; // scale from top left
+    stage.style.transform = 'scale(' + scaleToCover + ')';
+  }
 }

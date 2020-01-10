@@ -34,7 +34,18 @@ export class SnakeGameState {
     return this.snakes.reduce((acc, curr) => acc || curr.willEat(), false);
   }
   private nextApple(): Point {
-    return this.willEat() ? this.rndPos() : this.apple;
+    // return this.willEat() ? this.rndPos() : this.apple;
+    if (this.willEat()) {
+      let nextApple: Point;
+      do {
+        nextApple = this.snakes.reduce((acc, cur) => {
+          return cur.inSnake(acc) ? null : acc;
+        }, this.rndPos());
+      } while (!nextApple);
+      return nextApple;
+    } else {
+      return this.apple;
+    }
   }
   private nextSnakes(): Snake[] {
     return this.snakes.map((s, i, src) =>
