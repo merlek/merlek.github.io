@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SnakeAnimator } from './snake-animator';
-import { State } from './snake';
 
 @Component({
   selector: 'app-snake',
@@ -30,10 +29,12 @@ export class SnakeComponent implements OnInit, OnDestroy {
   get score() {
     return this.animator.state.snake.length;
   }
+  set score(v: any) {}
   get highScore() {
     if (this.score > this._highScore) {
       this._highScore = this.score;
     }
     return this._highScore;
   }
+  set highScore(v: any) {}
 }
