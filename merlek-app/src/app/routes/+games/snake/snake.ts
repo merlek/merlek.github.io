@@ -13,7 +13,7 @@ export class Snake {
     public readonly apple: Apple,
     public readonly snake: Point[] = []
   ) {}
-  willEat(): boolean {
+  public willEat(): boolean {
     return this.nextHead().equals(this.apple);
   }
   public inSnake(point: Point) {

@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SnakeAnimator } from './snake-animator';
+import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
 import { CookieManager } from 'app/lib/cookie';
+import { SnakeAnimator } from './snake-animator';
 
 @Component({
   selector: 'app-snake',
@@ -14,6 +14,8 @@ export class SnakeComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit() {
+    this.scaleCanvas();
+
     this.animator = new SnakeAnimator(
       <HTMLCanvasElement>document.getElementById('game-layer'),
       <HTMLCanvasElement>document.getElementById('background-layer'),
@@ -47,20 +49,25 @@ export class SnakeComponent implements OnInit, OnDestroy {
   set highScore(v: number) {
     this._highScore = v;
   }
-
-  scaleCanvas() {
+  @HostListener('window:resize', ['$event'])
+  scaleCanvas(event?: Event) {
+    const menu = document.getElementById('menu');
+    const main = document.getElementById('main');
     const stage = <HTMLCanvasElement>document.getElementById('stage');
     const backgroundCanvas = <HTMLCanvasElement>(
       document.getElementById('background-layer')
     );
 
-    const scaleX = window.innerWidth / backgroundCanvas.width;
-    const scaleY = window.innerHeight / backgroundCanvas.height;
+    // const scaleX = window.innerWidth / backgroundCanvas.width;
+    const scaleY =
+      (window.innerHeight - menu.offsetHeight - 10) / backgroundCanvas.height;
+    const scaleX = main.offsetWidth / backgroundCanvas.width;
+    // const scaleY = main.offsetHeight / backgroundCanvas.height;
 
     const scaleToFit = Math.min(scaleX, scaleY);
     const scaleToCover = Math.max(scaleX, scaleY);
 
     stage.style.transformOrigin = '0 0'; // scale from top left
-    stage.style.transform = 'scale(' + scaleToCover + ')';
+    stage.style.transform = 'scale(' + scaleToFit + ')';
   }
 }
