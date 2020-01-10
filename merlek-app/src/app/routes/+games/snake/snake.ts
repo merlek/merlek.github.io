@@ -1,4 +1,4 @@
-import { Apple, Direction, Point } from './point';
+import { Apple, Direction, Point, Directions } from './point';
 
 export const rnd = (min: number, max: number) =>
   Math.floor(Math.random() * max) + min;
@@ -58,7 +58,7 @@ export class Snake {
       other
     );
   }
-  next(cols: number, rows: number, apple: Apple, other?: Snake): Snake {
+  public next(cols: number, rows: number, apple: Apple, other?: Snake): Snake {
     return new Snake(
       cols,
       rows,
@@ -68,9 +68,40 @@ export class Snake {
       this.nextSnake(other)
     );
   }
-  enqueue(move: Direction): Snake {
+  public enqueue(move: Direction): Snake {
     return this.validMove(move)
       ? this.merge({ moves: this.moves.concat([move]) })
       : this;
+  }
+  public direction(): number {
+    const move = this.moves[0];
+    if (move.equals(Directions.NORTH)) {
+      return 270;
+    } else if (move.equals(Directions.SOUTH)) {
+      return 90;
+    } else if (move.equals(Directions.EAST)) {
+      return 0;
+    } else if (move.equals(Directions.WEST)) {
+      return 180;
+    }
+    return null;
+  }
+  public segments(): Point[][] {
+    return this.snake.reduce((acc, cur) => {
+      if (acc.length === 0) {
+        acc.push([cur]);
+      } else {
+        const last = acc[acc.length - 1];
+        if (cur.distance(last[last.length - 1]) === 1) {
+          last.push(cur);
+        } else {
+          acc.push([cur]);
+        }
+      }
+      return acc;
+    }, []);
+  }
+  public isAlive(): boolean {
+    return this.snake.length > 0;
   }
 }

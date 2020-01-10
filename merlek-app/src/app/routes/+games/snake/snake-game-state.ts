@@ -28,10 +28,7 @@ export class SnakeGameState {
     );
   }
   public isCrash(): boolean {
-    return this.snakes.reduce(
-      (acc, curr) => acc || curr.snake.length === 0,
-      false
-    );
+    return this.snakes.reduce((acc, curr) => acc || !curr.isAlive(), false);
   }
   private willEat(): boolean {
     return this.snakes.reduce((acc, curr) => acc || curr.willEat(), false);

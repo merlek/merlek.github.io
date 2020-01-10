@@ -1,6 +1,7 @@
 import { SnakeGameState } from './snake-game-state';
 import { Directions, Point } from './point';
 import { Snake } from './snake';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 interface RoundedRectRadius {
   tl?: number;
@@ -68,34 +69,53 @@ export class SnakeAnimator {
   private drawSnakes(ctx: CanvasRenderingContext2D, state: SnakeGameState) {
     ctx.save();
     state.snakes.forEach((s, i) => {
-      ctx.fillStyle = SnakeAnimator.SNAKE_COLORS[i];
-      ctx.strokeStyle = SnakeAnimator.SNAKE_COLORS[i];
-      // this.drawSnake2(ctx, s);
-      this.drawSnake(ctx, s);
+      if (s.isAlive()) {
+        // ctx.fillStyle = SnakeAnimator.SNAKE_COLORS[i];
+        ctx.strokeStyle = SnakeAnimator.SNAKE_COLORS[i];
+        // this.drawSnake2(ctx, s);
+        this.drawSnake(ctx, s);
+      }
     });
     ctx.restore();
   }
   private drawSnake(ctx: CanvasRenderingContext2D, snake: Snake) {
-    this.segments(snake).forEach(segment =>
-      this.drawSnakeSegment(ctx, segment)
+    snake.segments().forEach(this.drawSnakeSegment(ctx));
+    this.drawSnakeHead(ctx, snake);
+  }
+  private drawSnakeHead(ctx: CanvasRenderingContext2D, snake: Snake) {
+    ctx.save();
+
+    const head = snake.snake[0];
+
+    ctx.translate(
+      this.x(head.x) + this.x(1) / 2,
+      this.y(head.y) + this.y(1) / 2
     );
+    ctx.rotate((Math.PI / 180) * snake.direction());
+
+    const x = 0 + (this.x(1) * 3) / 16;
+    const y = 0;
+    const dy = (this.y(1) * 3) / 16;
+
+    ctx.fillStyle = 'white';
+
+    ctx.beginPath();
+    ctx.arc(x, y - dy, 4, 0, Math.PI * 2); // Left eye
+    ctx.arc(x, y + dy, 4, 0, Math.PI * 2); // Right eye
+    ctx.fill();
+
+    ctx.fillStyle = 'black';
+
+    ctx.beginPath();
+    ctx.arc(x + this.x(1) / 16, y - dy, 2, 0, Math.PI * 2); // Left eye
+    ctx.arc(x + this.x(1) / 16, y + dy, 2, 0, Math.PI * 2); // Right eye
+    ctx.fill();
+
+    ctx.restore();
   }
-  private segments(snake: Snake): Point[][] {
-    return snake.snake.reduce((acc, cur) => {
-      if (acc.length === 0) {
-        acc.push([cur]);
-      } else {
-        const last = acc[acc.length - 1];
-        if (cur.distance(last[last.length - 1]) === 1) {
-          last.push(cur);
-        } else {
-          acc.push([cur]);
-        }
-      }
-      return acc;
-    }, []);
-  }
-  private drawSnakeSegment(ctx: CanvasRenderingContext2D, points: Point[]) {
+  private drawSnakeSegment = (ctx: CanvasRenderingContext2D) => (
+    points: Point[]
+  ) => {
     ctx.save();
 
     ctx.lineWidth = Math.min(this.x(1), this.y(1));
@@ -169,6 +189,8 @@ export class SnakeAnimator {
   ) {
     ctx.fillStyle = color;
     ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+
+    // draw grid
 
     // ctx.strokeStyle = 'white';
     // ctx.strokeRect(0, 0, this.canvasWidth, this.canvasHeight);
