@@ -31,7 +31,7 @@ export class SnakeComponent implements OnInit, OnDestroy {
     this.animator.destroy();
   }
   get score() {
-    return this.animator.state.snake.length;
+    return Math.max(...this.animator.state.snakes.map(s => s.snake.length));
   }
   set score(v: number) {}
   get highScore() {
