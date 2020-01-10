@@ -1,6 +1,13 @@
 import { SnakeGameState } from './snake-game-state';
-import { Directions } from './point';
+import { Directions, Point } from './point';
 import { Snake } from './snake';
+
+interface RoundedRectRadius {
+  tl?: number;
+  tr?: number;
+  br?: number;
+  bl?: number;
+}
 
 export class SnakeAnimator {
   static readonly SNAKE_COLORS = ['rgb(0,200,50)', 'rgb(250,250,0)'];
@@ -62,18 +69,67 @@ export class SnakeAnimator {
     ctx.save();
     state.snakes.forEach((s, i) => {
       ctx.fillStyle = SnakeAnimator.SNAKE_COLORS[i];
+      ctx.strokeStyle = SnakeAnimator.SNAKE_COLORS[i];
+      // this.drawSnake2(ctx, s);
       this.drawSnake(ctx, s);
     });
     ctx.restore();
   }
   private drawSnake(ctx: CanvasRenderingContext2D, snake: Snake) {
-    snake.snake.forEach(point =>
-      ctx.fillRect(this.x(point.x), this.y(point.y), this.x(1), this.y(1))
+    this.segments(snake).forEach(segment =>
+      this.drawSnakeSegment(ctx, segment)
     );
+  }
+  private segments(snake: Snake): Point[][] {
+    return snake.snake.reduce((acc, cur) => {
+      if (acc.length === 0) {
+        acc.push([cur]);
+      } else {
+        const last = acc[acc.length - 1];
+        if (cur.distance(last[last.length - 1]) === 1) {
+          last.push(cur);
+        } else {
+          acc.push([cur]);
+        }
+      }
+      return acc;
+    }, []);
+  }
+  private drawSnakeSegment(ctx: CanvasRenderingContext2D, points: Point[]) {
+    ctx.save();
+
+    ctx.lineWidth = Math.min(this.x(1), this.y(1));
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    const start = points.shift();
+
+    ctx.moveTo(
+      this.x(start.x) + this.x(1) / 2,
+      this.y(start.y) + this.y(1) / 2
+    );
+
+    ctx.beginPath();
+    ctx.lineTo(
+      this.x(start.x) + this.x(1) / 2,
+      this.y(start.y) + this.y(1) / 2
+    );
+
+    points.forEach(point => {
+      ctx.lineTo(
+        this.x(point.x) + this.x(1) / 2,
+        this.y(point.y) + this.y(1) / 2
+      );
+    });
+
+    ctx.stroke();
+
+    ctx.restore();
   }
   private drawApple(ctx: CanvasRenderingContext2D, state: SnakeGameState) {
     ctx.fillStyle = SnakeAnimator.APPLE_COLOR;
-    ctx.fillRect(
+    this.drawRoundedRect(
+      ctx,
       this.x(state.apple.x),
       this.y(state.apple.y),
       this.x(1),
@@ -95,7 +151,7 @@ export class SnakeAnimator {
     ctx.globalAlpha = 0.5;
 
     ctx.fillStyle = 'grey'; // SnakeAnimator.BACKGROUND_COLOR;
-    this.fillRoundedRect(ctx, x - w / 2, y - h / 2, w, h);
+    this.drawRoundedRect(ctx, x - w / 2, y - h / 2, w, h);
 
     ctx.globalAlpha = 1;
 
@@ -113,35 +169,65 @@ export class SnakeAnimator {
   ) {
     ctx.fillStyle = color;
     ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+
+    // ctx.strokeStyle = 'white';
+    // ctx.strokeRect(0, 0, this.canvasWidth, this.canvasHeight);
+
+    // for (let x = 0; x < this.canvasWidth; x++) {
+    //   for (let y = 0; y < this.canvasHeight; y++) {
+    //     ctx.strokeRect(this.x(x), this.y(y), this.x(1), this.y(1));
+    //   }
+    // }
   }
-  private fillRoundedRect(
+  private drawRoundedRect(
     ctx: CanvasRenderingContext2D,
     x: number,
     y: number,
     width: number,
     height: number,
-    radius = 10
+    radius: number | RoundedRectRadius = 10,
+    fill = true,
+    stroke = false
   ) {
+    if (typeof radius === 'number') {
+      radius = { tl: radius, tr: radius, br: radius, bl: radius };
+    } else {
+      const defaultRadius = { tl: 0, tr: 0, br: 0, bl: 0 };
+      for (const key of Object.keys(defaultRadius)) {
+        radius[key] = radius[key] || defaultRadius[key];
+      }
+    }
     ctx.save();
 
     ctx.beginPath();
-    ctx.moveTo(x + radius, y);
-    ctx.lineTo(x + width - radius, y);
-    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-    ctx.lineTo(x + width, y + height - radius);
-    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-    ctx.lineTo(x + radius, y + height);
-    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-    ctx.lineTo(x, y + radius);
-    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.moveTo(x + radius.tl, y);
+    ctx.lineTo(x + width - radius.tr, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
+    ctx.lineTo(x + width, y + height - radius.br);
+    ctx.quadraticCurveTo(
+      x + width,
+      y + height,
+      x + width - radius.br,
+      y + height
+    );
+    ctx.lineTo(x + radius.bl, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
+    ctx.lineTo(x, y + radius.tl);
+    ctx.quadraticCurveTo(x, y, x + radius.tl, y);
     ctx.closePath();
-
-    ctx.fill();
+    if (fill) {
+      ctx.fill();
+    }
+    if (stroke) {
+      ctx.stroke();
+    }
 
     ctx.restore();
   }
   public destroy(): void {
     if (this.animationFrameId) {
+    }
+    {
       window.cancelAnimationFrame(this.animationFrameId);
     }
   }
