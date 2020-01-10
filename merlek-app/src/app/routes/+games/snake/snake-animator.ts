@@ -7,6 +7,13 @@ export class SnakeAnimator {
   static readonly APPLE_COLOR = 'rgb(255,50,0)';
   static readonly BACKGROUND_COLOR = '#232323';
   static readonly CRASH_COLOR = 'rgb(255,0,0)';
+  public fps = 10;
+  private readonly backgroundCtx: CanvasRenderingContext2D; // HTML Canvas's 2D context
+  private readonly gameCtx: CanvasRenderingContext2D; // HTML Canvas's 2D context
+  private readonly canvasWidth: number; // width of the canvas
+  private readonly canvasHeight: number; // height of the canvas
+  private animationFrameId: number;
+  public paused = false;
   constructor(
     gameCanvas: HTMLCanvasElement,
     backgroundCanvas: HTMLCanvasElement,
@@ -18,18 +25,12 @@ export class SnakeAnimator {
 
     this.gameCtx = gameCanvas.getContext('2d');
   }
-  public fps = 10;
-  private readonly backgroundCtx: CanvasRenderingContext2D; // HTML Canvas's 2D context
-  private readonly gameCtx: CanvasRenderingContext2D; // HTML Canvas's 2D context
-  private readonly canvasWidth: number; // width of the canvas
-  private readonly canvasHeight: number; // height of the canvas
-  private animationFrameId: number;
   public start(): void {
     this.draw();
     this.animationFrameId = window.requestAnimationFrame(this.update(0));
   }
   private update = (t1: DOMHighResTimeStamp) => (t2: DOMHighResTimeStamp) => {
-    if (t2 - t1 > 1000 / this.fps) {
+    if (t2 - t1 > 1000 / this.fps && !this.paused) {
       this.state = this.state.next();
       this.draw();
       this.animationFrameId = window.requestAnimationFrame(this.update(t2));
@@ -77,15 +78,16 @@ export class SnakeAnimator {
   }
   public destroy(): void {
     if (this.animationFrameId) {
-    }
-    {
-    }
-    {
       window.cancelAnimationFrame(this.animationFrameId);
     }
   }
   public keyEvent(key: string): void {
     switch (key) {
+      // Game state
+      case ' ':
+        this.pause();
+        break;
+      // Player one
       case 'w':
         this.state = this.state.enqueue(0, Directions.NORTH);
         break;
@@ -98,8 +100,7 @@ export class SnakeAnimator {
       case 'd':
         this.state = this.state.enqueue(0, Directions.EAST);
         break;
-    }
-    switch (key) {
+      // Player two
       case 'h':
       case 'ArrowUp':
         this.state = this.state.enqueue(1, Directions.NORTH);
@@ -123,5 +124,8 @@ export class SnakeAnimator {
   }
   private y(y: number) {
     return Math.round((y * this.canvasHeight) / this.state.rows);
+  }
+  public pause() {
+    this.paused = !this.paused;
   }
 }
