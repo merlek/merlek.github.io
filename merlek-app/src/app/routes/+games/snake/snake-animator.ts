@@ -1,7 +1,7 @@
 import { State, Direction } from './snake';
 
 export class SnakeAnimator {
-  public fps = 15;
+  public fps = 10;
   private readonly backgroundCtx: CanvasRenderingContext2D; // HTML Canvas's 2D context
   private readonly gameCtx: CanvasRenderingContext2D; // HTML Canvas's 2D context
   private readonly canvasWidth: number; // width of the canvas
@@ -64,7 +64,6 @@ export class SnakeAnimator {
   }
 
   public keyEvent(key: string): void {
-    console.log('keyEvent', key);
     switch (key) {
       case 'w':
       case 'h':
