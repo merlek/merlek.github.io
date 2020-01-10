@@ -99,16 +99,19 @@ export class SnakeAnimator {
 
     ctx.fillStyle = 'white';
 
+    let size = Math.min(this.x(1), this.y(1)) / 8;
+
     ctx.beginPath();
-    ctx.arc(x, y - dy, 4, 0, Math.PI * 2); // Left eye
-    ctx.arc(x, y + dy, 4, 0, Math.PI * 2); // Right eye
+    ctx.arc(x, y - dy, size, 0, Math.PI * 2); // Left eye
+    ctx.arc(x, y + dy, size, 0, Math.PI * 2); // Right eye
     ctx.fill();
 
     ctx.fillStyle = 'black';
+    size = size / 2;
 
     ctx.beginPath();
-    ctx.arc(x + this.x(1) / 16, y - dy, 2, 0, Math.PI * 2); // Left eye
-    ctx.arc(x + this.x(1) / 16, y + dy, 2, 0, Math.PI * 2); // Right eye
+    ctx.arc(x + size, y - dy, size, 0, Math.PI * 2); // Left eye
+    ctx.arc(x + size, y + dy, size, 0, Math.PI * 2); // Right eye
     ctx.fill();
 
     ctx.restore();
