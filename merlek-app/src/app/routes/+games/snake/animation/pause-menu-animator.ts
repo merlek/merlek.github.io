@@ -11,38 +11,53 @@ export class PauseMenuAnimator extends CanvasAnimator implements OnDestroy {
   constructor(
     canvas: HTMLCanvasElement,
     grid: { cols: number; rows: number },
-    public pause: () => any
+    pause: () => any,
+    toggleTwoPlayers: () => any
   ) {
     super(canvas, grid);
-    this.initButtons();
-  }
-  private initButtons(canvas: HTMLCanvasElement = this.canvas) {
+
     const width = canvas.width / 4;
     const height = canvas.height / 8;
 
     const x = canvas.width / 2 - width / 2;
     const y = canvas.height / 2 - height / 2;
 
-    this.buttons.push({
-      x,
-      y,
-      width,
-      height,
-      radius: 5,
-      fillStyle: 'rgba(128, 128, 128, 1)',
-      hoverStyle: 'rgba(179, 179, 179, 1)',
-      text: 'Paused',
-      fontSize: this.y(1),
+    this.buttons.push(
+      {
+        x,
+        y,
+        width,
+        height,
+        radius: 5,
+      fillStyle: '#005FA1',
+        hoverStyle: '#00487b',
+        text: 'Paused',
+        fontSize: this.y(1),
       textStyle: 'white',
-      enabled: true,
-      onClick: () => {
-        this.pause();
+        enabled: true,
+        onClick: () => {
+          pause();
+        }
+      },
+      {
+        x,
+        y: y + height * 2,
+        width,
+        height,
+        radius: 5,
+        fillStyle: '#005fa1',
+        hoverStyle: '#00487b',
+        text: 'Two Players',
+        fontSize: this.y(1) * 0.8,
+        textStyle: 'rgba(255, 255, 255, 1)',
+        enabled: true,
+        onClick: () => {
+          toggleTwoPlayers();
+        }
       }
-    });
+    );
 
     this.addEventListeners();
-
-    return this.buttons;
   }
   addEventListeners(
     canvas: HTMLCanvasElement = this.canvas,
@@ -75,9 +90,11 @@ export class PauseMenuAnimator extends CanvasAnimator implements OnDestroy {
 
     ctx.save();
 
-    ctx.globalAlpha = 0.7;
+    // ctx.globalAlpha = 0.7;
 
     this.buttons.forEach(CanvasTools.drawButton(ctx));
+    // CanvasTools.drawButton(ctx)(this.buttons[0]);
+    // CanvasTools.drawButton(ctx)(this.buttons[1]);
 
     ctx.restore();
   }
@@ -88,6 +105,7 @@ export class PauseMenuAnimator extends CanvasAnimator implements OnDestroy {
   public hide() {
     this.clear();
     this.disableButtons();
+    this.canvas.style.cursor = 'default';
   }
   ngOnDestroy(): void {
     this.removeEventListeners();

@@ -19,9 +19,12 @@ export class SnakeGameManager implements OnDestroy {
     public state: SnakeGameState = new SnakeGameState(true)
   ) {
     this.gameAnimator = new SnakeGameAnimator(gameCanvas, state);
-    this.pauseMenuAnimator = new PauseMenuAnimator(uiCanvas, state, () => {
-      this.pause();
-    });
+    this.pauseMenuAnimator = new PauseMenuAnimator(
+      uiCanvas,
+      state,
+      () => this.pause(),
+      () => this.toggleTwoPlayers()
+    );
     this.backgroundAnimator = new BackgroundAnimator(backgroundCanvas, state);
   }
   public start(): void {

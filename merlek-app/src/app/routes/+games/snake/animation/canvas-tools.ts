@@ -69,7 +69,6 @@ export class CanvasTools {
 
     ctx.restore();
   }
-
   static drawButton = (ctx: CanvasRenderingContext2D) => ({
     x,
     y,
@@ -86,17 +85,15 @@ export class CanvasTools {
   }: ICanvasButton) => {
     ctx.save();
 
-    if (state === 'hover') {
+    if (state === 'hover' && hoverStyle) {
       ctx.fillStyle = hoverStyle;
-    } else {
+    } else if (fillStyle) {
       ctx.fillStyle = fillStyle;
     }
-    ctx.fill();
 
     if (strokeStyle) {
       ctx.lineWidth = 2;
       ctx.strokeStyle = strokeStyle;
-      ctx.stroke();
     }
 
     CanvasTools.drawRoundedRect(
@@ -110,8 +107,6 @@ export class CanvasTools {
       strokeStyle != null
     );
 
-    ctx.restore();
-
     CanvasTools.drawText(
       ctx,
       text,
@@ -120,8 +115,9 @@ export class CanvasTools {
       fontSize,
       textStyle
     );
-  }
 
+    ctx.restore();
+  }
   static drawText = (
     ctx: CanvasRenderingContext2D,
     text: string,
