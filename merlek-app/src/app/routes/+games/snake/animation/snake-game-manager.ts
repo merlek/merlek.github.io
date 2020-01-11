@@ -2,33 +2,30 @@ import { Directions } from '../core/point';
 import { SnakeGameState } from '../core/snake-game-state';
 import { PauseMenuAnimator } from './pause-menu-animator';
 import { SnakeGameAnimator } from './snake-game-animator';
+import { CanvasAnimator } from './canvas-animator';
+import { BackgroundAnimator } from './background-animator';
 
 export class SnakeGameManager {
   public fps = 10;
   public paused = false;
-  private readonly backgroundCtx: CanvasRenderingContext2D; // HTML Canvas's 2D context
-  private readonly canvasWidth: number; // width of the canvas
-  private readonly canvasHeight: number; // height of the canvas
   private animationFrameId: number;
   private gameAnimator: SnakeGameAnimator;
   private pauseMenuAnimator: PauseMenuAnimator;
+  private backgroundAnimator: BackgroundAnimator;
   constructor(
     gameCanvas: HTMLCanvasElement,
     backgroundCanvas: HTMLCanvasElement,
     uiCanvas: HTMLCanvasElement,
     public state: SnakeGameState = new SnakeGameState(true)
   ) {
-    this.backgroundCtx = backgroundCanvas.getContext('2d', { alpha: false });
-    this.canvasWidth = backgroundCanvas.width;
-    this.canvasHeight = backgroundCanvas.height;
-
     this.gameAnimator = new SnakeGameAnimator(gameCanvas, state);
-    this.pauseMenuAnimator = new PauseMenuAnimator(uiCanvas, this.state, () => {
+    this.pauseMenuAnimator = new PauseMenuAnimator(uiCanvas, state, () => {
       this.pause();
     });
+    this.backgroundAnimator = new BackgroundAnimator(backgroundCanvas, state);
   }
   public start(): void {
-    this.drawBackground();
+    this.backgroundAnimator.draw();
     this.gameAnimator.draw()(this.state);
     this.pause();
     this.animationFrameId = window.requestAnimationFrame(this.update(0));
@@ -52,24 +49,6 @@ export class SnakeGameManager {
     if (this.animationFrameId) {
       window.cancelAnimationFrame(this.animationFrameId);
     }
-  }
-  drawBackground(
-    ctx: CanvasRenderingContext2D = this.backgroundCtx,
-    color: string = SnakeGameAnimator.BACKGROUND_COLOR
-  ) {
-    ctx.fillStyle = color;
-    ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
-
-    // draw grid
-
-    // ctx.strokeStyle = 'white';
-    // ctx.strokeRect(0, 0, this.canvasWidth, this.canvasHeight);
-
-    // for (let x = 0; x < this.canvasWidth; x++) {
-    //   for (let y = 0; y < this.canvasHeight; y++) {
-    //     ctx.strokeRect(this.x(x), this.y(y), this.x(1), this.y(1));
-    //   }
-    // }
   }
   public keyEvent(key: string): boolean {
     switch (key) {

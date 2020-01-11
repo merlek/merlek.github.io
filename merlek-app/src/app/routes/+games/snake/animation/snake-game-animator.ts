@@ -5,7 +5,6 @@ import { SnakeAnimator } from './snake-animator';
 
 export class SnakeGameAnimator extends CanvasAnimator {
   static readonly APPLE_COLOR = '#ff3200';
-  static readonly BACKGROUND_COLOR = '#232323';
   static readonly CRASH_COLOR = 'rgb(255,0,0)';
   private snakeAnimator: SnakeAnimator;
   constructor(canvas: HTMLCanvasElement, grid: { cols: number; rows: number }) {
