@@ -198,8 +198,8 @@ export class CanvasTools {
   static getMousePos = (canvas: HTMLCanvasElement) => (e: MouseEvent) => {
     const rect = canvas.getBoundingClientRect();
     return {
-      x: ((e.clientX - rect.left) * canvas.width) / canvas.offsetWidth,
-      y: ((e.clientY - rect.top) * canvas.height) / canvas.offsetHeight
+      x: ((e.clientX - rect.left) / (rect.right - rect.left)) * canvas.width,
+      y: ((e.clientY - rect.top) / (rect.bottom - rect.top)) * canvas.height
     };
   }
   static isIntersect = (pos: { x: number; y: number }, button: Rect) =>
