@@ -2,6 +2,7 @@ import { Directions } from '../core/point';
 import { SnakeGameState } from '../core/snake-game-state';
 import { SnakeAnimator } from './snake-animator';
 import { CanvasTools, ICanvasButton } from './canvas-tools';
+import { PauseMenuAnimator } from './pause-menu-animator';
 
 export class SnakeGameAnimator {
   static readonly APPLE_COLOR = '#ff3200';
@@ -17,7 +18,7 @@ export class SnakeGameAnimator {
   private readonly canvasHeight: number; // height of the canvas
   private animationFrameId: number;
   private snakeAnimator: SnakeAnimator;
-  private buttons: ICanvasButton[] = [];
+  private pauseMenuAnimator: PauseMenuAnimator;
   constructor(
     gameCanvas: HTMLCanvasElement,
     backgroundCanvas: HTMLCanvasElement,
@@ -38,32 +39,9 @@ export class SnakeGameAnimator {
       this.state.rows
     );
 
-    CanvasTools.addButtonEventListeners(uiCanvas, this.initButtons(uiCanvas));
-  }
-  public initButtons(canvas: HTMLCanvasElement): ICanvasButton[] {
-    const width = canvas.width / 4;
-    const height = canvas.height / 8;
-
-    const x = canvas.width / 2 - width / 2;
-    const y = canvas.height / 2 - height / 2;
-
-    this.buttons.push({
-      x,
-      y,
-      width,
-      height,
-      radius: 5,
-      fillStyle: 'rgba(128, 128, 128, 1)',
-      hoverStyle: 'rgba(179, 179, 179, 1)',
-      text: 'Paused',
-      fontSize: this.y(1),
-      textStyle: 'white',
-      onClick: () => {
-        this.pause();
-      }
+    this.pauseMenuAnimator = new PauseMenuAnimator(uiCanvas, this.state, () => {
+      this.pause();
     });
-
-    return this.buttons;
   }
   public start(): void {
     this.drawBackground();
@@ -76,10 +54,10 @@ export class SnakeGameAnimator {
       if (!this.paused) {
         this.state = this.state.next();
         this.drawGame();
-        this.clearDrawing(this.uiCtx);
+        this.pauseMenuAnimator.clear();
       } else {
         this.clearDrawing(this.uiCtx);
-        this.drawPaused();
+        this.pauseMenuAnimator.draw();
       }
 
       this.animationFrameId = window.requestAnimationFrame(this.update(t2));
@@ -107,15 +85,6 @@ export class SnakeGameAnimator {
       this.x(1),
       this.y(1)
     );
-  }
-  private drawPaused(ctx: CanvasRenderingContext2D = this.uiCtx) {
-    ctx.save();
-
-    ctx.globalAlpha = 0.7;
-
-    this.buttons.forEach(CanvasTools.drawButton(ctx));
-
-    ctx.restore();
   }
   private drawCrash(ctx: CanvasRenderingContext2D) {
     this.drawBackground(ctx, SnakeGameAnimator.CRASH_COLOR);
@@ -189,11 +158,6 @@ export class SnakeGameAnimator {
     return Math.round((y * this.canvasHeight) / this.state.rows);
   }
   public pause() {
-    // if ((this.paused = !this.paused)) {
-    //   this.drawPaused();
-    // } else {
-    //   this.clearDrawing(this.uiCtx);
-    // }
     this.paused = !this.paused;
   }
   public toggleTwoPlayers() {

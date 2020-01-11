@@ -149,13 +149,13 @@ export class CanvasTools {
       'px Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
     );
   }
-  static addButtonEventListeners = (
+  static addButtonClickEventListeners = (
     canvas: HTMLCanvasElement,
     buttons: ICanvasButton[]
   ) => {
     const getMousePos = CanvasTools.getMousePos(canvas);
 
-    canvas.addEventListener('click', e => {
+    const handler = e => {
       const pos = getMousePos(e);
       buttons.forEach(button => {
         if (CanvasTools.isIntersect(pos, button)) {
@@ -163,9 +163,20 @@ export class CanvasTools {
           button.onClick(e);
         }
       });
-    });
+    };
 
-    canvas.addEventListener('mousemove', e => {
+    canvas.addEventListener('click', handler);
+
+    return handler;
+  }
+
+  static addButtonHoverEventListeners = (
+    canvas: HTMLCanvasElement,
+    buttons: ICanvasButton[]
+  ) => {
+    const getMousePos = CanvasTools.getMousePos(canvas);
+
+    const handler = e => {
       const pos = getMousePos(e);
       let intersect = false;
       buttons.forEach(button => {
@@ -177,9 +188,12 @@ export class CanvasTools {
           button.state = undefined;
         }
       });
-
       canvas.style.cursor = intersect ? 'pointer' : 'default';
-    });
+    };
+
+    canvas.addEventListener('mousemove', handler);
+
+    return handler;
   }
   static getMousePos = (canvas: HTMLCanvasElement) => (e: MouseEvent) => {
     const rect = canvas.getBoundingClientRect();
