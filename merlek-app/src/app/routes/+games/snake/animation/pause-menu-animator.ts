@@ -1,15 +1,14 @@
-import { ICanvasButton, CanvasTools } from './canvas-tools';
-import { SnakeGameState } from '../core/snake-game-state';
 import { CanvasAnimator } from './canvas-animator';
+import { CanvasTools, ICanvasButton } from './canvas-tools';
 
 export class PauseMenuAnimator extends CanvasAnimator {
   private buttons: ICanvasButton[] = [];
   constructor(
     canvas: HTMLCanvasElement,
-    state: SnakeGameState,
+    grid: { cols: number; rows: number },
     public pause: () => any
   ) {
-    super(canvas, state);
+    super(canvas, grid);
 
     this.initButtons();
 
@@ -42,7 +41,9 @@ export class PauseMenuAnimator extends CanvasAnimator {
 
     return this.buttons;
   }
-  public draw(ctx: CanvasRenderingContext2D = this.ctx) {
+  public draw = (ctx: CanvasRenderingContext2D = this.ctx) => {
+    this.clear();
+
     ctx.save();
 
     ctx.globalAlpha = 0.7;

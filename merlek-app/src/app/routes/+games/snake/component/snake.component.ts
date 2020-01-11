@@ -2,6 +2,7 @@ import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { CookieManager } from 'app/lib/cookie';
 import { SnakeAnimator } from '../animation/snake-animator';
 import { SnakeGameAnimator } from '../animation/snake-game-animator';
+import { SnakeGameManager } from '../animation/snake-game-manager';
 
 @Component({
   selector: 'app-snake',
@@ -11,13 +12,13 @@ import { SnakeGameAnimator } from '../animation/snake-game-animator';
 export class SnakeComponent implements OnInit, OnDestroy {
   private static readonly COOKIE_NAME = 'snake-high-score';
   private _highScore = 0;
-  animator: SnakeGameAnimator;
+  animator: SnakeGameManager;
   constructor() {}
 
   ngOnInit() {
     this.scaleCanvas();
 
-    this.animator = new SnakeGameAnimator(
+    this.animator = new SnakeGameManager(
       <HTMLCanvasElement>document.getElementById('game-layer'),
       <HTMLCanvasElement>document.getElementById('background-layer'),
       <HTMLCanvasElement>document.getElementById('ui-layer')
