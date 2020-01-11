@@ -1,24 +1,17 @@
 import { Point } from '../core/point';
 import { Snake } from '../core/snake';
 import { SnakeGameState } from '../core/snake-game-state';
+import { CanvasAnimator } from './canvas-animator';
 
-interface RoundedRectRadius {
-  tl?: number;
-  tr?: number;
-  br?: number;
-  bl?: number;
-}
-
-export class SnakeAnimator {
+export class SnakeAnimator extends CanvasAnimator {
   static readonly SNAKE_COLORS = ['#00c832', '#c7c700'];
-  constructor(
-    private readonly canvasWidth: number,
-    private readonly canvasHeight: number,
-    private readonly gameCols: number,
-    private readonly gameRows: number
-  ) {}
+  constructor(canvas: HTMLCanvasElement, grid: { cols: number; rows: number }) {
+    super(canvas, grid);
+  }
 
-  public drawSnakes(ctx: CanvasRenderingContext2D, state: SnakeGameState) {
+  public draw = (ctx: CanvasRenderingContext2D = this.ctx) => (
+    state: SnakeGameState
+  ) => {
     ctx.save();
     state.snakes.forEach((s, i) => {
       if (s.isAlive()) {
@@ -98,11 +91,5 @@ export class SnakeAnimator {
     ctx.stroke();
 
     ctx.restore();
-  }
-  private x(x: number) {
-    return Math.round((x * this.canvasWidth) / this.gameCols);
-  }
-  private y(y: number) {
-    return Math.round((y * this.canvasHeight) / this.gameRows);
   }
 }

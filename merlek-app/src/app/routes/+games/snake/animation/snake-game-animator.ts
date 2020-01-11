@@ -9,19 +9,13 @@ export class SnakeGameAnimator extends CanvasAnimator {
   private snakeAnimator: SnakeAnimator;
   constructor(canvas: HTMLCanvasElement, grid: { cols: number; rows: number }) {
     super(canvas, grid);
-
-    this.snakeAnimator = new SnakeAnimator(
-      this.canvas.width,
-      this.canvas.height,
-      this.grid.cols,
-      this.grid.rows
-    );
+    this.snakeAnimator = new SnakeAnimator(canvas, grid);
   }
   public draw = (ctx: CanvasRenderingContext2D = this.ctx) => (
     state: SnakeGameState
   ) => {
     this.clear();
-    this.snakeAnimator.drawSnakes(ctx, state);
+    this.snakeAnimator.draw()(state);
     this.drawApple(ctx)(state);
     if (state.isCrash()) {
       this.drawCrash(ctx);
