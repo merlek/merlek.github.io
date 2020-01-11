@@ -4,11 +4,13 @@ export interface RoundedRectRadius {
   br?: number;
   bl?: number;
 }
-export interface CanvasButton {
+export interface Rect {
   x: number;
   y: number;
   width: number;
   height: number;
+}
+export interface ICanvasButton extends Rect {
   radius: number;
   fillStyle: string;
   strokeStyle?: string;
@@ -16,9 +18,8 @@ export interface CanvasButton {
   text: string;
   fontSize: number;
   textStyle: string;
-  alpha?: number;
-  fade?: number;
   state?: string;
+  onClick: (event?: any) => any;
 }
 export class CanvasTools {
   static drawRoundedRect(
@@ -68,28 +69,21 @@ export class CanvasTools {
     ctx.restore();
   }
 
-  static drawButton = (
-    ctx: CanvasRenderingContext2D,
-    {
-      x,
-      y,
-      width,
-      height,
-      radius,
-      fillStyle,
-      strokeStyle,
-      hoverStyle,
-      text,
-      fontSize,
-      textStyle,
-      alpha,
-      fade,
-      state
-    }: CanvasButton
-  ) => {
+  static drawButton = (ctx: CanvasRenderingContext2D) => ({
+    x,
+    y,
+    width,
+    height,
+    radius,
+    fillStyle,
+    strokeStyle,
+    hoverStyle,
+    text,
+    fontSize,
+    textStyle,
+    state
+  }: ICanvasButton) => {
     ctx.save();
-
-    ctx.globalAlpha = alpha += fade;
 
     if (state === 'hover') {
       ctx.fillStyle = hoverStyle;
@@ -155,4 +149,48 @@ export class CanvasTools {
       'px Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
     );
   }
+  static addButtonEventListeners = (
+    canvas: HTMLCanvasElement,
+    buttons: ICanvasButton[]
+  ) => {
+    const getMousePos = CanvasTools.getMousePos(canvas);
+
+    canvas.addEventListener('click', e => {
+      const pos = getMousePos(e);
+      buttons.forEach(button => {
+        if (CanvasTools.isIntersect(pos, button)) {
+          // click event
+          button.onClick(e);
+        }
+      });
+    });
+
+    canvas.addEventListener('mousemove', e => {
+      const pos = getMousePos(e);
+      let intersect = false;
+      buttons.forEach(button => {
+        if (CanvasTools.isIntersect(pos, button)) {
+          // hover event
+          button.state = 'hover';
+          intersect = true;
+        } else if (button.state) {
+          button.state = undefined;
+        }
+      });
+
+      canvas.style.cursor = intersect ? 'pointer' : 'default';
+    });
+  }
+  static getMousePos = (canvas: HTMLCanvasElement) => (e: MouseEvent) => {
+    const rect = canvas.getBoundingClientRect();
+    return {
+      x: ((e.clientX - rect.left) * canvas.width) / canvas.offsetWidth,
+      y: ((e.clientY - rect.top) * canvas.height) / canvas.offsetHeight
+    };
+  }
+  static isIntersect = (pos: { x: number; y: number }, button: Rect) =>
+    pos.x > button.x &&
+    pos.x < button.x + button.width &&
+    pos.y < button.y + button.height &&
+    pos.y > button.y
 }
