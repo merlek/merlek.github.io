@@ -10,13 +10,15 @@ export interface CanvasButton {
   width: number;
   height: number;
   radius: number;
-  text: string;
   fillStyle: string;
-  strokeStyle: string;
-  hoverStyle: string;
-  alpha: number;
-  fade: number;
-  state: string;
+  strokeStyle?: string;
+  hoverStyle?: string;
+  text: string;
+  fontSize: number;
+  textStyle: string;
+  alpha?: number;
+  fade?: number;
+  state?: string;
 }
 export class CanvasTools {
   static drawRoundedRect(
@@ -55,6 +57,7 @@ export class CanvasTools {
     ctx.lineTo(x, y + radius.tl);
     ctx.quadraticCurveTo(x, y, x + radius.tl, y);
     ctx.closePath();
+
     if (fill) {
       ctx.fill();
     }
@@ -73,28 +76,18 @@ export class CanvasTools {
       width,
       height,
       radius,
-      text,
       fillStyle,
       strokeStyle,
       hoverStyle,
+      text,
+      fontSize,
+      textStyle,
       alpha,
       fade,
       state
     }: CanvasButton
   ) => {
     ctx.save();
-
-    ctx.beginPath();
-    ctx.moveTo(x + radius, y);
-    ctx.lineTo(x + width - radius, y);
-    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-    ctx.lineTo(x + width, y + height - radius);
-    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-    ctx.lineTo(x + radius, y + height);
-    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-    ctx.lineTo(x, y + radius);
-    ctx.quadraticCurveTo(x, y, x + radius, y);
-    ctx.closePath();
 
     ctx.globalAlpha = alpha += fade;
 
@@ -111,9 +104,27 @@ export class CanvasTools {
       ctx.stroke();
     }
 
+    CanvasTools.drawRoundedRect(
+      ctx,
+      x,
+      y,
+      width,
+      height,
+      radius,
+      true,
+      strokeStyle != null
+    );
+
     ctx.restore();
 
-    CanvasTools.drawText(ctx, text, x, y, height, 'white');
+    CanvasTools.drawText(
+      ctx,
+      text,
+      x + width / 2,
+      y + height / 2,
+      fontSize,
+      textStyle
+    );
   }
 
   static drawText = (
@@ -138,6 +149,10 @@ export class CanvasTools {
   }
 
   static getFont = fontSize => {
-    return fontSize + 'px \'Source Sans Pro\', Arial, sans-serif';
+    // return fontSize + 'px \'Source Sans Pro\', Arial, sans-serif';
+    return (
+      fontSize +
+      'px Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
+    );
   }
 }

@@ -79,20 +79,23 @@ export class SnakeGameAnimator {
   private drawPaused(ctx: CanvasRenderingContext2D = this.uiCtx) {
     ctx.save();
 
-    const x = this.canvasWidth / 2;
-    const y = this.canvasHeight / 2;
+    const width = this.canvasWidth / 4;
+    const height = this.canvasHeight / 8;
 
-    const w = this.canvasWidth / 4;
-    const h = this.canvasHeight / 8;
+    const x = this.canvasWidth / 2 - width / 2;
+    const y = this.canvasHeight / 2 - height / 2;
 
-    ctx.globalAlpha = 0.5;
-
-    ctx.fillStyle = 'grey'; // SnakeAnimator.BACKGROUND_COLOR;
-    CanvasTools.drawRoundedRect(ctx, x - w / 2, y - h / 2, w, h);
-
-    ctx.globalAlpha = 1;
-
-    CanvasTools.drawText(ctx, 'Paused', x, y, this.y(1), 'white');
+    CanvasTools.drawButton(ctx, {
+      x,
+      y,
+      width,
+      height,
+      radius: 5,
+      fillStyle: 'rgba(128, 128, 128, 0.5)',
+      text: 'Paused',
+      fontSize: this.y(1),
+      textStyle: 'white'
+    });
 
     ctx.restore();
   }
