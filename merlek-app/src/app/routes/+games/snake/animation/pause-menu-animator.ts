@@ -1,21 +1,21 @@
 import { CanvasAnimator } from './canvas-animator';
 import { CanvasTools, ICanvasButton } from './canvas-tools';
+import { OnDestroy } from '@angular/core';
 
-export class PauseMenuAnimator extends CanvasAnimator {
+export class PauseMenuAnimator extends CanvasAnimator implements OnDestroy {
   private buttons: ICanvasButton[] = [];
+  private eventListeners: {
+    type: string; // <K extends keyof HTMLElementEventMap>
+    function: (e: MouseEvent) => void;
+  }[] = [];
   constructor(
     canvas: HTMLCanvasElement,
     grid: { cols: number; rows: number },
     public pause: () => any
   ) {
     super(canvas, grid);
-
     this.initButtons();
-
-    CanvasTools.addButtonClickEventListeners(canvas, this.buttons);
-    CanvasTools.addButtonHoverEventListeners(canvas, this.buttons);
   }
-
   private initButtons(canvas: HTMLCanvasElement = this.canvas) {
     const width = canvas.width / 4;
     const height = canvas.height / 8;
@@ -34,12 +34,41 @@ export class PauseMenuAnimator extends CanvasAnimator {
       text: 'Paused',
       fontSize: this.y(1),
       textStyle: 'white',
+      enabled: true,
       onClick: () => {
         this.pause();
       }
     });
 
+    this.addEventListeners();
+
     return this.buttons;
+  }
+  addEventListeners(
+    canvas: HTMLCanvasElement = this.canvas,
+    buttons: ICanvasButton[] = this.buttons
+  ) {
+    return this.eventListeners.push(
+      CanvasTools.addButtonClickEventListener(canvas, buttons),
+      CanvasTools.addButtonHoverEventListener(canvas, buttons)
+    );
+  }
+  removeEventListeners(
+    canvas: HTMLCanvasElement = this.canvas,
+    eventListeners: {
+      type: string;
+      function: (e: MouseEvent) => void;
+    }[] = this.eventListeners
+  ) {
+    eventListeners.forEach(l => {
+      canvas.removeEventListener(l.type, l.function);
+    });
+  }
+  enableButtons(buttons: ICanvasButton[] = this.buttons) {
+    buttons.forEach(b => (b.enabled = true));
+  }
+  disableButtons(buttons: ICanvasButton[] = this.buttons) {
+    buttons.forEach(b => (b.enabled = false));
   }
   public draw = (ctx: CanvasRenderingContext2D = this.ctx) => {
     this.clear();
@@ -51,5 +80,16 @@ export class PauseMenuAnimator extends CanvasAnimator {
     this.buttons.forEach(CanvasTools.drawButton(ctx));
 
     ctx.restore();
+  }
+  public show() {
+    this.enableButtons();
+    this.draw();
+  }
+  public hide() {
+    this.clear();
+    this.disableButtons();
+  }
+  ngOnDestroy(): void {
+    this.removeEventListeners();
   }
 }

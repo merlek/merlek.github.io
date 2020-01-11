@@ -1,11 +1,11 @@
 import { Directions } from '../core/point';
 import { SnakeGameState } from '../core/snake-game-state';
+import { BackgroundAnimator } from './background-animator';
 import { PauseMenuAnimator } from './pause-menu-animator';
 import { SnakeGameAnimator } from './snake-game-animator';
-import { CanvasAnimator } from './canvas-animator';
-import { BackgroundAnimator } from './background-animator';
+import { OnDestroy } from '@angular/core';
 
-export class SnakeGameManager {
+export class SnakeGameManager implements OnDestroy {
   public fps = 10;
   public paused = false;
   private animationFrameId: number;
@@ -35,7 +35,7 @@ export class SnakeGameManager {
       if (!this.paused) {
         this.state = this.state.next();
         this.gameAnimator.draw(this.state);
-        this.pauseMenuAnimator.clear();
+        // this.pauseMenuAnimator.clear();
       } else {
         this.pauseMenuAnimator.draw();
       }
@@ -45,9 +45,10 @@ export class SnakeGameManager {
       this.animationFrameId = window.requestAnimationFrame(this.update(t1));
     }
   }
-  public destroy(): void {
+  ngOnDestroy(): void {
     if (this.animationFrameId) {
       window.cancelAnimationFrame(this.animationFrameId);
+      this.pauseMenuAnimator.ngOnDestroy();
     }
   }
   public keyEvent(key: string): boolean {
@@ -90,7 +91,11 @@ export class SnakeGameManager {
     return false;
   }
   public pause() {
-    this.paused = !this.paused;
+    if ((this.paused = !this.paused)) {
+      this.pauseMenuAnimator.show();
+    } else {
+      this.pauseMenuAnimator.hide();
+    }
   }
   public toggleTwoPlayers() {
     this.gameAnimator.draw(

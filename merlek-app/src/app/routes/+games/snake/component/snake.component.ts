@@ -35,7 +35,7 @@ export class SnakeComponent implements OnInit, OnDestroy {
     this.highScore = +CookieManager.getCookie(SnakeComponent.COOKIE_NAME);
   }
   ngOnDestroy(): void {
-    this.animator.destroy();
+    this.animator.ngOnDestroy();
   }
   get score() {
     return Math.max(...this.animator.state.snakes.map(s => s.snake.length));

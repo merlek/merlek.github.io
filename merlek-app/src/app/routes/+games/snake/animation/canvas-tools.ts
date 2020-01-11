@@ -19,6 +19,7 @@ export interface ICanvasButton extends Rect {
   fontSize: number;
   textStyle: string;
   state?: string;
+  enabled: boolean;
   onClick: (event?: any) => any;
 }
 export class CanvasTools {
@@ -149,16 +150,16 @@ export class CanvasTools {
       'px Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
     );
   }
-  static addButtonClickEventListeners = (
+  static addButtonClickEventListener = (
     canvas: HTMLCanvasElement,
     buttons: ICanvasButton[]
   ) => {
     const getMousePos = CanvasTools.getMousePos(canvas);
 
-    const handler = e => {
+    const handler = (e: MouseEvent) => {
       const pos = getMousePos(e);
       buttons.forEach(button => {
-        if (CanvasTools.isIntersect(pos, button)) {
+        if (button.enabled && CanvasTools.isIntersect(pos, button)) {
           // click event
           button.onClick(e);
         }
@@ -167,10 +168,10 @@ export class CanvasTools {
 
     canvas.addEventListener('click', handler);
 
-    return handler;
+    return { type: 'click', function: handler };
   }
 
-  static addButtonHoverEventListeners = (
+  static addButtonHoverEventListener = (
     canvas: HTMLCanvasElement,
     buttons: ICanvasButton[]
   ) => {
@@ -180,7 +181,7 @@ export class CanvasTools {
       const pos = getMousePos(e);
       let intersect = false;
       buttons.forEach(button => {
-        if (CanvasTools.isIntersect(pos, button)) {
+        if (button.enabled && CanvasTools.isIntersect(pos, button)) {
           // hover event
           button.state = 'hover';
           intersect = true;
@@ -193,7 +194,7 @@ export class CanvasTools {
 
     canvas.addEventListener('mousemove', handler);
 
-    return handler;
+    return { type: 'mousemove', function: handler };
   }
   static getMousePos = (canvas: HTMLCanvasElement) => (e: MouseEvent) => {
     const rect = canvas.getBoundingClientRect();
