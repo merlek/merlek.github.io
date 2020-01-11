@@ -26,7 +26,7 @@ export class SnakeGameManager {
   }
   public start(): void {
     this.backgroundAnimator.draw();
-    this.gameAnimator.draw()(this.state);
+    this.gameAnimator.draw(this.state);
     this.pause();
     this.animationFrameId = window.requestAnimationFrame(this.update(0));
   }
@@ -34,7 +34,7 @@ export class SnakeGameManager {
     if (t2 - t1 > 1000 / this.fps) {
       if (!this.paused) {
         this.state = this.state.next();
-        this.gameAnimator.draw()(this.state);
+        this.gameAnimator.draw(this.state);
         this.pauseMenuAnimator.clear();
       } else {
         this.pauseMenuAnimator.draw();
@@ -93,7 +93,8 @@ export class SnakeGameManager {
     this.paused = !this.paused;
   }
   public toggleTwoPlayers() {
-    this.state = new SnakeGameState(!this.state.isTwoPlayers);
-    this.gameAnimator.draw();
+    this.gameAnimator.draw(
+      (this.state = new SnakeGameState(!this.state.isTwoPlayers))
+    );
   }
 }

@@ -6,9 +6,7 @@ export abstract class CanvasAnimator {
   ) {
     this.ctx = canvas.getContext('2d');
   }
-  public abstract draw: (
-    ctx?: CanvasRenderingContext2D
-  ) => void | ((state?: any) => void);
+  public abstract draw: (state?: any, ctx?: CanvasRenderingContext2D) => void;
   public clear(ctx: CanvasRenderingContext2D = this.ctx): void {
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }

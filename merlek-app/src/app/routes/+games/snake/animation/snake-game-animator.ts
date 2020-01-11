@@ -11,8 +11,9 @@ export class SnakeGameAnimator extends CanvasAnimator {
     super(canvas, grid);
     this.snakeAnimator = new SnakeAnimator(canvas, grid);
   }
-  public draw = (ctx: CanvasRenderingContext2D = this.ctx) => (
-    state: SnakeGameState
+  public draw = (
+    state: SnakeGameState,
+    ctx: CanvasRenderingContext2D = this.ctx
   ) => {
     this.clear();
     this.snakeAnimator.draw()(state);
