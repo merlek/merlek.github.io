@@ -92,11 +92,7 @@ export class SnakeGameAnimator {
 
     ctx.globalAlpha = 1;
 
-    ctx.fillStyle = 'white';
-    ctx.font = '24px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('Paused', x, y);
+    CanvasTools.drawText(ctx, 'Paused', x, y, this.y(1), 'white');
 
     ctx.restore();
   }

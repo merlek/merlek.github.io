@@ -4,6 +4,20 @@ export interface RoundedRectRadius {
   br?: number;
   bl?: number;
 }
+export interface CanvasButton {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  radius: number;
+  text: string;
+  fillStyle: string;
+  strokeStyle: string;
+  hoverStyle: string;
+  alpha: number;
+  fade: number;
+  state: string;
+}
 export class CanvasTools {
   static drawRoundedRect(
     ctx: CanvasRenderingContext2D,
@@ -49,5 +63,81 @@ export class CanvasTools {
     }
 
     ctx.restore();
+  }
+
+  static drawButton = (
+    ctx: CanvasRenderingContext2D,
+    {
+      x,
+      y,
+      width,
+      height,
+      radius,
+      text,
+      fillStyle,
+      strokeStyle,
+      hoverStyle,
+      alpha,
+      fade,
+      state
+    }: CanvasButton
+  ) => {
+    ctx.save();
+
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
+
+    ctx.globalAlpha = alpha += fade;
+
+    if (state === 'hover') {
+      ctx.fillStyle = hoverStyle;
+    } else {
+      ctx.fillStyle = fillStyle;
+    }
+    ctx.fill();
+
+    if (strokeStyle) {
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = strokeStyle;
+      ctx.stroke();
+    }
+
+    ctx.restore();
+
+    CanvasTools.drawText(ctx, text, x, y, height, 'white');
+  }
+
+  static drawText = (
+    ctx: CanvasRenderingContext2D,
+    text: string,
+    x: number,
+    y: number,
+    fontSize: number,
+    fillStyle: string,
+    textAlign: CanvasTextAlign = 'center',
+    textBaseline: CanvasTextBaseline = 'middle'
+  ) => {
+    ctx.save();
+
+    ctx.fillStyle = fillStyle;
+    ctx.font = CanvasTools.getFont(fontSize); // '24px sans-serif';
+    ctx.textAlign = textAlign;
+    ctx.textBaseline = textBaseline;
+    ctx.fillText(text, x, y);
+
+    ctx.restore();
+  }
+
+  static getFont = fontSize => {
+    return fontSize + 'px \'Source Sans Pro\', Arial, sans-serif';
   }
 }
