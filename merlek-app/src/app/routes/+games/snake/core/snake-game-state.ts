@@ -6,7 +6,7 @@ export class SnakeGameState {
     public readonly cols: number = 24,
     public readonly rows: number = 24,
     public readonly snakes: Snake[] = [],
-    public readonly apple: Apple = new Point(20, 2)
+    public readonly apples: Apple[] = [new Point(20, 2), new Point(2, 20)]
   ) {
     if (this.snakes.length === 0) {
       this.snakes = [this.snakeFromState(Directions.EAST, new Point(2, 2))];
@@ -18,24 +18,18 @@ export class SnakeGameState {
     }
   }
   private snakeFromState(startingMove: Direction, startingPoint: Point): Snake {
-    return new Snake(
-      this.cols,
-      this.rows,
-      [startingMove],
-      startingPoint,
-      this.apple,
-      [startingPoint]
-    );
+    return new Snake(this.cols, this.rows, [startingMove], startingPoint, [
+      startingPoint
+    ]);
   }
   public isCrash(): boolean {
     return this.snakes.reduce((acc, curr) => acc || !curr.isAlive(), false);
   }
-  private willEat(): boolean {
-    return this.snakes.reduce((acc, curr) => acc || curr.willEat(), false);
+  private willEat(apple: Apple): boolean {
+    return this.snakes.reduce((acc, curr) => acc || curr.willEat(apple), false);
   }
-  private nextApple(): Point {
-    // return this.willEat() ? this.rndPos() : this.apple;
-    if (this.willEat()) {
+  private nextApple(apple: Apple): Point {
+    if (this.willEat(apple)) {
       let nextApple: Point;
       do {
         nextApple = this.snakes.reduce((acc, cur) => {
@@ -44,7 +38,7 @@ export class SnakeGameState {
       } while (!nextApple);
       return nextApple;
     } else {
-      return this.apple;
+      return apple;
     }
   }
   private nextSnakes(): Snake[] {
@@ -52,7 +46,7 @@ export class SnakeGameState {
       s.next(
         this.cols,
         this.rows,
-        this.apple,
+        this.apples,
         src.length > 1 ? src[(i + 1) % src.length] : null
       )
     );
@@ -69,7 +63,9 @@ export class SnakeGameState {
       this.cols,
       this.rows,
       this.nextSnakes(),
-      this.nextApple()
+      this.apples.map(apple => {
+        return this.nextApple(apple);
+      })
     );
   }
   public enqueue(snakeId: number, move: Direction): SnakeGameState {

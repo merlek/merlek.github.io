@@ -25,14 +25,20 @@ export class SnakeGameAnimator extends CanvasAnimator {
   private drawApple = (ctx: CanvasRenderingContext2D = this.ctx) => (
     state: SnakeGameState
   ) => {
+    ctx.save();
+
     ctx.fillStyle = SnakeGameAnimator.APPLE_COLOR;
-    CanvasTools.drawRoundedRect(
-      ctx,
-      this.x(state.apple.x),
-      this.y(state.apple.y),
-      this.x(1),
-      this.y(1)
-    );
+    state.apples.forEach(apple => {
+      CanvasTools.drawRoundedRect(
+        ctx,
+        this.x(apple.x),
+        this.y(apple.y),
+        this.x(1),
+        this.y(1)
+      );
+    });
+
+    ctx.restore();
   }
   private drawCrash(ctx: CanvasRenderingContext2D = this.ctx) {
     ctx.fillStyle = SnakeGameAnimator.CRASH_COLOR;

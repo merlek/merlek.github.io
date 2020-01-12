@@ -29,11 +29,11 @@ export class PauseMenuAnimator extends CanvasAnimator implements OnDestroy {
         width,
         height,
         radius: 5,
-      fillStyle: '#005FA1',
+        fillStyle: '#005FA1',
         hoverStyle: '#00487b',
         text: 'Paused',
         fontSize: this.y(1),
-      textStyle: 'white',
+        textStyle: 'white',
         enabled: true,
         onClick: () => {
           pause();
