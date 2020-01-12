@@ -1,9 +1,5 @@
 import { Apple, Direction, Point, Directions } from './point';
-
-export const rnd = (min: number, max: number) =>
-  Math.floor(Math.random() * max) + min;
-const mod = x => y => ((y % x) + x) % x;
-
+import { mod } from 'app/lib/helpers';
 export class Snake {
   constructor(
     public readonly cols: number,
