@@ -1,7 +1,5 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { CookieManager } from 'app/lib/cookie';
-import { SnakeAnimator } from '../animation/snake-animator';
-import { SnakeGameAnimator } from '../animation/snake-game-animator';
 import { SnakeGameManager } from '../animation/snake-game-manager';
 
 @Component({
