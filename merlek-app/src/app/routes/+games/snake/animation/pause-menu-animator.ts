@@ -32,7 +32,7 @@ export class PauseMenuAnimator extends CanvasAnimator implements OnDestroy {
         fillStyle: '#005FA1',
         hoverStyle: '#00487b',
         text: 'Paused',
-        fontSize: this.y(1),
+        font: CanvasTools.getFont(this.y(1)),
         textStyle: 'white',
         enabled: true,
         onClick: () => {
@@ -48,7 +48,7 @@ export class PauseMenuAnimator extends CanvasAnimator implements OnDestroy {
         fillStyle: '#005fa1',
         hoverStyle: '#00487b',
         text: 'Two Players',
-        fontSize: this.y(1) * 0.8,
+        font: CanvasTools.getFont(this.y(1) * 0.8),
         textStyle: 'rgba(255, 255, 255, 1)',
         enabled: true,
         onClick: () => {
@@ -97,7 +97,7 @@ export class PauseMenuAnimator extends CanvasAnimator implements OnDestroy {
     // CanvasTools.drawButton(ctx)(this.buttons[1]);
 
     ctx.restore();
-  }
+  };
   public show() {
     this.enableButtons();
     this.draw();

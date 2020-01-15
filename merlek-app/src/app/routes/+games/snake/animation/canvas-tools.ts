@@ -1,8 +1,11 @@
+export type MouseEventListener = (event: MouseEvent) => any;
+
 export interface RoundedRectRadius {
-  tl?: number;
-  tr?: number;
-  br?: number;
-  bl?: number;
+  tl: number;
+  tr: number;
+  br: number;
+  bl: number;
+  // [key: string]: number | undefined;
 }
 export interface Rect {
   x: number;
@@ -14,15 +17,20 @@ export interface ICanvasButton extends Rect {
   radius: number;
   fillStyle: string;
   strokeStyle?: string;
+  borderWidth?: number;
   hoverStyle?: string;
   text: string;
-  fontSize: number;
-  textStyle: string;
-  state?: string;
+  font: string;
+  textStyle: string | (() => string);
+  state?: 'hover' | undefined;
   enabled: boolean;
-  onClick: (event?: any) => any;
+  onClick: MouseEventListener;
+  onMouseEnter?: MouseEventListener;
+  onMouseLeave?: MouseEventListener;
 }
 export class CanvasTools {
+  static readonly FONT_BASE = 20;
+  static readonly FONT_SIZE = 14;
   static drawRoundedRect(
     ctx: CanvasRenderingContext2D,
     x: number,
@@ -34,13 +42,14 @@ export class CanvasTools {
     stroke = false
   ) {
     if (typeof radius === 'number') {
-      radius = { tl: radius, tr: radius, br: radius, bl: radius };
-    } else {
-      const defaultRadius = { tl: 0, tr: 0, br: 0, bl: 0 };
-      for (const key of Object.keys(defaultRadius)) {
-        radius[key] = radius[key] || defaultRadius[key];
-      }
+      radius = {
+        tl: radius,
+        tr: radius,
+        br: radius,
+        bl: radius
+      };
     }
+
     ctx.save();
 
     ctx.beginPath();
@@ -76,10 +85,11 @@ export class CanvasTools {
     height,
     radius,
     fillStyle,
-    strokeStyle,
+    strokeStyle = 'rgba(255,255,255,0)',
+    borderWidth = 1,
     hoverStyle,
     text,
-    fontSize,
+    font,
     textStyle,
     state
   }: ICanvasButton) => {
@@ -91,8 +101,11 @@ export class CanvasTools {
       ctx.fillStyle = fillStyle;
     }
 
-    if (strokeStyle) {
-      ctx.lineWidth = 2;
+    ctx.lineWidth = borderWidth;
+
+    if (state === 'hover' && hoverStyle) {
+      ctx.strokeStyle = hoverStyle;
+    } else if (strokeStyle) {
       ctx.strokeStyle = strokeStyle;
     }
 
@@ -112,18 +125,20 @@ export class CanvasTools {
       text,
       x + width / 2,
       y + height / 2,
-      fontSize,
-      textStyle
+      width * 0.9,
+      font,
+      typeof textStyle === 'string' ? textStyle : textStyle()
     );
 
     ctx.restore();
-  }
+  };
   static drawText = (
     ctx: CanvasRenderingContext2D,
     text: string,
     x: number,
     y: number,
-    fontSize: number,
+    maxWidth: number | undefined,
+    font: string,
     fillStyle: string,
     textAlign: CanvasTextAlign = 'center',
     textBaseline: CanvasTextBaseline = 'middle'
@@ -131,21 +146,19 @@ export class CanvasTools {
     ctx.save();
 
     ctx.fillStyle = fillStyle;
-    ctx.font = CanvasTools.getFont(fontSize); // '24px sans-serif';
+    ctx.font = font;
     ctx.textAlign = textAlign;
     ctx.textBaseline = textBaseline;
-    ctx.fillText(text, x, y);
+    ctx.fillText(text, x, y, maxWidth);
 
     ctx.restore();
-  }
-
+  };
   static getFont = fontSize => {
-    // return fontSize + 'px \'Source Sans Pro\', Arial, sans-serif';
     return (
       fontSize +
       'px Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
     );
-  }
+  };
   static addButtonClickEventListener = (
     canvas: HTMLCanvasElement,
     buttons: ICanvasButton[]
@@ -164,25 +177,35 @@ export class CanvasTools {
 
     canvas.addEventListener('click', handler);
 
-    return { type: 'click', function: handler };
-  }
-
+    return { type: 'click', function: handler } as {
+      type: string;
+      function: MouseEventListener;
+    };
+  };
   static addButtonHoverEventListener = (
     canvas: HTMLCanvasElement,
     buttons: ICanvasButton[]
   ) => {
     const getMousePos = CanvasTools.getMousePos(canvas);
 
-    const handler = e => {
+    const handler = (e: MouseEvent) => {
       const pos = getMousePos(e);
       let intersect = false;
       buttons.forEach(button => {
         if (button.enabled && CanvasTools.isIntersect(pos, button)) {
           // hover event
-          button.state = 'hover';
+          if (button.state !== 'hover') {
+            button.state = 'hover';
+            if (button.onMouseEnter) {
+              button.onMouseEnter(e);
+            }
+          }
           intersect = true;
-        } else if (button.state) {
+        } else if (button.state === 'hover') {
           button.state = undefined;
+          if (button.onMouseLeave) {
+            button.onMouseLeave(e);
+          }
         }
       });
       canvas.style.cursor = intersect ? 'pointer' : 'default';
@@ -190,18 +213,21 @@ export class CanvasTools {
 
     canvas.addEventListener('mousemove', handler);
 
-    return { type: 'mousemove', function: handler };
-  }
+    return { type: 'mousemove', function: handler } as {
+      type: string;
+      function: MouseEventListener;
+    };
+  };
   static getMousePos = (canvas: HTMLCanvasElement) => (e: MouseEvent) => {
     const rect = canvas.getBoundingClientRect();
     return {
       x: ((e.clientX - rect.left) / (rect.right - rect.left)) * canvas.width,
       y: ((e.clientY - rect.top) / (rect.bottom - rect.top)) * canvas.height
     };
-  }
+  };
   static isIntersect = (pos: { x: number; y: number }, button: Rect) =>
     pos.x > button.x &&
     pos.x < button.x + button.width &&
     pos.y < button.y + button.height &&
-    pos.y > button.y
+    pos.y > button.y;
 }
