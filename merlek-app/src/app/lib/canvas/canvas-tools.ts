@@ -166,7 +166,7 @@ export class CanvasTools {
 
     ctx.restore();
   };
-  static getFont = fontSize => {
+  static getFont = (fontSize: number) => {
     return (
       fontSize +
       'px Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'

@@ -11,7 +11,7 @@ export class TicTacToeGameState {
     public readonly cols: number = 3,
     public readonly rows: number = 3
   ) {}
-  public get(x: number, y: number): TicTacToeMark {
+  public get(x: number, y: number): TicTacToeMark | undefined {
     return this.board[x] ? this.board[x][y] : undefined;
   }
   public set(marker: TicTacToeMark, x: number, y: number): void {

@@ -6,7 +6,7 @@ export interface ImageSourceSet {
 }
 export class ImageLoader {
   private loaded = 0;
-  private readonly total;
+  private readonly total: number;
   private readonly images: ImageSet = {};
   constructor(
     sources: ImageSourceSet,
