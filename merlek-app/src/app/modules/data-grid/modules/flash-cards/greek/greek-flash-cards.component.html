@@ -1,23 +1,56 @@
 <app-flash-card-header [data]="data"></app-flash-card-header>
 <div class="modal-body">
-	<div class="card">
-		<div class="front">
-			<div class="font-size-1_5">
-				<span *ngIf="item.Article" class="font-size-0_8 opacity-75" [innerHTML]="item.Article+'&nbsp;'"></span>
-				<a target="_blank" href="http://www.perseus.tufts.edu/hopper/morph?la=greek&l={{item.Greek}}" [innerHTML]="item.Greek"></a>
-				<span *ngIf="item.Declension" class="font-size-0_8 opacity-75" [innerHTML]="'&nbsp;'+item.Declension"></span>
-			</div>
-		</div>
-		<div class="back">
-			<div id="answer" [class.invisible]="!isShowAnswer">
-				<hr>
-				<div [innerHTML]="item.English"></div>
-				<div class="font-size-0_7" *ngIf="item.Notes" [innerHTML]="'('+item.Notes+')'"></div>
-				<div class="font-size-0_8 opacity-75" *ngIf="item.Root" [innerHTML]="item.Root"></div>
-				<div class="font-size-0_8 font-mono" [innerHTML]="item.Transliteration"></div>
-				<div class="font-size-0_8 opacity-50" *ngIf="item.Type" [innerHTML]="item.Type"></div>
-			</div>
-		</div>
-	</div>
+  <div class="card">
+    <div class="front">
+      <div class="font-size-1_5">
+        <span
+          *ngIf="item.Article"
+          class="font-size-0_8 opacity-75"
+          [innerHTML]="item.Article + '&nbsp;'"
+        ></span>
+        <a
+          target="_blank"
+          href="http://www.perseus.tufts.edu/hopper/morph?la=greek&l={{
+            item.Greek
+          }}"
+          [innerHTML]="item.Greek"
+        ></a>
+        <span
+          *ngIf="item.Declension"
+          class="font-size-0_8 opacity-75"
+          [innerHTML]="'&nbsp;' + item.Declension"
+        ></span>
+      </div>
+    </div>
+    <div class="back">
+      <div id="answer" [class.invisible]="!isShowAnswer">
+        <hr />
+        <div [innerHTML]="item.English"></div>
+        <div
+          class="font-size-0_7"
+          *ngIf="item.Notes"
+          [innerHTML]="'(' + item.Notes + ')'"
+        ></div>
+        <div
+          class="font-size-0_8 opacity-75"
+          *ngIf="item.Root"
+          [innerHTML]="item.Root"
+        ></div>
+        <div
+          class="font-size-0_8 font-mono"
+          [innerHTML]="item.Transliteration"
+        ></div>
+        <div
+          class="font-size-0_8 opacity-50"
+          *ngIf="item.Type"
+          [innerHTML]="item.Type"
+        ></div>
+      </div>
+    </div>
+  </div>
 </div>
-<app-flash-card-footer (showAnswerEvent)="showAnswer()" (nextEvent)="next()" (againEvent)="again()"></app-flash-card-footer>
+<app-flash-card-footer
+  (showAnswerEvent)="showAnswer()"
+  (nextEvent)="next()"
+  (againEvent)="again()"
+></app-flash-card-footer>

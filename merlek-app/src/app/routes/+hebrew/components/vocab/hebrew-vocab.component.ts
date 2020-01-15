@@ -69,9 +69,10 @@ export class HebrewVocabComponent implements OnInit {
   }
 
   getData(): void {
-    this.http
-      .get<HebrewVocab[]>(this.file)
-      .subscribe(data => (this.vocab = data), err => this.handleError(err));
+    this.http.get<HebrewVocab[]>(this.file).subscribe(
+      data => (this.vocab = data),
+      err => this.handleError(err)
+    );
   }
 
   private handleError(error: HttpErrorResponse) {

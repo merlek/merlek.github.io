@@ -6,11 +6,22 @@
     </div>
     <div class="back">
       <div id="answer" [class.invisible]="!isShowAnswer">
-        <hr>
+        <hr />
         <div [innerHTML]="item.English"></div>
-        <div class="font-mono font-size-0_8 opacity-75" [innerHTML]="item.Transliteration"></div>
-        <div class="font-size-0_7 opacity-75" *ngIf="item.Info" [innerHTML]="'('+item.Info+')'"></div>
-        <div class="font-size-0_7 opacity-50" *ngIf="item.Notes" [innerHTML]="'('+item.Notes+')'"></div>
+        <div
+          class="font-mono font-size-0_8 opacity-75"
+          [innerHTML]="item.Transliteration"
+        ></div>
+        <div
+          class="font-size-0_7 opacity-75"
+          *ngIf="item.Info"
+          [innerHTML]="'(' + item.Info + ')'"
+        ></div>
+        <div
+          class="font-size-0_7 opacity-50"
+          *ngIf="item.Notes"
+          [innerHTML]="'(' + item.Notes + ')'"
+        ></div>
         <div class="font-size-0_7 opacity-50">
           <span *ngIf="item.GenNum" [innerHTML]="item.GenNum"> </span>
           <span *ngIf="item.Type" [innerHTML]="item.Type"></span>
@@ -19,4 +30,8 @@
     </div>
   </div>
 </div>
-<app-flash-card-footer (onShowAnswer)="showAnswer()" (onNext)="next()" (onAgain)="again()" ></app-flash-card-footer>
+<app-flash-card-footer
+  (showAnswerEvent)="showAnswer()"
+  (nextEvent)="next()"
+  (againEvent)="again()"
+></app-flash-card-footer>
