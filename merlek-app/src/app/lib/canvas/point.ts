@@ -18,4 +18,3 @@ export class Directions {
   static readonly WEST: Direction = new Point(-1, 0);
   private constructor() {}
 }
-export type Apple = Point;

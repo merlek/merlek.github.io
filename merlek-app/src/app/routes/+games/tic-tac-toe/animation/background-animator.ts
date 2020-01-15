@@ -1,5 +1,5 @@
 import { CanvasAnimator } from '../../../../lib/canvas/canvas-animator';
-import { Point } from '../../snake/core/point';
+import { Point } from '../../../../lib/canvas/point';
 
 const BACKGROUND_GRID_RATIO = 0.9;
 

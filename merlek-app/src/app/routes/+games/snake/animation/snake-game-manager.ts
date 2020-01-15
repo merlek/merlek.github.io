@@ -1,4 +1,4 @@
-import { Directions } from '../core/point';
+import { Directions } from '../../../../lib/canvas/point';
 import { SnakeGameState } from '../core/snake-game-state';
 import { BackgroundAnimator } from './background-animator';
 import { PauseMenuAnimator } from './pause-menu-animator';
@@ -47,7 +47,7 @@ export class SnakeGameManager implements OnDestroy {
     } else {
       this.animationFrameId = window.requestAnimationFrame(this.update(t1));
     }
-  }
+  };
   ngOnDestroy(): void {
     if (this.animationFrameId) {
       window.cancelAnimationFrame(this.animationFrameId);

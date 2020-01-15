@@ -1,5 +1,6 @@
-import { Apple, Direction, Point, Directions } from './point';
 import { mod } from 'app/lib/helpers';
+import { Direction, Directions, Point } from '../../../../lib/canvas/point';
+export type Apple = Point;
 export class Snake {
   constructor(
     public readonly cols: number,

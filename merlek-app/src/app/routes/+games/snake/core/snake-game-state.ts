@@ -1,6 +1,6 @@
-import { Direction, Point, Apple, Directions } from './point';
-import { Snake } from './snake';
 import { rnd } from 'app/lib/helpers';
+import { Direction, Directions, Point } from '../../../../lib/canvas/point';
+import { Snake, Apple } from './snake';
 export class SnakeGameState {
   static readonly MAX_APPLES = 5;
   constructor(
