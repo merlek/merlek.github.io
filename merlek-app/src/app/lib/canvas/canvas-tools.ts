@@ -1,4 +1,4 @@
-import { Point } from './point';
+import { Point, IPoint } from './point';
 
 export type MouseEventListener = (event: MouseEvent) => any;
 
@@ -15,7 +15,17 @@ export interface Rect {
   width: number;
   height: number;
 }
-export interface ICanvasButton extends Rect {
+export interface ClickEventObject extends Rect {
+  enabled: boolean;
+  onClick: MouseEventListener;
+}
+export interface HoverEventObject extends Rect {
+  enabled: boolean;
+  state?: 'hover';
+  onMouseEnter?: MouseEventListener;
+  onMouseLeave?: MouseEventListener;
+}
+export interface ICanvasButton extends ClickEventObject, HoverEventObject {
   radius: number;
   fillStyle: string;
   strokeStyle?: string;
@@ -30,6 +40,7 @@ export interface ICanvasButton extends Rect {
   onMouseEnter?: MouseEventListener;
   onMouseLeave?: MouseEventListener;
 }
+
 export class CanvasTools {
   static readonly FONT_BASE = 20;
   static readonly FONT_SIZE = 14;
@@ -170,7 +181,7 @@ export class CanvasTools {
   };
   static addButtonClickEventListener = (
     canvas: HTMLCanvasElement,
-    buttons: ICanvasButton[]
+    buttons: ClickEventObject[]
   ) => {
     const getMousePos = CanvasTools.getMousePos(canvas);
 
@@ -193,7 +204,7 @@ export class CanvasTools {
   };
   static addButtonHoverEventListener = (
     canvas: HTMLCanvasElement,
-    buttons: ICanvasButton[]
+    buttons: HoverEventObject[]
   ) => {
     const getMousePos = CanvasTools.getMousePos(canvas);
 
@@ -234,7 +245,7 @@ export class CanvasTools {
       y: ((e.clientY - rect.top) / (rect.bottom - rect.top)) * canvas.height
     };
   };
-  static isIntersect = (pos: { x: number; y: number }, button: Rect) =>
+  static isIntersect = (pos: IPoint, button: Rect) =>
     pos.x > button.x &&
     pos.x < button.x + button.width &&
     pos.y < button.y + button.height &&
