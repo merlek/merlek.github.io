@@ -1,3 +1,5 @@
+import { Point } from './point';
+
 export type MouseEventListener = (event: MouseEvent) => any;
 
 export interface RoundedRectRadius {
@@ -158,6 +160,13 @@ export class CanvasTools {
       fontSize +
       'px Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
     );
+  };
+  static drawLine = (ctx: CanvasRenderingContext2D, p1: Point, p2: Point) => {
+    ctx.beginPath();
+    ctx.moveTo(p1.x, p1.y);
+    ctx.lineTo(p2.x, p2.y);
+    ctx.stroke();
+    ctx.closePath();
   };
   static addButtonClickEventListener = (
     canvas: HTMLCanvasElement,

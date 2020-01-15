@@ -1,4 +1,9 @@
-export class Point {
+export interface IPoint {
+  x: number;
+  y: number;
+}
+
+export class Point implements IPoint {
   constructor(public readonly x: number, public readonly y: number) {}
   public equals(other: Point): boolean {
     return other != null && this.x === other.x && this.y === other.y;
