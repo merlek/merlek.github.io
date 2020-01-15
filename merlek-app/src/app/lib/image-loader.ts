@@ -34,23 +34,19 @@ export class ImageLoader {
     return this.images[img] != null;
   }
   public onLoad(callback: (images: ImageSet) => void) {
-    // console.log('onLoad loaded=' + this.loaded + ', total=' + this.total);
     for (const img in this.images) {
       if (this.images.hasOwnProperty(img)) {
         if (this.loaded < this.total) {
-          // console.log('   images not loaded, add listener');
           this.images[img].addEventListener(
             'load',
             () => {
               if (++this.loaded >= this.total) {
-                // console.log('   images  loaded');
                 callback(this.images);
               }
             },
             false
           );
         } else {
-          // console.log('   images loaded, execute callback');
           callback(this.images);
         }
       }

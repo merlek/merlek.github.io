@@ -9,20 +9,15 @@ import { GreekVocab } from 'app/routes/+greek-vocab/greekVocab';
 })
 export class GreekFlashCardsComponent implements OnInit {
   @Input() data: GreekVocab[];
-
   item: GreekVocab;
   isShowAnswer = false;
-
   constructor(public activeModal: NgbActiveModal) {}
-
   ngOnInit() {
     this.item = this.data.shift();
   }
-
   showAnswer() {
     this.isShowAnswer = true;
   }
-
   next() {
     this.isShowAnswer = false;
     this.item = this.data.shift();
@@ -30,7 +25,6 @@ export class GreekFlashCardsComponent implements OnInit {
       this.activeModal.close();
     }
   }
-
   again() {
     this.data.push(this.item);
     this.next();

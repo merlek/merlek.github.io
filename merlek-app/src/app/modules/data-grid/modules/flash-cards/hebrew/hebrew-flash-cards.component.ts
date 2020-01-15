@@ -10,20 +10,15 @@ import { HebrewVocab } from 'app/routes/+hebrew/components/vocab/hebrewVocab';
 })
 export class HebrewFlashCardsComponent implements OnInit {
   @Input() data: HebrewVocab[];
-
   item: HebrewVocab;
   isShowAnswer = false;
-
   constructor(public activeModal: NgbActiveModal) {}
-
   ngOnInit() {
     this.item = this.data.shift();
   }
-
   showAnswer() {
     this.isShowAnswer = true;
   }
-
   next() {
     this.isShowAnswer = false;
     this.item = this.data.shift();
@@ -31,7 +26,6 @@ export class HebrewFlashCardsComponent implements OnInit {
       this.activeModal.close();
     }
   }
-
   again() {
     this.data.push(this.item);
     this.next();
