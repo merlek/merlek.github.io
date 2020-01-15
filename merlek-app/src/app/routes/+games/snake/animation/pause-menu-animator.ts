@@ -1,5 +1,8 @@
-import { CanvasAnimator } from './canvas-animator';
-import { CanvasTools, ICanvasButton } from './canvas-tools';
+import { CanvasAnimator } from '../../../../lib/canvas/canvas-animator';
+import {
+  CanvasTools,
+  ICanvasButton
+} from '../../../../lib/canvas/canvas-tools';
 import { OnDestroy } from '@angular/core';
 
 export class PauseMenuAnimator extends CanvasAnimator implements OnDestroy {

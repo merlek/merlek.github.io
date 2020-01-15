@@ -18,6 +18,9 @@ export class AppComponent {
       new Nav('N Queens', 'n-queens'),
       new Nav('Edit Distance', 'edit-distance')
     ]),
-    new Nav('Games', 'games', [new Nav('Snake', 'snake')])
+    new Nav('Games', 'games', [
+      new Nav('Snake', 'snake'),
+      new Nav('Tic Tac Toe', 'tic-tac-toe')
+    ])
   ];
 }

@@ -49,6 +49,13 @@ const routes: Routes = [
     path: 'games/snake',
     loadChildren: () =>
       import('./routes/+games/snake/snake.module').then(m => m.SnakeModule)
+  },
+  {
+    path: 'games/tic-tac-toe',
+    loadChildren: () =>
+      import('./routes/+games/tic-tac-toe/tic-tac-toe.module').then(
+        m => m.TicTacToeModule
+      )
   }
 ];
 

@@ -1,7 +1,7 @@
 import { Point } from '../core/point';
 import { Snake } from '../core/snake';
 import { SnakeGameState } from '../core/snake-game-state';
-import { CanvasAnimator } from './canvas-animator';
+import { CanvasAnimator } from '../../../../lib/canvas/canvas-animator';
 
 export class SnakeAnimator extends CanvasAnimator {
   static readonly SNAKE_COLORS = ['#00c832', '#c7c700'];
@@ -20,7 +20,7 @@ export class SnakeAnimator extends CanvasAnimator {
       }
     });
     ctx.restore();
-  }
+  };
   private drawSnake(ctx: CanvasRenderingContext2D, snake: Snake) {
     snake.segments().forEach(this.drawSnakeSegment(ctx));
     this.drawSnakeHead(ctx, snake);
@@ -91,5 +91,5 @@ export class SnakeAnimator extends CanvasAnimator {
     ctx.stroke();
 
     ctx.restore();
-  }
+  };
 }

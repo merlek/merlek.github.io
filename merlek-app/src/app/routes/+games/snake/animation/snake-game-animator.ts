@@ -1,6 +1,6 @@
 import { SnakeGameState } from '../core/snake-game-state';
-import { CanvasAnimator } from './canvas-animator';
-import { CanvasTools } from './canvas-tools';
+import { CanvasAnimator } from '../../../../lib/canvas/canvas-animator';
+import { CanvasTools } from '../../../../lib/canvas/canvas-tools';
 import { SnakeAnimator } from './snake-animator';
 
 export class SnakeGameAnimator extends CanvasAnimator {
@@ -21,7 +21,7 @@ export class SnakeGameAnimator extends CanvasAnimator {
     if (state.isCrash()) {
       this.drawCrash(ctx);
     }
-  }
+  };
   private drawApple = (ctx: CanvasRenderingContext2D = this.ctx) => (
     state: SnakeGameState
   ) => {
@@ -39,7 +39,7 @@ export class SnakeGameAnimator extends CanvasAnimator {
     });
 
     ctx.restore();
-  }
+  };
   private drawCrash(ctx: CanvasRenderingContext2D = this.ctx) {
     ctx.fillStyle = SnakeGameAnimator.CRASH_COLOR;
     ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
