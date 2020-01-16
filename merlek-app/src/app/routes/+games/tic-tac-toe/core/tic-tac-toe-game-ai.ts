@@ -41,7 +41,7 @@ export class TicTacToeAI extends TicTacToeGameState {
   ): { score: number; move?: Point } {
     const result = state.checkWinner(false);
     if (result !== undefined) {
-      return { score: this.scores(result) };
+      return { score: this.scores(result, depth) };
     }
 
     const moves = state.getAvailableMoves();
@@ -63,8 +63,8 @@ export class TicTacToeAI extends TicTacToeGameState {
     });
     return { score: bestScore, move: bestMove };
   }
-  private scores = (t: TicTacToeWinner) =>
-    t === 'tie' ? 0 : t === this.getTurn() ? 10 : -10;
+  private scores = (t: TicTacToeWinner, depth: number = 0) =>
+    t === 'tie' ? 0 : t === this.getTurn() ? 10 - depth : -10 + depth;
   private player = (isMaxing: boolean) =>
     isMaxing ? this.getTurn() : this.getTurn(this.turns + 1);
 }
