@@ -45,6 +45,8 @@ export class TicTacToeAI extends TicTacToeGameState {
   private minimax(
     state: TicTacToeAI = this,
     depth: number = 0,
+    alpha: number = -Infinity,
+    beta: number = Infinity,
     isMaximizing: boolean = true
   ): { score: number; move?: Point } {
     const result = state.checkWinner(false);
@@ -56,19 +58,35 @@ export class TicTacToeAI extends TicTacToeGameState {
 
     let bestScore = isMaximizing ? -Infinity : Infinity;
     let bestMove: Point;
-    const compare = isMaximizing ? Math.max : Math.min;
+    const compare = (a: any, b: any) => (isMaximizing ? a > b : a < b);
 
-    moves.forEach(move => {
+    for (const move of moves) {
       state.set(move, this.player(isMaximizing));
-      const { score } = this.minimax(state, depth + 1, !isMaximizing);
+      const { score } = this.minimax(
+        state,
+        depth + 1,
+        alpha,
+        beta,
+        !isMaximizing
+      );
       state.set(move, undefined);
 
-      bestScore = compare(bestScore, score);
-
-      if (bestScore === score) {
+      if (compare(score, bestScore)) {
+        bestScore = score;
         bestMove = move;
       }
-    });
+
+      if (isMaximizing) {
+        alpha = Math.max(alpha, score);
+      } else {
+        beta = Math.min(beta, score);
+      }
+
+      if (beta <= alpha) {
+        break;
+      }
+    }
+
     return { score: bestScore, move: bestMove };
   }
   private scores = (t: TicTacToeWinner, depth: number = 0) =>
