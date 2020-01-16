@@ -35,7 +35,7 @@ export class TicTacToeManager implements OnDestroy {
           height: y(1),
           enabled: true,
           onClick: () => {
-            this.state.setNextTurn(i, j);
+            this.state.takeTurn({ x: i, y: j });
           }
         });
       }
@@ -49,6 +49,7 @@ export class TicTacToeManager implements OnDestroy {
   }
   private update = (t1: DOMHighResTimeStamp) => (t2: DOMHighResTimeStamp) => {
     if (t2 - t1 > 1000 / this.fps) {
+      this.state.takeAiTurn();
       this.gameAnimator.draw(this.state);
 
       if (this.state.winner) {

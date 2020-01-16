@@ -1,5 +1,6 @@
 import { rnd } from 'app/lib/helpers';
-import { Point } from '../../../../lib/canvas/point';
+import { Point, IPoint } from '../../../../lib/canvas/point';
+import { TicTacToeAI } from './tic-tac-toe-game-ai';
 
 export type TicTacToeMark = 'X' | 'O';
 const X = 'X';
@@ -9,14 +10,18 @@ export class TicTacToeGameState {
   private board: TicTacToeMark[][] = [];
   private turns = 0;
   public winner?: TicTacToeMark;
+  private isAiTurn = false;
   constructor(
     public readonly cols: number = 3,
-    public readonly rows: number = 3
-  ) {}
+    public readonly rows: number = 3,
+    private readonly ai = new TicTacToeAI()
+  ) {
+    this.takeAiTurn();
+  }
   public get(x: number, y: number): TicTacToeMark | undefined {
     return this.board[x] ? this.board[x][y] : undefined;
   }
-  public set(marker: TicTacToeMark, x: number, y: number): boolean {
+  private set(marker: TicTacToeMark, x: number, y: number): boolean {
     let set = false;
     if (!this.winner) {
       if (!this.board[x]) {
@@ -30,14 +35,32 @@ export class TicTacToeGameState {
     }
     return set;
   }
-  public setNextTurn(x: number, y: number): void {
-    if (this.set(this.getTurn(), x, y)) {
-      this.turns++;
-    }
-  }
-  public getTurn(): TicTacToeMark {
+  private getTurn(): TicTacToeMark {
     return this.turns % 2 === 0 ? X : O;
   }
+  private setNextTurn({ x, y }: IPoint): boolean {
+    if (this.set(this.getTurn(), x, y)) {
+      this.turns++;
+      return true;
+    }
+    return false;
+  }
+  public takeTurn(p: IPoint) {
+    if (!this.isAiTurn) {
+      console.log('takeTurn', this.isAiTurn);
+      if (this.setNextTurn(p)) {
+        this.isAiTurn = true;
+      }
+    }
+  }
+  public takeAiTurn() {
+    if (this.isAiTurn && !this.checkGameOver()) {
+      console.log('takeAiTurn', this.isAiTurn);
+      while (!this.setNextTurn(this.ai.getNextMove(this))) {}
+      this.isAiTurn = false;
+    }
+  }
+
   private checkGameOver(): TicTacToeGameOver {
     let winner;
     if (!(winner = this.checkColWins())) {
