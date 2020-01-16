@@ -1,16 +1,10 @@
 import { rnd } from 'app/lib/helpers';
 import { IPoint, Point } from '../../../../lib/canvas/point';
-import { TicTacToeGameState, TicTacToeWinner } from './tic-tac-toe-game-state';
-
-const scores = {
-  X: -10,
-  O: 10,
-  tie: 0
-} as {
-  [key in TicTacToeWinner]: number;
-};
-const ai = 'O';
-const human = 'X';
+import {
+  TicTacToeGameState,
+  TicTacToeWinner,
+  TicTacToeMark
+} from './tic-tac-toe-game-state';
 
 export class TicTacToeAI extends TicTacToeGameState {
   constructor(cols: number = 3, rows: number = 3, private isAiTurn = false) {
@@ -20,22 +14,30 @@ export class TicTacToeAI extends TicTacToeGameState {
 
   static minimax(
     state: TicTacToeAI,
+    scores: (i: TicTacToeWinner) => number,
+    player: (isMaximizing: boolean) => TicTacToeMark,
     depth: number = 0,
     isMaximizing: boolean = true
   ): { score: number; move?: Point } {
     const result = state.checkWinner(false);
     if (result !== undefined) {
-      return { score: scores[result] };
+      return { score: scores(result) };
     }
 
     const moves = state.getAvailableMoves();
 
     let bestScore = isMaximizing ? -Infinity : Infinity;
-    let bestMove;
+    let bestMove: Point;
 
     moves.forEach(move => {
-      state.set(move, isMaximizing ? ai : human);
-      const { score } = TicTacToeAI.minimax(state, depth + 1, !isMaximizing);
+      state.set(move, player(isMaximizing));
+      const { score } = TicTacToeAI.minimax(
+        state,
+        scores,
+        player,
+        depth + 1,
+        !isMaximizing
+      );
       state.set(move, undefined);
 
       bestScore = isMaximizing
@@ -49,21 +51,16 @@ export class TicTacToeAI extends TicTacToeGameState {
   }
   public takeTurn(p?: IPoint): void {
     if (this.isAiTurn && !this.checkWinner()) {
-      // setTimeout(() => {
       while (!this.setNextTurn(this.getNextMove())) {}
       this.bestMove();
       this.checkWinner();
       this.isAiTurn = false;
-      // }, 1000);
     } else {
       this.isAiTurn = this.setNextTurn(p);
     }
   }
   public getNextMove(): Point {
     return this.bestMove();
-  }
-  private rndPos(): Point {
-    return new Point(rnd(0)(this.cols), rnd(0)(this.rows));
   }
   protected removeTurn(): undefined {
     this.turns--;
@@ -83,6 +80,14 @@ export class TicTacToeAI extends TicTacToeGameState {
   public next = () => new TicTacToeAI(this.cols, this.rows);
 
   private bestMove(): Point {
-    return TicTacToeAI.minimax(this).move;
+    return TicTacToeAI.minimax(
+      this,
+      (t: TicTacToeWinner) => {
+        return t === 'tie' ? 0 : t === this.getTurn() ? 10 : -10;
+      },
+      (isMaximizing: boolean) => {
+        return isMaximizing ? this.getTurn() : this.getTurn(this.turns + 1);
+      }
+    ).move;
   }
 }

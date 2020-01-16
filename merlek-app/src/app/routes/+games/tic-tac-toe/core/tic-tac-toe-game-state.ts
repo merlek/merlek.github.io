@@ -47,8 +47,8 @@ export class TicTacToeGameState {
   protected nextTurn(): TicTacToeMark {
     return this.turns++ % 2 === 0 ? X : O;
   }
-  protected getTurn(): TicTacToeMark {
-    return this.turns % 2 === 0 ? X : O;
+  protected getTurn(turn = this.turns): TicTacToeMark {
+    return turn % 2 === 0 ? X : O;
   }
   public checkWinner(set = true): TicTacToeWinner {
     let winner;
