@@ -2,6 +2,14 @@ import { IPoint, Point } from '../../../../lib/canvas/point';
 import { TicTacToeGameState, TicTacToeWinner } from './tic-tac-toe-game-state';
 import { rnd } from 'app/lib/helpers';
 
+const shuffle = (array: any[]) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+};
+
 export class TicTacToeAI extends TicTacToeGameState {
   constructor(
     cols: number = 3,
@@ -44,19 +52,19 @@ export class TicTacToeAI extends TicTacToeGameState {
       return { score: this.scores(result, depth) };
     }
 
-    const moves = state.getAvailableMoves();
+    const moves = shuffle(state.getAvailableMoves());
 
     let bestScore = isMaximizing ? -Infinity : Infinity;
     let bestMove: Point;
+    const compare = isMaximizing ? Math.max : Math.min;
 
     moves.forEach(move => {
       state.set(move, this.player(isMaximizing));
       const { score } = this.minimax(state, depth + 1, !isMaximizing);
       state.set(move, undefined);
 
-      bestScore = isMaximizing
-        ? Math.max(score, bestScore)
-        : Math.min(score, bestScore);
+      bestScore = compare(bestScore, score);
+
       if (bestScore === score) {
         bestMove = move;
       }
