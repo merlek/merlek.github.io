@@ -2,7 +2,7 @@ import { CanvasAnimator } from '../../../../lib/canvas/canvas-animator';
 import { Point } from '../../../../lib/canvas/point';
 import { CanvasTools } from 'app/lib/canvas/canvas-tools';
 
-const BACKGROUND_GRID_RATIO = 0.9;
+export const BACKGROUND_GRID_RATIO = 0.9;
 
 export class BackgroundAnimator extends CanvasAnimator {
   static readonly BACKGROUND_COLOR = '#232323';

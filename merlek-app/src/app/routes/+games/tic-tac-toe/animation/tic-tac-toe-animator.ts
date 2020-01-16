@@ -1,12 +1,13 @@
+import { CanvasTools } from 'app/lib/canvas/canvas-tools';
+import { Point } from 'app/lib/canvas/point';
 import { CanvasAnimator } from '../../../../lib/canvas/canvas-animator';
 import {
   TicTacToeGameState,
   TicTacToeMark
 } from '../core/tic-tac-toe-game-state';
-import { CanvasTools } from 'app/lib/canvas/canvas-tools';
-import { Point } from 'app/lib/canvas/point';
+import { BACKGROUND_GRID_RATIO } from './background-animator';
 
-const GRID_FILL_RATIO = 0.9;
+const GRID_FILL_RATIO = BACKGROUND_GRID_RATIO;
 
 export class TicTacToeAnimator extends CanvasAnimator {
   constructor(canvas: HTMLCanvasElement, grid: { cols: number; rows: number }) {
@@ -16,16 +17,13 @@ export class TicTacToeAnimator extends CanvasAnimator {
     state: TicTacToeGameState,
     ctx: CanvasRenderingContext2D = this.ctx
   ) => {
-    console.log('draw', state);
     this.clear();
 
     ctx.lineWidth = this.canvas.width * 0.01;
 
     for (let x = 0; x < state.cols; x++) {
       for (let y = 0; y < state.rows; y++) {
-        const marker = state.get(x, y);
-        console.log(marker, x, y);
-        this.drawMarker(marker)(ctx, x, y);
+        this.drawMarker(state.get(x, y))(ctx, x, y);
       }
     }
   };
