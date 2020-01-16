@@ -1,15 +1,20 @@
 import { IPoint, Point } from '../../../../lib/canvas/point';
 import { TicTacToeGameState, TicTacToeWinner } from './tic-tac-toe-game-state';
+import { rnd } from 'app/lib/helpers';
 
 export class TicTacToeAI extends TicTacToeGameState {
-  constructor(cols: number = 3, rows: number = 3, private isAiTurn = false) {
+  constructor(
+    cols: number = 3,
+    rows: number = 3,
+    private isAiTurn = rnd(0)(2) === 0
+  ) {
     super(cols, rows);
-    (window as any).TicTacToeAI = this;
   }
   public takeTurn(p?: IPoint): void {
     if (this.isAiTurn && !this.checkWinner()) {
+      // setTimeout(() => {
       while (!this.setNextTurn(this.bestMove())) {}
-      this.bestMove();
+      // }, 1000);
       this.checkWinner();
       this.isAiTurn = false;
     } else {
