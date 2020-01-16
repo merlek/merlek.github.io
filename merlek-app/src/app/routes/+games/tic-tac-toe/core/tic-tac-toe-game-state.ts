@@ -5,7 +5,7 @@ const X = 'X';
 const O = 'O';
 export type TicTacToeWinner = TicTacToeMark | 'tie';
 export class TicTacToeGameState {
-  protected board: TicTacToeMark[][] = [];
+  private board: TicTacToeMark[][] = [];
   protected turns = 0;
   public winner?: TicTacToeMark;
   constructor(
