@@ -23,7 +23,7 @@ export class TicTacToeAnimator extends CanvasAnimator {
 
     for (let x = 0; x < state.cols; x++) {
       for (let y = 0; y < state.rows; y++) {
-        this.drawMarker(state.get(x, y))(ctx, x, y);
+        this.drawMarker(state.get({ x, y }))(ctx, x, y);
       }
     }
   };

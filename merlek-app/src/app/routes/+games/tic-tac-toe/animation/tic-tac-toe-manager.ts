@@ -4,6 +4,7 @@ import { TicTacToeGameState } from '../core/tic-tac-toe-game-state';
 import { BackgroundAnimator } from './background-animator';
 import { TicTacToeAnimator } from './tic-tac-toe-animator';
 import { TicTacToeUIAnimator } from './tic-tac-toe-ui-animator';
+import { TicTacToeAI } from '../core/tic-tac-toe-game-ai';
 
 export class TicTacToeManager implements OnDestroy {
   public fps = 60;
@@ -16,7 +17,7 @@ export class TicTacToeManager implements OnDestroy {
     game: HTMLCanvasElement,
     background: HTMLCanvasElement,
     ui: HTMLCanvasElement,
-    public state = new TicTacToeGameState()
+    public state: TicTacToeGameState = new TicTacToeAI()
   ) {
     this.gameAnimator = new TicTacToeAnimator(game, state);
     this.backgroundAnimator = new BackgroundAnimator(background, state);
@@ -49,7 +50,7 @@ export class TicTacToeManager implements OnDestroy {
   }
   private update = (t1: DOMHighResTimeStamp) => (t2: DOMHighResTimeStamp) => {
     if (t2 - t1 > 1000 / this.fps) {
-      this.state.takeAiTurn();
+      this.state.takeTurn();
       this.gameAnimator.draw(this.state);
 
       if (this.state.winner) {

@@ -1,73 +1,62 @@
-import { rnd } from 'app/lib/helpers';
-import { Point, IPoint } from '../../../../lib/canvas/point';
-import { TicTacToeAI } from './tic-tac-toe-game-ai';
+import { IPoint } from '../../../../lib/canvas/point';
 
 export type TicTacToeMark = 'X' | 'O';
 const X = 'X';
 const O = 'O';
-export type TicTacToeGameOver = TicTacToeMark | 'Tie';
+export type TicTacToeWinner = TicTacToeMark | 'tie';
 export class TicTacToeGameState {
-  private board: TicTacToeMark[][] = [];
-  private turns = 0;
+  protected board: TicTacToeMark[][] = [];
+  protected turns = 0;
   public winner?: TicTacToeMark;
-  private isAiTurn = false;
   constructor(
     public readonly cols: number = 3,
-    public readonly rows: number = 3,
-    private readonly ai = new TicTacToeAI()
+    public readonly rows: number = 3
   ) {
-    this.takeAiTurn();
+    for (let x = 0; x < this.cols; x++) {
+      this.board[x] = [];
+    }
   }
-  public get(x: number, y: number): TicTacToeMark | undefined {
+  public get({ x, y }: IPoint): TicTacToeMark | undefined {
     return this.board[x] ? this.board[x][y] : undefined;
   }
-  private set(marker: TicTacToeMark, x: number, y: number): boolean {
+  protected set({ x, y }: IPoint, marker: TicTacToeMark): void {
+    this.board[x][y] = marker;
+  }
+  protected setIfAble(marker: TicTacToeMark, p: IPoint): boolean {
     let set = false;
     if (!this.winner) {
-      if (!this.board[x]) {
-        this.board[x] = [];
-      }
-      if (!this.board[x][y]) {
-        this.board[x][y] = marker;
+      if (!this.get(p)) {
+        this.set(p, marker);
         set = true;
       }
-      this.checkGameOver();
+      this.checkWinner();
     }
     return set;
   }
-  private getTurn(): TicTacToeMark {
+  protected setNextTurn(p: IPoint): boolean {
+    let set = false;
+    if (p && this.setIfAble(this.getTurn(), p)) {
+      this.nextTurn();
+      set = true;
+    }
+    return set;
+  }
+  public takeTurn(p?: IPoint): void {
+    this.setNextTurn(p);
+  }
+  protected nextTurn(): TicTacToeMark {
+    return this.turns++ % 2 === 0 ? X : O;
+  }
+  protected getTurn(): TicTacToeMark {
     return this.turns % 2 === 0 ? X : O;
   }
-  private setNextTurn({ x, y }: IPoint): boolean {
-    if (this.set(this.getTurn(), x, y)) {
-      this.turns++;
-      return true;
-    }
-    return false;
-  }
-  public takeTurn(p: IPoint) {
-    if (!this.isAiTurn) {
-      console.log('takeTurn', this.isAiTurn);
-      if (this.setNextTurn(p)) {
-        this.isAiTurn = true;
-      }
-    }
-  }
-  public takeAiTurn() {
-    if (this.isAiTurn && !this.checkGameOver()) {
-      console.log('takeAiTurn', this.isAiTurn);
-      while (!this.setNextTurn(this.ai.getNextMove(this))) {}
-      this.isAiTurn = false;
-    }
-  }
-
-  private checkGameOver(): TicTacToeGameOver {
+  public checkWinner(): TicTacToeWinner {
     let winner;
     if (!(winner = this.checkColWins())) {
       if (!(winner = this.checkRowWins())) {
         if (!(winner = this.checkDiagonalWins())) {
           if (this.checkBoardFull()) {
-            winner = 'Tie';
+            winner = 'tie';
           }
         }
       }
@@ -76,9 +65,9 @@ export class TicTacToeGameState {
   }
   private checkColWins(): TicTacToeMark | undefined {
     for (let x = 0; x < this.cols; x++) {
-      let v = this.get(x, 0);
+      let v = this.get({ x, y: 0 });
       for (let y = 1; y < this.rows; y++) {
-        if (v !== this.get(x, y)) {
+        if (v !== this.get({ x, y })) {
           v = undefined;
         }
       }
@@ -90,9 +79,9 @@ export class TicTacToeGameState {
   }
   private checkRowWins(): TicTacToeMark | undefined {
     for (let y = 0; y < this.cols; y++) {
-      let v = this.get(0, y);
+      let v = this.get({ x: 0, y });
       for (let x = 1; x < this.rows; x++) {
-        if (v !== this.get(x, y)) {
+        if (v !== this.get({ x, y })) {
           v = undefined;
         }
       }
@@ -103,13 +92,13 @@ export class TicTacToeGameState {
     return undefined;
   }
   private checkDiagonalWins(): TicTacToeMark | undefined {
-    let v1 = this.get(0, 0);
-    let v2 = this.get(0, this.rows - 1);
+    let v1 = this.get({ x: 0, y: 0 });
+    let v2 = this.get({ x: 0, y: this.rows - 1 });
     for (let i = 1; i < this.cols; i++) {
-      if (v1 !== this.get(i, i)) {
+      if (v1 !== this.get({ x: i, y: i })) {
         v1 = undefined;
       }
-      if (v2 !== this.get(i, this.rows - 1 - i)) {
+      if (v2 !== this.get({ x: i, y: this.rows - 1 - i })) {
         v2 = undefined;
       }
     }
@@ -118,15 +107,12 @@ export class TicTacToeGameState {
   private checkBoardFull(): boolean {
     for (let x = 0; x < this.cols; x++) {
       for (let y = 0; y < this.rows; y++) {
-        if (!this.get(x, y)) {
+        if (!this.get({ x, y })) {
           return false;
         }
       }
     }
     return true;
-  }
-  private rndPos(): Point {
-    return new Point(rnd(0)(this.cols), rnd(0)(this.rows));
   }
   public next = () => new TicTacToeGameState(this.cols, this.rows);
 }

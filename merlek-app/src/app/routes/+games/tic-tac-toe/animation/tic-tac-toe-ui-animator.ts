@@ -3,7 +3,7 @@ import { CanvasAnimator } from '../../../../lib/canvas/canvas-animator';
 import {
   TicTacToeGameState,
   TicTacToeMark,
-  TicTacToeGameOver
+  TicTacToeWinner
 } from '../core/tic-tac-toe-game-state';
 import { BACKGROUND_GRID_RATIO } from './background-animator';
 
@@ -22,7 +22,7 @@ export class TicTacToeUIAnimator extends CanvasAnimator {
   };
   private drawText = (
     ctx: CanvasRenderingContext2D,
-    winner: TicTacToeGameOver,
+    winner: TicTacToeWinner,
     x = this.canvas.width / 2,
     y = this.canvas.height / 2,
     font = CanvasTools.getFont(this.y(1)),
@@ -34,7 +34,7 @@ export class TicTacToeUIAnimator extends CanvasAnimator {
     ctx.fillStyle = fillStyle;
     ctx.fillRect(0, this.y(1), this.canvas.width, this.y(1));
 
-    const text = winner === 'Tie' ? 'Tie!' : winner + ' wins!';
+    const text = winner === 'tie' ? 'tie!' : winner + ' wins!';
 
     const maxWidth = this.canvas.width * BACKGROUND_GRID_RATIO;
 
