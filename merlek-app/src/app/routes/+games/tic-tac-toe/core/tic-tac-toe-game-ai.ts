@@ -16,70 +16,15 @@ const scores = {
 const ai = 'O';
 const human = 'X';
 
-function equals3(a: any, b: any, c: any) {
-  return a === b && b === c && a !== undefined;
-}
-
-function checkWinner(board: TicTacToeMark[][]): TicTacToeWinner {
-  let winner: TicTacToeMark;
-
-  // horizontal
-  for (let i = 0; i < 3; i++) {
-    if (equals3(board[i][0], board[i][1], board[i][2])) {
-      winner = board[i][0];
-    }
-  }
-
-  // Vertical
-  for (let i = 0; i < 3; i++) {
-    if (equals3(board[0][i], board[1][i], board[2][i])) {
-      winner = board[0][i];
-    }
-  }
-
-  // Diagonal
-  if (equals3(board[0][0], board[1][1], board[2][2])) {
-    winner = board[0][0];
-  }
-  if (equals3(board[2][0], board[1][1], board[0][2])) {
-    winner = board[2][0];
-  }
-
-  let openSpots = 0;
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
-      if (board[i][j] === undefined) {
-        openSpots++;
-      }
-    }
-  }
-
-  if (winner === undefined && openSpots === 0) {
-    return 'tie';
-  } else {
-    return winner;
-  }
-}
 export class TicTacToeAI extends TicTacToeGameState {
-  static calls = 0;
   // static minimax(
   //   state: TicTacToeAI,
   //   depth: number = 0,
   //   isMaximizingPlayer = true
-  // ): { score: number; move?: Point } {
-  //   if (TicTacToeAI.calls > 255168) {
-  //     throw Error('Should have solved it by now');
-  //   }
-  //   console.log(
-  //     'minimax',
-  //     TicTacToeAI.calls++,
-  //     state.getTurn(),
-  //     depth,
-  //     isMaximizingPlayer
-  //   );
+  // ): number {
   //   const result = state.checkWinner();
   //   if (result !== undefined) {
-  //     return { score: scores[result] };
+  //     return scores[result];
   //   }
 
   //   const moves = state.getAvailableMoves();
@@ -90,7 +35,7 @@ export class TicTacToeAI extends TicTacToeGameState {
 
   //   moves.forEach(move => {
   //     state.set(move, t);
-  //     const { score } = this.minimax(state, depth + 1, !isMaximizingPlayer);
+  //     const score = this.minimax(state, depth + 1, !isMaximizingPlayer);
   //     state.set(move, undefined);
   //     bestScore = isMaximizingPlayer
   //       ? Math.max(score, bestScore)
@@ -102,18 +47,15 @@ export class TicTacToeAI extends TicTacToeGameState {
 
   //   state.removeTurn();
 
-  //   return { score: bestScore, move: bestMove };
+  //   return bestScore;
   // }
   constructor(cols: number = 3, rows: number = 3, private isAiTurn = false) {
     super(cols, rows);
     (window as any).TicTacToeAI = this;
   }
 
-  static minimax(board, depth: number, isMaximizing: boolean) {
-    if (TicTacToeAI.calls++ > 255168) {
-      throw Error('Should have solved it by now');
-    }
-    const result = checkWinner(board);
+  static minimax(state: TicTacToeAI, depth: number, isMaximizing: boolean) {
+    const result = state.checkWinner(false);
     if (result !== undefined) {
       return scores[result];
     }
@@ -123,10 +65,10 @@ export class TicTacToeAI extends TicTacToeGameState {
       for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
           // Is the spot available?
-          if (board[i][j] === undefined) {
-            board[i][j] = ai;
-            const score = TicTacToeAI.minimax(board, depth + 1, false);
-            board[i][j] = undefined;
+          if (state.board[i][j] === undefined) {
+            state.board[i][j] = ai;
+            const score = TicTacToeAI.minimax(state, depth + 1, false);
+            state.board[i][j] = undefined;
             bestScore = Math.max(score, bestScore);
           }
         }
@@ -137,10 +79,10 @@ export class TicTacToeAI extends TicTacToeGameState {
       for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
           // Is the spot available?
-          if (board[i][j] === undefined) {
-            board[i][j] = human;
-            const score = TicTacToeAI.minimax(board, depth + 1, true);
-            board[i][j] = undefined;
+          if (state.board[i][j] === undefined) {
+            state.board[i][j] = human;
+            const score = TicTacToeAI.minimax(state, depth + 1, true);
+            state.board[i][j] = undefined;
             bestScore = Math.min(score, bestScore);
           }
         }
@@ -153,6 +95,7 @@ export class TicTacToeAI extends TicTacToeGameState {
       // setTimeout(() => {
       // while (!this.setNextTurn(this.getNextMove())) {}
       this.bestMove();
+      this.checkWinner();
       this.isAiTurn = false;
       // }, 1000);
     } else {
@@ -208,7 +151,7 @@ export class TicTacToeAI extends TicTacToeGameState {
         // Is the spot available?
         if (this.board[i][j] === undefined) {
           this.board[i][j] = ai;
-          const score = TicTacToeAI.minimax(this.board, 0, false);
+          const score = TicTacToeAI.minimax(this, 0, false);
           this.board[i][j] = undefined;
           if (score > bestScore) {
             bestScore = score;

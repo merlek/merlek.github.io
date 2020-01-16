@@ -50,7 +50,7 @@ export class TicTacToeGameState {
   protected getTurn(): TicTacToeMark {
     return this.turns % 2 === 0 ? X : O;
   }
-  public checkWinner(): TicTacToeWinner {
+  public checkWinner(set = true): TicTacToeWinner {
     let winner;
     if (!(winner = this.checkColWins())) {
       if (!(winner = this.checkRowWins())) {
@@ -61,7 +61,10 @@ export class TicTacToeGameState {
         }
       }
     }
-    return (this.winner = winner);
+    if (set) {
+      this.winner = winner;
+    }
+    return winner;
   }
   private checkColWins(): TicTacToeMark | undefined {
     for (let x = 0; x < this.cols; x++) {
