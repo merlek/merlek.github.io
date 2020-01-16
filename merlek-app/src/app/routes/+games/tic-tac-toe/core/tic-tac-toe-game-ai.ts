@@ -14,7 +14,7 @@ export class TicTacToeAI extends TicTacToeGameState {
   constructor(
     cols: number = 3,
     rows: number = 3,
-    private isAiTurn = rnd(0)(2) === 0
+    public isAiTurn = rnd(0)(2) === 0
   ) {
     super(cols, rows);
   }

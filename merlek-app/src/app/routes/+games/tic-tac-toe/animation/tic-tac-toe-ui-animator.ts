@@ -6,27 +6,28 @@ import {
   TicTacToeWinner
 } from '../core/tic-tac-toe-game-state';
 import { BACKGROUND_GRID_RATIO } from './background-animator';
+import { TicTacToeAI } from '../core/tic-tac-toe-game-ai';
 
 export class TicTacToeUIAnimator extends CanvasAnimator {
   constructor(canvas: HTMLCanvasElement, grid: { cols: number; rows: number }) {
     super(canvas, grid);
   }
   public draw = (
-    state: TicTacToeGameState,
+    state: TicTacToeGameState | TicTacToeAI,
     ctx: CanvasRenderingContext2D = this.ctx
   ) => {
     if (state.winner) {
       this.clear();
-      this.drawText(ctx, state.winner);
+      this.drawText(ctx, state.winner, (state as TicTacToeAI).isAiTurn);
     }
   };
   private drawText = (
     ctx: CanvasRenderingContext2D,
     winner: TicTacToeWinner,
+    human: boolean,
     x = this.canvas.width / 2,
     y = this.canvas.height / 2,
     font = CanvasTools.getFont(this.y(1)),
-    textStyle = 'rgba(255,0,0,0.9)',
     fillStyle = 'rgba(100,100,100,0.9)'
   ) => {
     ctx.save();
@@ -35,6 +36,7 @@ export class TicTacToeUIAnimator extends CanvasAnimator {
     ctx.fillRect(0, this.y(1), this.canvas.width, this.y(1));
 
     const text = winner === 'tie' ? 'tie!' : winner + ' wins!';
+    const textStyle = winner === 'tie' ? 'white' : human ? 'green' : 'red';
 
     const maxWidth = this.canvas.width * BACKGROUND_GRID_RATIO;
 
