@@ -13,67 +13,44 @@ const ai = 'O';
 const human = 'X';
 
 export class TicTacToeAI extends TicTacToeGameState {
-  // static minimax(
-  //   state: TicTacToeAI,
-  //   depth: number = 0,
-  //   isMaximizingPlayer = true
-  // ): number {
-  //   const result = state.checkWinner();
-  //   if (result !== undefined) {
-  //     return scores[result];
-  //   }
-
-  //   const moves = state.getAvailableMoves();
-  //   let bestScore = isMaximizingPlayer ? -Infinity : Infinity;
-  //   let bestMove: Point;
-
-  //   const t = state.nextTurn();
-
-  //   moves.forEach(move => {
-  //     state.set(move, t);
-  //     const score = this.minimax(state, depth + 1, !isMaximizingPlayer);
-  //     state.set(move, undefined);
-  //     bestScore = isMaximizingPlayer
-  //       ? Math.max(score, bestScore)
-  //       : Math.min(score, bestScore);
-  //     if (bestScore === score) {
-  //       bestMove = move;
-  //     }
-  //   });
-
-  //   state.removeTurn();
-
-  //   return bestScore;
-  // }
   constructor(cols: number = 3, rows: number = 3, private isAiTurn = false) {
     super(cols, rows);
     (window as any).TicTacToeAI = this;
   }
 
-  static minimax(state: TicTacToeAI, depth: number, isMaximizing: boolean) {
+  static minimax(
+    state: TicTacToeAI,
+    depth: number = 0,
+    isMaximizing: boolean = true
+  ): { score: number; move?: Point } {
     const result = state.checkWinner(false);
     if (result !== undefined) {
-      return scores[result];
+      return { score: scores[result] };
     }
 
     const moves = state.getAvailableMoves();
 
     let bestScore = isMaximizing ? -Infinity : Infinity;
+    let bestMove;
+
     moves.forEach(move => {
       state.set(move, isMaximizing ? ai : human);
-      const score = TicTacToeAI.minimax(state, depth + 1, !isMaximizing);
+      const { score } = TicTacToeAI.minimax(state, depth + 1, !isMaximizing);
       state.set(move, undefined);
 
       bestScore = isMaximizing
         ? Math.max(score, bestScore)
         : Math.min(score, bestScore);
+      if (bestScore === score) {
+        bestMove = move;
+      }
     });
-    return bestScore;
+    return { score: bestScore, move: bestMove };
   }
   public takeTurn(p?: IPoint): void {
     if (this.isAiTurn && !this.checkWinner()) {
       // setTimeout(() => {
-      // while (!this.setNextTurn(this.getNextMove())) {}
+      while (!this.setNextTurn(this.getNextMove())) {}
       this.bestMove();
       this.checkWinner();
       this.isAiTurn = false;
@@ -82,9 +59,9 @@ export class TicTacToeAI extends TicTacToeGameState {
       this.isAiTurn = this.setNextTurn(p);
     }
   }
-  // public getNextMove(): Point {
-  //   return this.bestMove();
-  // }
+  public getNextMove(): Point {
+    return this.bestMove();
+  }
   private rndPos(): Point {
     return new Point(rnd(0)(this.cols), rnd(0)(this.rows));
   }
@@ -92,23 +69,6 @@ export class TicTacToeAI extends TicTacToeGameState {
     this.turns--;
     return undefined;
   }
-  // private bestMove(): Point {
-  //   // let bestScore = -Infinity;
-  //   // let bestMove;
-  //   // const t = this.nextTurn();
-  //   // this.getAvailableMoves().forEach(move => {
-  //   //   this.set(move, t);
-  //   //   const { score } = TicTacToeAI.minimax(this, 0, false);
-  //   //   this.set(move, undefined);
-  //   //   if (score > bestScore) {
-  //   //     bestScore = score;
-  //   //     bestMove = move;
-  //   //   }
-  //   // });
-  //   // this.removeTurn();
-  //   // return bestMove;
-  //   return TicTacToeAI.minimax(this).move;
-  // }
   public getAvailableMoves(): Point[] {
     const moves: Point[] = [];
     for (let x = 0; x < this.cols; x++) {
@@ -122,26 +82,7 @@ export class TicTacToeAI extends TicTacToeGameState {
   }
   public next = () => new TicTacToeAI(this.cols, this.rows);
 
-  private bestMove() {
-    // AI to make its turn
-    let bestScore = -Infinity;
-    let move;
-
-    const moves = this.getAvailableMoves();
-
-    moves.forEach(m => {
-      this.set(m, ai);
-      const score = TicTacToeAI.minimax(this, 0, false);
-      this.set(m, undefined);
-
-      if (score > bestScore) {
-        bestScore = score;
-        move = m;
-      }
-    });
-
-    console.log('bestScore', bestScore, 'bestMove', move);
-    this.set(move, ai);
-    this.turns++; // currentPlayer = human;
+  private bestMove(): Point {
+    return TicTacToeAI.minimax(this).move;
   }
 }
