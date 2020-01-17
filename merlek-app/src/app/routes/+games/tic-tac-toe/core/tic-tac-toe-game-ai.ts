@@ -14,19 +14,18 @@ export class TicTacToeAI extends TicTacToeGameState {
   constructor(
     cols: number = 3,
     rows: number = 3,
-    public isAiTurn = rnd(0)(2) === 0
+    public aiPlayer: 0 | 1 = rnd(0)(2) as 0 | 1
   ) {
     super(cols, rows);
   }
   public takeTurn(p?: IPoint): void {
-    if (this.isAiTurn && !this.checkWinner()) {
+    if (this.isAiTurn() && !this.checkWinner()) {
       // setTimeout(() => {
       while (!this.setNextTurn(this.bestMove())) {}
       // }, 1000);
       this.checkWinner();
-      this.isAiTurn = false;
     } else {
-      this.isAiTurn = this.setNextTurn(p);
+      this.setNextTurn(p);
     }
   }
   public getAvailableMoves(): Point[] {
@@ -93,4 +92,5 @@ export class TicTacToeAI extends TicTacToeGameState {
     t === 'tie' ? 0 : t === this.getTurn() ? 10 - depth : -10 + depth;
   private player = (isMaxing: boolean) =>
     isMaxing ? this.getTurn() : this.getTurn(this.turns + 1);
+  public isAiTurn = () => this.turns % 2 === this.aiPlayer;
 }

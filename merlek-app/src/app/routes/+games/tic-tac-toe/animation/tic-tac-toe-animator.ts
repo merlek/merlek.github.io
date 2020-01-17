@@ -6,8 +6,23 @@ import {
   TicTacToeMark
 } from '../core/tic-tac-toe-game-state';
 import { BACKGROUND_GRID_RATIO } from './background-animator';
+import { TicTacToeAI } from '../core/tic-tac-toe-game-ai';
 
 const GRID_FILL_RATIO = BACKGROUND_GRID_RATIO;
+
+export type player = 'human' | 'ai';
+
+export const getStrokeStyle = (mode: player | 'tie') =>
+  mode === 'human' ? '#33ff33' : mode === 'ai' ? '#ff3333' : 'white';
+
+export const determineMode = (state: TicTacToeGameState) => {
+  if (state instanceof TicTacToeAI) {
+    return (marker: TicTacToeMark) =>
+      marker === ((state as TicTacToeAI).aiPlayer ? 'O' : 'X') ? 'ai' : 'human';
+  } else {
+    return () => undefined;
+  }
+};
 
 export class TicTacToeAnimator extends CanvasAnimator {
   constructor(canvas: HTMLCanvasElement, grid: { cols: number; rows: number }) {
@@ -19,29 +34,32 @@ export class TicTacToeAnimator extends CanvasAnimator {
   ) => {
     this.clear();
 
+    const mode = determineMode(state);
+
     ctx.lineWidth = this.canvas.width * 0.01;
 
     for (let x = 0; x < state.cols; x++) {
       for (let y = 0; y < state.rows; y++) {
-        this.drawMarker(state.get({ x, y }))(ctx, x, y);
+        const marker = state.get({ x, y });
+        this.drawMarker(marker, mode(marker))(ctx, x, y);
       }
     }
   };
-  private drawMarker = (marker: TicTacToeMark) => {
+  private drawMarker = (marker: TicTacToeMark, mode: player) => {
     switch (marker) {
       case 'X':
-        return this.drawMarkerX;
+        return this.drawMarkerX(mode);
       case 'O':
-        return this.drawMarkerO;
+        return this.drawMarkerO(mode);
       default:
         return () => {};
     }
   };
-  private drawMarkerX = (
+  private drawMarkerX = (mode: player) => (
     ctx: CanvasRenderingContext2D,
     x: number,
     y: number,
-    strokeStyle = 'white'
+    strokeStyle = getStrokeStyle(mode)
   ) => {
     ctx.save();
 
@@ -67,11 +85,11 @@ export class TicTacToeAnimator extends CanvasAnimator {
 
     ctx.restore();
   };
-  private drawMarkerO = (
+  private drawMarkerO = (mode: player) => (
     ctx: CanvasRenderingContext2D,
     x: number,
     y: number,
-    strokeStyle = 'white'
+    strokeStyle = getStrokeStyle(mode)
   ) => {
     ctx.save();
     const w = this.x(1);

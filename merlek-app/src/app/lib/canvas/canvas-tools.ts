@@ -99,7 +99,7 @@ export class CanvasTools {
     radius,
     fillStyle,
     strokeStyle = 'rgba(255,255,255,0)',
-    borderWidth = 1,
+    borderWidth = Math.min(4, (width / 36) * 4),
     hoverStyle,
     text,
     font,

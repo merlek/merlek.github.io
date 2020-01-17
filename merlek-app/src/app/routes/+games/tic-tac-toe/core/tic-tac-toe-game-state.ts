@@ -7,7 +7,7 @@ export type TicTacToeWinner = TicTacToeMark | 'tie';
 export class TicTacToeGameState {
   private board: TicTacToeMark[][] = [];
   protected turns = 0;
-  public winner?: TicTacToeMark;
+  public winner?: TicTacToeWinner;
   constructor(
     public readonly cols: number = 3,
     public readonly rows: number = 3

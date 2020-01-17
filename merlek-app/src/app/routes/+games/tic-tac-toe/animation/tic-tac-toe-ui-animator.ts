@@ -7,28 +7,34 @@ import {
 } from '../core/tic-tac-toe-game-state';
 import { BACKGROUND_GRID_RATIO } from './background-animator';
 import { TicTacToeAI } from '../core/tic-tac-toe-game-ai';
+import { player, getStrokeStyle } from './tic-tac-toe-animator';
 
 export class TicTacToeUIAnimator extends CanvasAnimator {
   constructor(canvas: HTMLCanvasElement, grid: { cols: number; rows: number }) {
     super(canvas, grid);
   }
   public draw = (
-    state: TicTacToeGameState | TicTacToeAI,
+    state: TicTacToeGameState,
     ctx: CanvasRenderingContext2D = this.ctx
   ) => {
     if (state.winner) {
       this.clear();
-      this.drawText(ctx, state.winner, (state as TicTacToeAI).isAiTurn);
+      this.drawText(
+        ctx,
+        state.winner,
+        (state as TicTacToeAI).isAiTurn() ? 'human' : 'ai'
+      );
     }
   };
   private drawText = (
     ctx: CanvasRenderingContext2D,
     winner: TicTacToeWinner,
-    human: boolean,
+    winnerPlayer: player,
     x = this.canvas.width / 2,
     y = this.canvas.height / 2,
     font = CanvasTools.getFont(this.y(1)),
-    fillStyle = 'rgba(100,100,100,0.9)'
+    fillStyle = 'rgba(100,100,100,0.95)',
+    textStyle = getStrokeStyle(winner === 'tie' ? 'tie' : winnerPlayer)
   ) => {
     ctx.save();
 
@@ -36,7 +42,6 @@ export class TicTacToeUIAnimator extends CanvasAnimator {
     ctx.fillRect(0, this.y(1), this.canvas.width, this.y(1));
 
     const text = winner === 'tie' ? 'tie!' : winner + ' wins!';
-    const textStyle = winner === 'tie' ? 'white' : human ? 'green' : 'red';
 
     const maxWidth = this.canvas.width * BACKGROUND_GRID_RATIO;
 
