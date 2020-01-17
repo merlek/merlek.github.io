@@ -1,6 +1,6 @@
+import { Point } from 'app/lib/canvas/Canvas-Tools';
 import { rnd } from 'app/lib/helpers';
-import { Direction, Directions, Point } from '../../../../lib/canvas/point';
-import { Snake, Apple } from './snake';
+import { Apple, Snake, Directions, Direction } from './snake';
 export class SnakeGameState {
   static readonly MAX_APPLES = 5;
   constructor(
@@ -8,13 +8,13 @@ export class SnakeGameState {
     public readonly cols: number = 24,
     public readonly rows: number = 24,
     public readonly snakes: Snake[] = [],
-    public readonly apples: Apple[] = [new Point(20, 2), new Point(2, 20)]
+    public readonly apples: Apple[] = [Point.create(20, 2), Point.create(2, 20)]
   ) {
     if (this.snakes.length === 0) {
-      this.snakes = [this.snakeFromState(Directions.EAST, new Point(2, 2))];
+      this.snakes = [this.snakeFromState(Directions.EAST, Point.create(2, 2))];
       if (this.isTwoPlayers) {
         this.snakes.push(
-          this.snakeFromState(Directions.NORTH, new Point(20, 20))
+          this.snakeFromState(Directions.NORTH, Point.create(20, 20))
         );
       }
     }
@@ -71,7 +71,7 @@ export class SnakeGameState {
     );
   }
   private rndPos(): Point {
-    return new Point(rnd(0)(this.cols), rnd(0)(this.rows));
+    return Point.create(rnd(0)(this.cols), rnd(0)(this.rows));
   }
   private merge(other: any): SnakeGameState {
     return Object.assign(new SnakeGameState(), this, other);

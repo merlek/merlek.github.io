@@ -1,7 +1,7 @@
-import { SnakeGameState } from '../core/snake-game-state';
 import { CanvasAnimator } from '../../../../lib/canvas/canvas-animator';
-import { CanvasTools } from '../../../../lib/canvas/canvas-tools';
+import { SnakeGameState } from '../core/snake-game-state';
 import { SnakeAnimator } from './snake-animator';
+import { Rect, RoundedRect } from 'app/lib/canvas/Canvas-Tools';
 
 export class SnakeGameAnimator extends CanvasAnimator {
   static readonly APPLE_COLOR = '#ff3200';
@@ -29,7 +29,7 @@ export class SnakeGameAnimator extends CanvasAnimator {
 
     ctx.fillStyle = SnakeGameAnimator.APPLE_COLOR;
     state.apples.forEach(apple => {
-      CanvasTools.drawRoundedRect(
+      RoundedRect.draw(
         ctx,
         this.x(apple.x),
         this.y(apple.y),

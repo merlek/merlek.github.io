@@ -1,6 +1,5 @@
-import { CanvasAnimator } from '../../../../lib/canvas/canvas-animator';
-import { Point } from '../../../../lib/canvas/point';
-import { CanvasTools } from 'app/lib/canvas/canvas-tools';
+import { CanvasAnimator } from 'app/lib/canvas/canvas-animator';
+import { Point, Line } from 'app/lib/canvas/Canvas-Tools';
 
 export const BACKGROUND_GRID_RATIO = 0.9;
 
@@ -23,10 +22,10 @@ export class BackgroundAnimator extends CanvasAnimator {
 
     const yOffset = (this.canvas.height * (1 - BACKGROUND_GRID_RATIO)) / 2;
     for (let x = 1; x < this.grid.cols; x++) {
-      CanvasTools.drawLine(
+      Line.draw(
         ctx,
-        new Point(this.x(x), this.y(0) * BACKGROUND_GRID_RATIO + yOffset),
-        new Point(
+        Point.create(this.x(x), this.y(0) * BACKGROUND_GRID_RATIO + yOffset),
+        Point.create(
           this.x(x),
           this.y(this.grid.rows) * BACKGROUND_GRID_RATIO + yOffset
         )
@@ -35,10 +34,10 @@ export class BackgroundAnimator extends CanvasAnimator {
 
     const xOffset = (this.canvas.width * (1 - BACKGROUND_GRID_RATIO)) / 2;
     for (let y = 1; y < this.grid.cols; y++) {
-      CanvasTools.drawLine(
+      Line.draw(
         ctx,
-        new Point(this.x(0) * BACKGROUND_GRID_RATIO + xOffset, this.y(y)),
-        new Point(
+        Point.create(this.x(0) * BACKGROUND_GRID_RATIO + xOffset, this.y(y)),
+        Point.create(
           this.x(this.grid.rows) * BACKGROUND_GRID_RATIO + xOffset,
           this.y(y)
         )

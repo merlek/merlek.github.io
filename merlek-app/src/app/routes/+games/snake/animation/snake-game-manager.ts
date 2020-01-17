@@ -1,9 +1,9 @@
-import { Directions } from '../../../../lib/canvas/point';
 import { SnakeGameState } from '../core/snake-game-state';
 import { BackgroundAnimator } from './background-animator';
 import { PauseMenuAnimator } from './pause-menu-animator';
 import { SnakeGameAnimator } from './snake-game-animator';
 import { OnDestroy } from '@angular/core';
+import { Directions } from '../core/snake';
 
 export class SnakeGameManager implements OnDestroy {
   public fps = 10;

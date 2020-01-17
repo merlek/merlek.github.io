@@ -1,13 +1,12 @@
-import { CanvasTools } from 'app/lib/canvas/canvas-tools';
+import { Text } from 'app/lib/canvas/Canvas-Tools';
 import { CanvasAnimator } from '../../../../lib/canvas/canvas-animator';
+import { TicTacToeAI } from '../core/tic-tac-toe-game-ai';
 import {
   TicTacToeGameState,
-  TicTacToeMark,
   TicTacToeWinner
 } from '../core/tic-tac-toe-game-state';
 import { BACKGROUND_GRID_RATIO } from './background-animator';
-import { TicTacToeAI } from '../core/tic-tac-toe-game-ai';
-import { player, getStrokeStyle } from './tic-tac-toe-animator';
+import { getStrokeStyle, player } from './tic-tac-toe-animator';
 
 export class TicTacToeUIAnimator extends CanvasAnimator {
   constructor(canvas: HTMLCanvasElement, grid: { cols: number; rows: number }) {
@@ -32,7 +31,7 @@ export class TicTacToeUIAnimator extends CanvasAnimator {
     winnerPlayer: player,
     x = this.canvas.width / 2,
     y = this.canvas.height / 2,
-    font = CanvasTools.getFont(this.y(1)),
+    font = Text.getFont(this.y(1)),
     fillStyle = 'rgba(100,100,100,0.95)',
     textStyle = getStrokeStyle(winner === 'tie' ? 'tie' : winnerPlayer)
   ) => {
@@ -45,7 +44,7 @@ export class TicTacToeUIAnimator extends CanvasAnimator {
 
     const maxWidth = this.canvas.width * BACKGROUND_GRID_RATIO;
 
-    CanvasTools.drawText(ctx, text, x, y, maxWidth, font, textStyle);
+    Text.draw(ctx, text, x, y, maxWidth, font, textStyle);
 
     ctx.restore();
   };

@@ -1,12 +1,9 @@
 import { CanvasAnimator } from '../../../../lib/canvas/canvas-animator';
-import {
-  CanvasTools,
-  ICanvasButton
-} from '../../../../lib/canvas/canvas-tools';
 import { OnDestroy } from '@angular/core';
+import { Button, Text, Mouse } from 'app/lib/canvas/Canvas-Tools';
 
 export class PauseMenuAnimator extends CanvasAnimator implements OnDestroy {
-  private buttons: ICanvasButton[] = [];
+  private buttons: Button[] = [];
   private eventListeners: {
     type: string; // <K extends keyof HTMLElementEventMap>
     function: (e: MouseEvent) => void;
@@ -35,7 +32,7 @@ export class PauseMenuAnimator extends CanvasAnimator implements OnDestroy {
         fillStyle: '#005FA1',
         hoverStyle: '#00487b',
         text: 'Paused',
-        font: CanvasTools.getFont(this.y(1)),
+        font: Text.getFont(this.y(1)),
         textStyle: 'white',
         enabled: true,
         onClick: () => {
@@ -51,7 +48,7 @@ export class PauseMenuAnimator extends CanvasAnimator implements OnDestroy {
         fillStyle: '#005fa1',
         hoverStyle: '#00487b',
         text: 'Two Players',
-        font: CanvasTools.getFont(this.y(1) * 0.8),
+        font: Text.getFont(this.y(1) * 0.8),
         textStyle: 'rgba(255, 255, 255, 1)',
         enabled: true,
         onClick: () => {
@@ -64,11 +61,11 @@ export class PauseMenuAnimator extends CanvasAnimator implements OnDestroy {
   }
   addEventListeners(
     canvas: HTMLCanvasElement = this.canvas,
-    buttons: ICanvasButton[] = this.buttons
+    buttons: Button[] = this.buttons
   ) {
     return this.eventListeners.push(
-      CanvasTools.addButtonClickEventListener(canvas, buttons),
-      CanvasTools.addButtonHoverEventListener(canvas, buttons)
+      Mouse.addClickEventListener(canvas, buttons),
+      Mouse.addHoverEventListener(canvas, buttons)
     );
   }
   removeEventListeners(
@@ -82,24 +79,16 @@ export class PauseMenuAnimator extends CanvasAnimator implements OnDestroy {
       canvas.removeEventListener(l.type, l.function);
     });
   }
-  enableButtons(buttons: ICanvasButton[] = this.buttons) {
+  enableButtons(buttons: Button[] = this.buttons) {
     buttons.forEach(b => (b.enabled = true));
   }
-  disableButtons(buttons: ICanvasButton[] = this.buttons) {
+  disableButtons(buttons: Button[] = this.buttons) {
     buttons.forEach(b => (b.enabled = false));
   }
   public draw = (ctx: CanvasRenderingContext2D = this.ctx) => {
     this.clear();
 
-    ctx.save();
-
-    // ctx.globalAlpha = 0.7;
-
-    this.buttons.forEach(CanvasTools.drawButton(ctx));
-    // CanvasTools.drawButton(ctx)(this.buttons[0]);
-    // CanvasTools.drawButton(ctx)(this.buttons[1]);
-
-    ctx.restore();
+    this.buttons.forEach(Button.draw(ctx));
   };
   public show() {
     this.enableButtons();

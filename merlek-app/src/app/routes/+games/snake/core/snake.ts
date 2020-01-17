@@ -1,6 +1,14 @@
+import { Point } from 'app/lib/canvas/Canvas-Tools/point';
 import { mod } from 'app/lib/helpers';
-import { Direction, Directions, Point } from '../../../../lib/canvas/point';
 export type Apple = Point;
+export type Direction = Point;
+export class Directions {
+  static readonly NORTH: Direction = Point.create(0, -1);
+  static readonly SOUTH: Direction = Point.create(0, 1);
+  static readonly EAST: Direction = Point.create(1, 0);
+  static readonly WEST: Direction = Point.create(-1, 0);
+  private constructor() {}
+}
 export class Snake {
   constructor(
     public readonly cols: number,
@@ -10,10 +18,10 @@ export class Snake {
     public readonly snake: Point[] = []
   ) {}
   public willEat(apple: Apple): boolean {
-    return this.nextHead().equals(apple);
+    return Point.equals(this.nextHead())(apple);
   }
   public inSnake(point: Point) {
-    return this.snake.some(p => p.equals(point));
+    return this.snake.some(Point.equals(point));
   }
   private willCrash(other?: Snake): boolean {
     const nextHead = this.nextHead();
@@ -21,7 +29,7 @@ export class Snake {
       this.inSnake(nextHead) ||
       (other &&
         (other.inSnake(nextHead) ||
-          (this.snake[0] && this.snake[0].equals(other.snake[0]))))
+          Point.equals(this.snake[0])(other.snake[0])))
     );
   }
   private validMove(move: Direction): boolean {
@@ -33,7 +41,7 @@ export class Snake {
   private nextHead(): Point {
     return this.snake.length === 0
       ? this.start
-      : new Point(
+      : Point.create(
           mod(this.cols)(this.snake[0].x + this.moves[0].x),
           mod(this.rows)(this.snake[0].y + this.moves[0].y)
         );
@@ -78,13 +86,13 @@ export class Snake {
   }
   public direction(): number {
     const move = this.moves[0];
-    if (move.equals(Directions.NORTH)) {
+    if (Point.equals(move)(Directions.NORTH)) {
       return 270;
-    } else if (move.equals(Directions.SOUTH)) {
+    } else if (Point.equals(move)(Directions.SOUTH)) {
       return 90;
-    } else if (move.equals(Directions.EAST)) {
+    } else if (Point.equals(move)(Directions.EAST)) {
       return 0;
-    } else if (move.equals(Directions.WEST)) {
+    } else if (Point.equals(move)(Directions.WEST)) {
       return 180;
     }
     return null;
@@ -95,7 +103,7 @@ export class Snake {
         acc.push([cur]);
       } else {
         const last = acc[acc.length - 1];
-        if (cur.distance(last[last.length - 1]) === 1) {
+        if (Point.distance(cur, last[last.length - 1]) === 1) {
           last.push(cur);
         } else {
           acc.push([cur]);

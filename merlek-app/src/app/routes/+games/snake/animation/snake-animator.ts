@@ -1,4 +1,4 @@
-import { Point } from '../../../../lib/canvas/point';
+import { Point } from 'app/lib/canvas/Canvas-Tools';
 import { Snake } from '../core/snake';
 import { SnakeGameState } from '../core/snake-game-state';
 import { CanvasAnimator } from '../../../../lib/canvas/canvas-animator';

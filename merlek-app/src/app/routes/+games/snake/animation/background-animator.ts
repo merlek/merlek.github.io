@@ -1,4 +1,4 @@
-import { CanvasAnimator } from '../../../../lib/canvas/canvas-animator';
+import { CanvasAnimator } from 'app/lib/canvas/canvas-animator';
 
 export class BackgroundAnimator extends CanvasAnimator {
   static readonly BACKGROUND_COLOR = '#232323';

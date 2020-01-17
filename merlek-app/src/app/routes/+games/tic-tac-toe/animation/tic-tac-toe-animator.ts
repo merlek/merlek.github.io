@@ -1,6 +1,5 @@
-import { CanvasTools } from 'app/lib/canvas/canvas-tools';
-import { Point } from 'app/lib/canvas/point';
-import { CanvasAnimator } from '../../../../lib/canvas/canvas-animator';
+import { Point, Line } from 'app/lib/canvas/Canvas-Tools';
+import { CanvasAnimator } from 'app/lib/canvas/canvas-animator';
 import {
   TicTacToeGameState,
   TicTacToeMark
@@ -71,16 +70,16 @@ export class TicTacToeAnimator extends CanvasAnimator {
 
     ctx.strokeStyle = strokeStyle;
 
-    CanvasTools.drawLine(
+    Line.draw(
       ctx,
-      new Point(this.x(x) + xOffset, this.y(y) + yOffset),
-      new Point(this.x(x) + w - xOffset, this.y(y) + h - yOffset)
+      Point.create(this.x(x) + xOffset, this.y(y) + yOffset),
+      Point.create(this.x(x) + w - xOffset, this.y(y) + h - yOffset)
     );
 
-    CanvasTools.drawLine(
+    Line.draw(
       ctx,
-      new Point(this.x(x) + xOffset, this.y(y) + h - yOffset),
-      new Point(this.x(x) + w - xOffset, this.y(y) + yOffset)
+      Point.create(this.x(x) + xOffset, this.y(y) + h - yOffset),
+      Point.create(this.x(x) + w - xOffset, this.y(y) + yOffset)
     );
 
     ctx.restore();

@@ -1,4 +1,4 @@
-import { IPoint, Point } from '../../../../lib/canvas/point';
+import { Point } from 'app/lib/canvas/Canvas-Tools';
 import { TicTacToeGameState, TicTacToeWinner } from './tic-tac-toe-game-state';
 import { rnd } from 'app/lib/helpers';
 
@@ -18,7 +18,7 @@ export class TicTacToeAI extends TicTacToeGameState {
   ) {
     super(cols, rows);
   }
-  public takeTurn(p?: IPoint): void {
+  public takeTurn(p?: Point): void {
     if (this.isAiTurn() && !this.checkWinner()) {
       // setTimeout(() => {
       while (!this.setNextTurn(this.bestMove())) {}
@@ -33,7 +33,7 @@ export class TicTacToeAI extends TicTacToeGameState {
     for (let x = 0; x < this.cols; x++) {
       for (let y = 0; y < this.rows; y++) {
         if (!this.get({ x, y })) {
-          moves.push(new Point(x, y));
+          moves.push(Point.create(x, y));
         }
       }
     }

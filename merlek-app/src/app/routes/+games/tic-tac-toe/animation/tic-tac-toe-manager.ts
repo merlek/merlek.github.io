@@ -1,10 +1,10 @@
 import { OnDestroy } from '@angular/core';
-import { CanvasTools, ClickEventObject } from 'app/lib/canvas/canvas-tools';
+import { ClickEventObject, Mouse } from 'app/lib/canvas/Canvas-Tools';
+import { TicTacToeAI } from '../core/tic-tac-toe-game-ai';
 import { TicTacToeGameState } from '../core/tic-tac-toe-game-state';
 import { BackgroundAnimator } from './background-animator';
 import { TicTacToeAnimator } from './tic-tac-toe-animator';
 import { TicTacToeUIAnimator } from './tic-tac-toe-ui-animator';
-import { TicTacToeAI } from '../core/tic-tac-toe-game-ai';
 
 export class TicTacToeManager implements OnDestroy {
   public fps = 60;
@@ -41,7 +41,7 @@ export class TicTacToeManager implements OnDestroy {
         });
       }
     }
-    CanvasTools.addButtonClickEventListener(ui, gridButtons);
+    Mouse.addClickEventListener(ui, gridButtons);
   }
   public start(): void {
     this.backgroundAnimator.draw();
