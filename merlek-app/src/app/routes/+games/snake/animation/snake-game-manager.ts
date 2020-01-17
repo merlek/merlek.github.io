@@ -1,9 +1,9 @@
+import { OnDestroy } from '@angular/core';
+import { BackgroundAnimator } from 'app/lib/canvas/background-animator';
+import { Directions } from '../core/snake';
 import { SnakeGameState } from '../core/snake-game-state';
-import { BackgroundAnimator } from './background-animator';
 import { PauseMenuAnimator } from './pause-menu-animator';
 import { SnakeGameAnimator } from './snake-game-animator';
-import { OnDestroy } from '@angular/core';
-import { Directions } from '../core/snake';
 
 export class SnakeGameManager implements OnDestroy {
   public fps = 10;
@@ -25,7 +25,7 @@ export class SnakeGameManager implements OnDestroy {
       () => this.pause(),
       () => this.toggleTwoPlayers()
     );
-    this.backgroundAnimator = new BackgroundAnimator(backgroundCanvas, state);
+    this.backgroundAnimator = new BackgroundAnimator(backgroundCanvas);
   }
   public start(): void {
     this.backgroundAnimator.draw();

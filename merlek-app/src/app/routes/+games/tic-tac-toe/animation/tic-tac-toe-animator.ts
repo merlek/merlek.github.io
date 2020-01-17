@@ -1,11 +1,11 @@
-import { Point, Line } from 'app/lib/canvas/Canvas-Tools';
-import { CanvasAnimator } from 'app/lib/canvas/canvas-animator';
+import { CanvasGridAnimator } from 'app/lib/canvas/canvas-grid-animator';
+import { Line, Point } from 'app/lib/canvas/Canvas-Tools';
+import { TicTacToeAI } from '../core/tic-tac-toe-game-ai';
 import {
   TicTacToeGameState,
   TicTacToeMark
 } from '../core/tic-tac-toe-game-state';
 import { BACKGROUND_GRID_RATIO } from './background-animator';
-import { TicTacToeAI } from '../core/tic-tac-toe-game-ai';
 
 const GRID_FILL_RATIO = BACKGROUND_GRID_RATIO;
 
@@ -23,7 +23,7 @@ export const determineMode = (state: TicTacToeGameState) => {
   }
 };
 
-export class TicTacToeAnimator extends CanvasAnimator {
+export class TicTacToeAnimator extends CanvasGridAnimator {
   constructor(canvas: HTMLCanvasElement, grid: { cols: number; rows: number }) {
     super(canvas, grid);
   }

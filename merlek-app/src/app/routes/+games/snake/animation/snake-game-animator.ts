@@ -1,9 +1,9 @@
-import { CanvasAnimator } from '../../../../lib/canvas/canvas-animator';
+import { CanvasGridAnimator } from 'app/lib/canvas/canvas-grid-animator';
+import { RoundedRect } from 'app/lib/canvas/Canvas-Tools';
 import { SnakeGameState } from '../core/snake-game-state';
 import { SnakeAnimator } from './snake-animator';
-import { Rect, RoundedRect } from 'app/lib/canvas/Canvas-Tools';
 
-export class SnakeGameAnimator extends CanvasAnimator {
+export class SnakeGameAnimator extends CanvasGridAnimator {
   static readonly APPLE_COLOR = '#ff3200';
   static readonly CRASH_COLOR = 'rgb(255,0,0)';
   private snakeAnimator: SnakeAnimator;

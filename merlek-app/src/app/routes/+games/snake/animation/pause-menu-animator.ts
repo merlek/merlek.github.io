@@ -1,8 +1,8 @@
-import { CanvasAnimator } from '../../../../lib/canvas/canvas-animator';
 import { OnDestroy } from '@angular/core';
-import { Button, Text, Mouse } from 'app/lib/canvas/Canvas-Tools';
+import { CanvasGridAnimator } from 'app/lib/canvas/canvas-grid-animator';
+import { Button, Mouse, Text } from 'app/lib/canvas/Canvas-Tools';
 
-export class PauseMenuAnimator extends CanvasAnimator implements OnDestroy {
+export class PauseMenuAnimator extends CanvasGridAnimator implements OnDestroy {
   private buttons: Button[] = [];
   private eventListeners: {
     type: string; // <K extends keyof HTMLElementEventMap>

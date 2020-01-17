@@ -1,9 +1,9 @@
-import { CanvasAnimator } from 'app/lib/canvas/canvas-animator';
-import { Point, Line } from 'app/lib/canvas/Canvas-Tools';
+import { CanvasGridAnimator } from 'app/lib/canvas/canvas-grid-animator';
+import { Line, Point } from 'app/lib/canvas/Canvas-Tools';
 
 export const BACKGROUND_GRID_RATIO = 0.9;
 
-export class BackgroundAnimator extends CanvasAnimator {
+export class BackgroundAnimator extends CanvasGridAnimator {
   static readonly BACKGROUND_COLOR = '#232323';
 
   constructor(canvas: HTMLCanvasElement, grid: { cols: number; rows: number }) {
