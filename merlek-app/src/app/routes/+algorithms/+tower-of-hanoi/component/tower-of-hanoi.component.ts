@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { TowerOfHanoiAnimationBuilder } from './tower-of-hanoi-animation-builder';
-import { TowerOfHanoiAnimator } from './tower-of-hanoi-animator';
+import { TowerOfHanoiAnimationBuilder } from '../tower-of-hanoi-animation-builder';
+import { TowerOfHanoiAnimator } from '../tower-of-hanoi-animator';
 
 @Component({
   selector: 'app-tower-of-hanoi',

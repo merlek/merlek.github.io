@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { EditDistanceAnimator } from './edit-distance-animator';
-import { EditDistanceCalculator } from './edit-distance-calculator';
+import { EditDistanceAnimator } from '../edit-distance-animator';
+import { EditDistanceCalculator } from '../edit-distance-calculator';
 
 @Component({
   selector: 'app-edit-distance',

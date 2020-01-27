@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { NQueensComponent } from './n-queens.component';
+import { NQueensComponent } from './component/n-queens.component';
 
 const routes: Routes = [{ path: '', component: NQueensComponent }];
 
@@ -9,4 +9,4 @@ const routes: Routes = [{ path: '', component: NQueensComponent }];
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class NQueensRoutingModule { }
+export class NQueensRoutingModule {}

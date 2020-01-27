@@ -1,9 +1,8 @@
-import { CanvasGridAnimator } from 'app/lib/canvas/canvas-grid-animator';
-import { Point } from 'app/lib/canvas/Canvas-Tools';
+import { Animators, Point } from 'canvas-tools';
 import { Snake } from '../core/snake';
 import { SnakeGameState } from '../core/snake-game-state';
 
-export class SnakeAnimator extends CanvasGridAnimator {
+export class SnakeAnimator extends Animators.CanvasGridAnimator {
   static readonly SNAKE_COLORS = ['#00c832', '#c7c700'];
   constructor(canvas: HTMLCanvasElement, grid: { cols: number; rows: number }) {
     super(canvas, grid);

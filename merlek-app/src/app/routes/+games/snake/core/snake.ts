@@ -1,5 +1,6 @@
-import { Point } from 'app/lib/canvas/Canvas-Tools/point';
-import { mod } from 'app/lib/helpers';
+import { Point } from 'canvas-tools';
+import { mod } from 'utility-functions';
+
 export type Apple = Point;
 export type Direction = Point;
 export class Directions {

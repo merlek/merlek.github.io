@@ -1,8 +1,9 @@
 import { OnDestroy } from '@angular/core';
-import { CanvasGridAnimator } from 'app/lib/canvas/canvas-grid-animator';
-import { Button, Mouse, Text } from 'app/lib/canvas/Canvas-Tools';
+import { Animators } from 'canvas-tools';
+import { Button, Mouse, Text } from 'canvas-tools';
 
-export class PauseMenuAnimator extends CanvasGridAnimator implements OnDestroy {
+export class PauseMenuAnimator extends Animators.CanvasGridAnimator
+  implements OnDestroy {
   private buttons: Button[] = [];
   private eventListeners: {
     type: string; // <K extends keyof HTMLElementEventMap>
@@ -48,7 +49,7 @@ export class PauseMenuAnimator extends CanvasGridAnimator implements OnDestroy {
         fillStyle: '#005fa1',
         hoverStyle: '#00487b',
         text: 'Two Players',
-        font: Text.getFont(this.y(1) * 0.8),
+        font: Text.getFont(this.y(1)),
         textStyle: 'rgba(255, 255, 255, 1)',
         enabled: true,
         onClick: () => {
@@ -64,8 +65,8 @@ export class PauseMenuAnimator extends CanvasGridAnimator implements OnDestroy {
     buttons: Button[] = this.buttons
   ) {
     return this.eventListeners.push(
-      Mouse.addClickEventListener(canvas, buttons),
-      Mouse.addHoverEventListener(canvas, buttons)
+      Mouse.addClickEventListener(canvas, ...buttons),
+      Mouse.addHoverEventListener(canvas, ...buttons)
     );
   }
   removeEventListeners(
@@ -88,7 +89,7 @@ export class PauseMenuAnimator extends CanvasGridAnimator implements OnDestroy {
   public draw = (ctx: CanvasRenderingContext2D = this.ctx) => {
     this.clear();
 
-    this.buttons.forEach(Button.draw(ctx));
+    this.buttons.forEach(btn => Button.draw(ctx, btn));
   };
   public show() {
     this.enableButtons();

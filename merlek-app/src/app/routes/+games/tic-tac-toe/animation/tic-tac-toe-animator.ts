@@ -1,5 +1,4 @@
-import { CanvasGridAnimator } from 'app/lib/canvas/canvas-grid-animator';
-import { Line, Point } from 'app/lib/canvas/Canvas-Tools';
+import { Line, Point, Animators } from 'canvas-tools';
 import { TicTacToeAI } from '../core/tic-tac-toe-game-ai';
 import {
   TicTacToeGameState,
@@ -23,7 +22,7 @@ export const determineMode = (state: TicTacToeGameState) => {
   }
 };
 
-export class TicTacToeAnimator extends CanvasGridAnimator {
+export class TicTacToeAnimator extends Animators.CanvasGridAnimator {
   constructor(canvas: HTMLCanvasElement, grid: { cols: number; rows: number }) {
     super(canvas, grid);
   }
@@ -70,17 +69,15 @@ export class TicTacToeAnimator extends CanvasGridAnimator {
 
     ctx.strokeStyle = strokeStyle;
 
-    Line.draw(
-      ctx,
-      Point.create(this.x(x) + xOffset, this.y(y) + yOffset),
-      Point.create(this.x(x) + w - xOffset, this.y(y) + h - yOffset)
-    );
+    Line.draw(ctx, {
+      start: Point.create(this.x(x) + xOffset, this.y(y) + yOffset),
+      end: Point.create(this.x(x) + w - xOffset, this.y(y) + h - yOffset)
+    });
 
-    Line.draw(
-      ctx,
-      Point.create(this.x(x) + xOffset, this.y(y) + h - yOffset),
-      Point.create(this.x(x) + w - xOffset, this.y(y) + yOffset)
-    );
+    Line.draw(ctx, {
+      start: Point.create(this.x(x) + xOffset, this.y(y) + h - yOffset),
+      end: Point.create(this.x(x) + w - xOffset, this.y(y) + yOffset)
+    });
 
     ctx.restore();
   };

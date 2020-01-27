@@ -1,4 +1,4 @@
-import { Point } from 'app/lib/canvas/Canvas-Tools';
+import { Point } from 'canvas-tools';
 
 export type TicTacToeMark = 'X' | 'O';
 const X = 'X';

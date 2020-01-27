@@ -1,6 +1,6 @@
 import { NQueensAnimation } from './n-queens-animation-builder';
 import queenImageBase64 from './queen-image-base64';
-import { ImageLoader } from 'app/lib/image-loader';
+import { ImageLoader } from 'canvas-tools';
 
 class BoardAnimator {
   private static readonly ImageLoader: ImageLoader = new ImageLoader({

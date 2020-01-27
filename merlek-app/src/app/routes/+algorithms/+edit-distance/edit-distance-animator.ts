@@ -1,6 +1,6 @@
 import { EditPair } from './edit-distance';
 import { EditDistanceBase64Images } from './edit-distance-base64-images';
-import { ImageLoader } from 'app/lib/image-loader';
+import { ImageLoader } from 'canvas-tools';
 
 class WordAnimator {
   private static readonly ImageLoader = new ImageLoader({

@@ -1,9 +1,8 @@
-import { CanvasGridAnimator } from 'app/lib/canvas/canvas-grid-animator';
-import { RoundedRect } from 'app/lib/canvas/Canvas-Tools';
+import { RoundedRect, Animators } from 'canvas-tools';
 import { SnakeGameState } from '../core/snake-game-state';
 import { SnakeAnimator } from './snake-animator';
 
-export class SnakeGameAnimator extends CanvasGridAnimator {
+export class SnakeGameAnimator extends Animators.CanvasGridAnimator {
   static readonly APPLE_COLOR = '#ff3200';
   static readonly CRASH_COLOR = 'rgb(255,0,0)';
   private snakeAnimator: SnakeAnimator;
@@ -27,15 +26,15 @@ export class SnakeGameAnimator extends CanvasGridAnimator {
   ) => {
     ctx.save();
 
-    ctx.fillStyle = SnakeGameAnimator.APPLE_COLOR;
     state.apples.forEach(apple => {
-      RoundedRect.draw(
-        ctx,
-        this.x(apple.x),
-        this.y(apple.y),
-        this.x(1),
-        this.y(1)
-      );
+      RoundedRect.draw(ctx, {
+        x: this.x(apple.x),
+        y: this.y(apple.y),
+        width: this.x(1),
+        height: this.y(1),
+        radius: 10,
+        fillStyle: SnakeGameAnimator.APPLE_COLOR
+      });
     });
 
     ctx.restore();

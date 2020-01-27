@@ -1,5 +1,5 @@
-import { Point } from 'app/lib/canvas/Canvas-Tools';
-import { rnd } from 'app/lib/helpers';
+import { Point } from 'canvas-tools';
+import { random, randomInt } from 'utility-functions';
 import { Apple, Snake, Directions, Direction } from './snake';
 export class SnakeGameState {
   static readonly MAX_APPLES = 5;
@@ -41,7 +41,7 @@ export class SnakeGameState {
   }
   private nextApple(apple: Apple): Point {
     if (this.willEat(apple)) {
-      return this.apples.length <= 1 || rnd(0)(2) === 0
+      return this.apples.length <= 1 || randomInt(0)(2) === 0
         ? this.newApple()
         : null;
       // return this.newApple();
@@ -55,7 +55,10 @@ export class SnakeGameState {
         return this.nextApple(apple);
       })
       .filter(Boolean);
-    if (this.apples.length < SnakeGameState.MAX_APPLES && rnd(0)(100) === 0) {
+    if (
+      this.apples.length < SnakeGameState.MAX_APPLES &&
+      randomInt(0)(100) === 0
+    ) {
       apples.push(this.newApple());
     }
     return apples;
@@ -71,7 +74,7 @@ export class SnakeGameState {
     );
   }
   private rndPos(): Point {
-    return Point.create(rnd(0)(this.cols), rnd(0)(this.rows));
+    return Point.create(randomInt(0)(this.cols), randomInt(0)(this.rows));
   }
   private merge(other: any): SnakeGameState {
     return Object.assign(new SnakeGameState(), this, other);

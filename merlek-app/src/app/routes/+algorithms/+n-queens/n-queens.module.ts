@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ProgressbarModule } from 'ngx-bootstrap';
 import { NQueensRoutingModule } from './n-queens-routing.module';
-import { NQueensComponent } from './n-queens.component';
+import { NQueensComponent } from './component/n-queens.component';
 
 @NgModule({
   declarations: [NQueensComponent],

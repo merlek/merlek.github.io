@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { TowerOfHanoiComponent } from './tower-of-hanoi.component';
+import { TowerOfHanoiComponent } from './component/tower-of-hanoi.component';
 
 const routes: Routes = [{ path: '', component: TowerOfHanoiComponent }];
 

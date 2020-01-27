@@ -1,6 +1,6 @@
-import { Point } from 'app/lib/canvas/Canvas-Tools';
+import { Point } from 'canvas-tools';
 import { TicTacToeGameState, TicTacToeWinner } from './tic-tac-toe-game-state';
-import { rnd } from 'app/lib/helpers';
+import { randomInt } from 'utility-functions';
 
 const shuffle = (array: any[]) => {
   for (let i = array.length - 1; i > 0; i--) {
@@ -14,7 +14,7 @@ export class TicTacToeAI extends TicTacToeGameState {
   constructor(
     cols: number = 3,
     rows: number = 3,
-    public aiPlayer: 0 | 1 = rnd(0)(2) as 0 | 1
+    public aiPlayer: 0 | 1 = randomInt(0)(2) as 0 | 1
   ) {
     super(cols, rows);
   }

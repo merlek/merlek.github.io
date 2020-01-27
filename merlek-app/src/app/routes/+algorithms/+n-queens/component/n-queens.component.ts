@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NQueensAnimationBuilder } from './n-queens-animation-builder';
-import { NQueensAnimator } from './n-queens-animator';
+import { NQueensAnimationBuilder } from '../n-queens-animation-builder';
+import { NQueensAnimator } from '../n-queens-animator';
 
 @Component({
   selector: 'app-n-queens',

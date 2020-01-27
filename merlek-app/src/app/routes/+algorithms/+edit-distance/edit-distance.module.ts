@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { EditDistanceRoutingModule } from './edit-distance-routing.module';
-import { EditDistanceComponent } from './edit-distance.component';
+import { EditDistanceComponent } from './component/edit-distance.component';
 import { FormsModule } from '@angular/forms';
 import { ProgressbarModule } from 'ngx-bootstrap';
 
