@@ -10,8 +10,7 @@ import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
   template: `
     <div class="modal-header">
       <h5 class="modal-title text-muted">Cards remaining: {{data.length+1}}</h5>
-      <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
+      <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
       </button>
     </div>
     <div>

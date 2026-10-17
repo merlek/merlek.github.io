@@ -1,46 +1,71 @@
 <div class="portfolio">
   <section class="intro" aria-labelledby="intro-title">
-    <p class="eyebrow">MERLE KLEIN / SOFTWARE DEVELOPER</p>
-    <h1 id="intro-title">Thoughtful software.<br><em>From idea to everyday use.</em></h1>
-    <p class="intro-copy">I build applications that make complex workflows clear, with a focus on dependable behavior and the details that matter in daily use.</p>
-    <a class="text-link" href="https://github.com/merlek">Explore my GitHub <span aria-hidden="true">↗</span></a>
+    <div class="intro-main">
+      <p class="eyebrow"><span class="tiny-cross" aria-hidden="true">+</span> MERLE KLEIN / SOFTWARE DEVELOPER</p>
+      <h1 id="intro-title">Software with<br><em>intent</em></h1>
+    </div>
+    <figure class="hero-diagram">
+      <svg viewBox="0 0 360 330" role="img" aria-labelledby="layer-title">
+        <title id="layer-title">Software layers: interface, logic, and native capabilities</title>
+        <defs><pattern id="hero-grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M 24 0 L 0 0 0 24" fill="none" stroke="currentColor" stroke-width=".5"/></pattern></defs>
+        <rect width="360" height="330" fill="url(#hero-grid)" class="diagram-grid"/>
+        <path d="M45 215 175 145 305 215 175 285Z" class="layer layer-native"/>
+        <path d="M45 165 175 95 305 165 175 235Z" class="layer layer-logic"/>
+        <path d="M45 115 175 45 305 115 175 185Z" class="layer layer-interface"/>
+        <path d="M45 115V215M175 185V285M305 115V215" class="layer-guides"/>
+        <path d="M105 115 153 141 239 95" class="layer-signal"/>
+        <circle cx="105" cy="115" r="4" class="diagram-node"/><circle cx="239" cy="95" r="4" class="diagram-node"/>
+        <text x="195" y="68" class="diagram-label">01 / INTERFACE</text>
+        <text x="195" y="216" class="diagram-label muted">02 / LOGIC</text>
+        <text x="195" y="269" class="diagram-label muted">03 / NATIVE</text>
+        <path d="M18 18H30M24 12V24M324 306H336M330 300V312" class="diagram-cross"/>
+      </svg>
+      <figcaption>GOOD EXPERIENCES RUN DEEP.</figcaption>
+    </figure>
+    <div class="intro-bottom">
+      <p class="intro-copy">I build applications that make complex workflows clear. Thoughtful interfaces, dependable behavior, and care for the details.</p>
+      <a class="text-link" href="https://github.com/merlek">Explore my GitHub <span aria-hidden="true">↗</span></a>
+    </div>
   </section>
   <section aria-labelledby="featured-title">
-    <div class="section-label"><h2 id="featured-title">Featured project</h2><span>01 / IN DEVELOPMENT</span></div>
+    <div class="section-label"><h2 id="featured-title"><span aria-hidden="true">01 —</span> Selected work</h2><span>01 / IN DEVELOPMENT</span></div>
     <article class="feature">
       <div class="feature-copy">
         <p class="eyebrow">MOBILE / HEALTH &amp; FITNESS</p>
-        <h3>Health Coach<span class="working-name">Working name</span></h3>
-        <p class="project-lede">A strength journal built around<br class="desktop-break"> the way a workout actually happens.</p>
+        <h3>Health Coach<span class="working-name">Working name / iPhone app</span></h3>
+        <p class="project-lede">Built for the workout.<br>Designed for the decisions after it.</p>
         <p>Customizable plans, explicit set logging, and a separate review before next-workout targets change. An evolving iPhone app with local data storage and native Apple Health access.</p>
         <ul class="tech-list" aria-label="Technologies"><li>Angular</li><li>Ionic</li><li>Capacitor</li><li>Swift</li></ul>
         <a class="primary-link" routerLink="/projects/health-coach">Read the case study <span aria-hidden="true">↗</span></a>
         <p class="project-note">Private source · Public engineering case study</p>
       </div>
       <div class="project-visual">
+        <span class="visual-index" aria-hidden="true">HC / 001</span>
         <div class="workout-preview" aria-label="Illustrative workout interface using fictional data">
-          <div class="preview-top"><span>WORKOUT JOURNAL</span><span class="status-dot">Saved</span></div>
-          <p class="preview-breadcrumb">Week overview / Workout</p>
-          <h4>Build a stronger routine.</h4>
-          <p class="preview-subtitle">Day 1 · Squat</p>
+          <div class="preview-top"><span><b class="preview-logo">hc</b> WORKOUT JOURNAL</span><span class="status-dot">Saved</span></div>
+          <p class="preview-breadcrumb">TODAY / STRENGTH</p>
+          <h4>Make every<br>set count.</h4>
+          <p class="preview-subtitle">Day 1 <span aria-hidden="true">/</span> Squat</p>
           <div class="load-summary"><span>MAIN SET TARGET<strong>100 <small>lb</small></strong></span><span class="session-tag">In progress</span></div>
           <div class="set-row set-heading"><span>SET</span><span>LOAD</span><span>REPS</span><span>STATUS</span></div>
           <div class="set-row"><span>01</span><span>100 lb</span><span>1 / 1</span><span class="done">Logged</span></div>
           <div class="set-row"><span>02</span><span>80 lb</span><span>3 / 3</span><span class="done">Logged</span></div>
           <div class="set-row"><span>03</span><span>80 lb</span><span>— / 3</span><span>Next</span></div>
-          <p class="preview-footer">Your session. Your pace. Your next decision.</p>
+          <div class="set-progress" aria-hidden="true"><span></span><span></span><span></span></div>
+          <p class="preview-footer">Log the work. Review what comes next.</p>
         </div>
         <p class="visual-caption">Illustrative interface · Fictional demo values</p>
       </div>
     </article>
   </section>
   <section class="explorations" aria-labelledby="explore-title">
-    <div class="section-label"><h2 id="explore-title">More to explore</h2><span>INTERACTIVE PROJECTS</span></div>
+    <div class="section-label"><h2 id="explore-title"><span aria-hidden="true">02 —</span> The playground</h2><span>INTERACTIVE PROJECTS</span></div>
     <div class="exploration-grid">
-      <a routerLink="/algorithms/n-queens"><span class="project-number">02 / ALGORITHMS</span><h3>N Queens <span aria-hidden="true">↗</span></h3><p>Explore the classic chessboard constraint problem.</p></a>
-      <a routerLink="/languages/greek-vocab"><span class="project-number">03 / LANGUAGES</span><h3>Greek vocabulary <span aria-hidden="true">↗</span></h3><p>A tool for practicing and reviewing vocabulary.</p></a>
-      <a routerLink="/games/snake"><span class="project-number">04 / GAMES</span><h3>Snake <span aria-hidden="true">↗</span></h3><p>A browser implementation of a familiar arcade game.</p></a>
+      <a routerLink="/algorithms/n-queens"><span class="project-number">02 / ALGORITHMS</span><div class="exploration-art chess-art" aria-hidden="true"><div class="chess-board"><span></span><span>♛</span><span></span><span></span><span></span><span></span><span></span><span>♛</span><span>♛</span><span></span><span></span><span></span><span></span><span></span><span>♛</span><span></span></div></div><h3>N Queens <span aria-hidden="true">↗</span></h3><p>Explore the classic chessboard constraint problem.</p></a>
+      <a routerLink="/languages/greek-vocab"><span class="project-number">03 / LANGUAGES</span><div class="exploration-art greek-art" aria-hidden="true"><span>α</span><span>β</span><span>γ</span><span class="phonetic">/ language, practiced /</span></div><h3>Greek vocabulary <span aria-hidden="true">↗</span></h3><p>A tool for practicing and reviewing vocabulary.</p></a>
+      <a routerLink="/games/snake"><span class="project-number">04 / GAMES</span><div class="exploration-art snake-art" aria-hidden="true"><svg viewBox="0 0 280 130"><defs><pattern id="snake-grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="#425161"/></pattern></defs><rect width="280" height="130" fill="url(#snake-grid)"/><path d="M50 90H110V50H190" fill="none" stroke="#b2a2f4" stroke-width="17" stroke-linejoin="round"/><rect x="182" y="41" width="18" height="18" rx="5" fill="#d1c4ff"/><circle cx="195" cy="47" r="2" fill="#101216"/><circle cx="195" cy="54" r="2" fill="#101216"/><rect x="225" y="80" width="13" height="13" rx="4" fill="#e8ae88"/></svg></div><h3>Snake <span aria-hidden="true">↗</span></h3><p>A browser implementation of a familiar arcade game.</p></a>
     </div>
   </section>
+  <p class="footer-statement">Small details.<br><span>Better experiences.</span></p>
   <footer class="portfolio-footer"><span>Merle Klein / Software developer</span><a href="https://github.com/merlek">GitHub ↗</a></footer>
 </div>

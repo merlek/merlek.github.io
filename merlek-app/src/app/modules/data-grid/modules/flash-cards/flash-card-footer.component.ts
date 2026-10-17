@@ -44,7 +44,7 @@ export enum KEY_CODE {
       </div>
       <button
         type="button"
-        class="btn btn-outline-dark"
+        class="btn btn-outline-secondary"
         (click)="activeModal.close('Close click')"
       >
         Close

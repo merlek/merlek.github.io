@@ -1,75 +1,81 @@
-/* You can add global styles to this file, and also import other style files */
-// @import "./assets/fonts/cardo/font-styles.css";
-
-@import url('https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&subset=latin-ext'); // family=Cardo:400,400i,700|
-@import url('https://fonts.googleapis.com/css?family=Cardo:400,400i,700&display=swap&subset=greek,greek-ext,latin-ext');
-
 @import 'scss/_variables.scss';
-//@import 'scss/_variables_darkly.scss';
+
+$body-bg: #0c1015;
+$body-color: #c6cdd5;
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+$font-family-base: $font-family-sans-serif;
+$primary: #8fe5c2;
+$link-color: #8fe5c2;
+$link-hover-color: #b7f3dc;
 
 @import "bootstrap/scss/bootstrap";
-//@import 'scss/_bootswatch.scss';
 @import 'scss/_tables.scss';
 
-body {
-  /* Margin bottom by footer height */
-  // margin-bottom: 60px;
-  padding-top: 3.5rem;
+@font-face { font-family: Cardo; src: url('./assets/fonts/cardo/Cardo-Regular.woff') format('woff'); font-weight: 400; font-display: swap; }
+:root, [data-bs-theme="dark"] {
+  color-scheme: dark;
+  --bs-body-bg: #0c1015;
+  --bs-body-color: #c6cdd5;
+  --bs-secondary-color: #a0aab7;
+  --bs-tertiary-bg: #171e27;
+  --bs-secondary-bg: #1b242e;
+  --bs-border-color: #2a3541;
+  --bs-link-color: #8fe5c2;
+  --bs-link-hover-color: #bdf8df;
+  --bs-link-color-rgb: 143, 229, 194;
+  --bs-link-hover-color-rgb: 189, 248, 223;
+  --bs-emphasis-color: #eff3f6;
 }
-
-h1 {
-  margin-bottom: 3.5rem;
+html { background: #0c1015; scroll-padding-top: 100px; }
+body { padding-top: 88px; background: #0c1015; color: #c6cdd5; -webkit-font-smoothing: antialiased; }
+::selection { color: #0c1015; background: #8fe5c2; }
+a:focus-visible, button:focus-visible { outline: 2px solid #8fe5c2; outline-offset: 5px; }
+h1 { margin-bottom: 3.5rem; }
+#main { max-width: 1280px; padding-left: 48px; padding-right: 48px; }
+#menu { min-height: 78px; background: #0c1015ed !important; backdrop-filter: blur(20px); border-bottom: 1px solid #242d37; opacity: 1; padding: 14px 40px; font-family: $font-family-sans-serif; }
+#menu .navbar-brand { display: inline-flex; align-items: center; gap: 12px; color: #f1f4f7; font-size: 14px; margin-right: auto; font-weight: 600; letter-spacing: -.2px; }
+.brand-mark { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border: 1px solid #3c544d; border-radius: 10px; color: #eff6f2; font-size: 17px; font-weight: 750; letter-spacing: -1.5px; background: #172821; }
+.brand-mark > span { color: #8fe5c2; }
+#menu .navbar-nav { margin-left: auto; margin-right: 0 !important; gap: 6px; }
+#menu .nav-link { font-size: 12px; color: #9aa6b5; padding: 9px 13px; border-radius: 7px; transition: color .2s, background .2s; }
+#menu .nav-link:hover, #menu .active > .nav-link { background: #1a242c; color: #f2f6f8; }
+#menu .dropdown-menu { background: #151d26; border: 1px solid #32404d; padding: 7px; border-radius: 10px; box-shadow: 0 20px 45px #0005; }
+#menu .dropdown-item { color: #b7c2ce; border-radius: 5px; font-size: 12px; padding: 10px 12px; }
+#menu .dropdown-item:hover, #menu .dropdown-item.active { background: #25382f; color: #b9f6dc; }
+.navbar-toggler { border-color: #36424d; padding: 5px 8px; }
+.skip-link { position: fixed; top: -100px; left: 20px; background: #8fe5c2; color: #0c1015; padding: 10px 16px; z-index: 2000; border-radius: 6px; }
+.skip-link:focus { top: 10px; }
+.modal-open app-root { filter: blur(5px); }
+.hebrew { font-family: Cardo, serif; direction: rtl; font-size: 1.65em; text-align: center; display: inline-flex; }
+.vowel::before { color: #c6cdd5; content: '\25CC'; }
+.vowel-transparent::before { color: transparent; content: '\25CC'; }
+.red { color: #ff8d92; }
+.table { --bs-table-bg: transparent; --bs-table-color: #c6cdd5; }
+.table thead > tr:first-child > th { border-bottom-color: #40515f; }
+.table-responsive-sm { border-color: #36424d; }
+.form-control, .form-select { background-color: #111923; color: #e5eaf0; border-color: #354352; }
+.form-control:focus { background-color: #17202b; color: #f2f6fa; border-color: #8fe5c2; box-shadow: 0 0 0 3px #8fe5c218; }
+.modal-content { background: #151d26; border-color: #34424f; color: #d7e0e8; }
+.pagination .page-link { background: #151d26; color: #a1e9ce; border-color: #34424f; }
+@media (max-width: 767px) {
+  body { padding-top: 78px; }
+  #main { padding-left: 22px; padding-right: 22px; }
+  #menu { min-height: 70px; padding: 12px 22px; }
+  #menu .navbar-collapse { padding-top: 14px; }
+  #menu .navbar-nav { gap: 3px; }
+  #menu .nav-link { padding: 12px; }
 }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
 
-.btn,
-.navbar {
-  font-family: $font-family-sans-serif;
+.btn-outline-secondary {
+  --bs-btn-color: #aab8c4;
+  --bs-btn-border-color: #536571;
+  --bs-btn-hover-color: #101820;
+  --bs-btn-hover-bg: #c1d0da;
+  --bs-btn-hover-border-color: #c1d0da;
+  --bs-btn-active-color: #0c1015;
+  --bs-btn-active-bg: #a4d8c4;
 }
-
-@mixin filter($radius) {
-  -webkit-filter: blur($radius);
-  -moz-filter: blur($radius);
-  -o-filter: blur($radius);
-  -ms-filter: blur($radius);
-  filter: blur($radius);
-}
-
-.modal-open {
-
-  app-root,
-  .container {
-    @include filter(5px);
-  }
-}
-
-.hebrew {
-  font-family: Cardo, serif;
-  direction: rtl;
-  font-size: 1.65em;
-  text-align: center;
-  display: inline-flex;
-}
-
-.vowel::before {
-  color: $body-color;
-  content: '\25CC';
-}
-
-.vowel-transparent::before {
-  color: transparent;
-  content: '\25CC';
-}
-
-.red {
-  color: $red;
-}
-/* Portfolio shell; existing interactive project styles remain available. */
-body { background: #fafbf6; padding-top: 4.5rem; }
-#main { max-width: 1200px; padding-left: 40px; padding-right: 40px; }
-#menu { background: #fafbf6 !important; border-bottom: 1px solid #e4e7dc; opacity: 1; padding: 15px 30px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-#menu .navbar-brand { color: #203e38; font-size: 17px; margin-right: auto; font-weight: 600; }
-#menu .navbar-nav { margin-left: auto; margin-right: 0 !important; }
-#menu .nav-link { font-size: 12px; color: #53634f; padding-left: 12px; padding-right: 12px; }
-.skip-link { position: fixed; top: -100px; left: 20px; background: #fff; padding: 10px; z-index: 2000; }
-.skip-link:focus { top: 8px; }
-@media (max-width: 767px) { #main { padding-left: 22px; padding-right: 22px; } #menu { padding-left: 22px; padding-right: 22px; } }
+.ngx-pagination .current { background: #234b3d; color: #c8f6e3; }
+.ngx-pagination a, .ngx-pagination button { color: #b4c4d0; }
+.ngx-pagination a:hover, .ngx-pagination button:hover { background: #253541; }

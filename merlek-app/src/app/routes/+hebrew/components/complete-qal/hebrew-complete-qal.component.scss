@@ -2,11 +2,11 @@
 
 tr {
   >th:first-child {
-    border-right: 2px solid black;
+    border-right: 2px solid var(--bs-border-color);
   }
 
   >*:nth-child(5) {
-    border-right: 2px solid black;
+    border-right: 2px solid var(--bs-border-color);
     text-align: center;
     font-style: italic;
     color: #ccc;
@@ -14,20 +14,20 @@ tr {
 
   >*:nth-child(6) {
     text-align: center;
-    border-right: 2px solid black;
+    border-right: 2px solid var(--bs-border-color);
   }
 }
 
 tr:nth-child(6)>* {
-  border-top: 2px solid black;
+  border-top: 2px solid var(--bs-border-color);
 }
 
 .bordertop {
-  border-top: 2px solid black;
+  border-top: 2px solid var(--bs-border-color);
 }
 
 .borderbottom {
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid var(--bs-border-color);
   vertical-align: bottom;
 }
 
