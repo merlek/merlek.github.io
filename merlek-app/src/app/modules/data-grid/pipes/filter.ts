@@ -4,6 +4,7 @@ import { SearchMatch } from '../components/search-list/search-list.component';
 import { SearchEvent } from '../components/search-list/search-list.component';
 
 @Pipe({
+  standalone: false,
   name: 'filter'
 })
 @Injectable()

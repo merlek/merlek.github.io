@@ -1,7 +1,10 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component } from '@angular/core';
 import { Nav } from './components/header/header.component';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
   selector: 'app-root',
   templateUrl: './app.component.html'
 })

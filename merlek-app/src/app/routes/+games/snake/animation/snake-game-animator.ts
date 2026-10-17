@@ -1,8 +1,10 @@
-import { RoundedRect, Animators } from 'canvas-tools';
+import { ManagedCanvasGridAnimator } from 'app/lib/managed-canvas-grid-animator';
+import { RoundedRect } from 'canvas-tools';
 import { SnakeGameState } from '../core/snake-game-state';
 import { SnakeAnimator } from './snake-animator';
 
-export class SnakeGameAnimator extends Animators.CanvasGridAnimator {
+export class SnakeGameAnimator extends ManagedCanvasGridAnimator {
+
   static readonly APPLE_COLOR = '#ff3200';
   static readonly CRASH_COLOR = 'rgb(255,0,0)';
   private snakeAnimator: SnakeAnimator;

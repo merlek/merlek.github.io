@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { EditDistanceRoutingModule } from './edit-distance-routing.module';
 import { EditDistanceComponent } from './component/edit-distance.component';
 import { FormsModule } from '@angular/forms';
-import { ProgressbarModule } from 'ngx-bootstrap';
+import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 
 @NgModule({
   declarations: [EditDistanceComponent],
@@ -12,7 +12,7 @@ import { ProgressbarModule } from 'ngx-bootstrap';
     CommonModule,
     FormsModule,
     EditDistanceRoutingModule,
-    ProgressbarModule.forRoot()
+    ProgressbarModule
   ]
 })
 export class EditDistanceModule {}

@@ -1,5 +1,4 @@
 
-import {MetaProperty} from 'typescript';
 export class Letter {
 
   public static Alef = new Letter({name: 'Alef', hebrew: 'א', transliteration: 'ʾ'});

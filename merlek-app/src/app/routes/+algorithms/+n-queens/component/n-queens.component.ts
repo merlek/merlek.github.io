@@ -1,8 +1,11 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NQueensAnimationBuilder } from '../n-queens-animation-builder';
 import { NQueensAnimator } from '../n-queens-animator';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
   selector: 'app-n-queens',
   templateUrl: './n-queens.component.html',
   styleUrls: ['./n-queens.component.scss']
@@ -21,7 +24,7 @@ export class NQueensComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.animator.destroy();
+    this.animator?.destroy();
   }
 
   reset() {

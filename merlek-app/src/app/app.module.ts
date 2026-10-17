@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { NgModule, provideZoneChangeDetection } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './/app-routing.module';
@@ -11,6 +11,7 @@ import { HomeComponent } from './routes/+home/home.component';
 @NgModule({
   declarations: [AppComponent, HeaderComponent, HomeComponent, HealthCoachComponent],
   imports: [AppRoutingModule, BrowserModule, HttpClientModule, NgbModule],
+  providers: [provideZoneChangeDetection()],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

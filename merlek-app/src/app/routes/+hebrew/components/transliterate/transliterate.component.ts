@@ -1,7 +1,10 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { TransliteratorService } from '../../services/transliterator.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
   selector: 'app-transliterate',
   templateUrl: './transliterate.component.html',
   styles: ['textarea {font-size: 2rem;}']

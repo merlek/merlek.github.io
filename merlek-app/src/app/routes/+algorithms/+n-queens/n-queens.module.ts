@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ProgressbarModule } from 'ngx-bootstrap';
+import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { NQueensRoutingModule } from './n-queens-routing.module';
 import { NQueensComponent } from './component/n-queens.component';
 
@@ -11,7 +11,7 @@ import { NQueensComponent } from './component/n-queens.component';
     CommonModule,
     FormsModule,
     NQueensRoutingModule,
-    ProgressbarModule.forRoot()
+    ProgressbarModule
   ]
 })
 export class NQueensModule {}

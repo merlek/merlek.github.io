@@ -1,8 +1,9 @@
+import { IPoint } from 'canvas-tools';
 import { Point } from 'canvas-tools';
 import { mod } from 'utility-functions';
 
-export type Apple = Point;
-export type Direction = Point;
+export type Apple = IPoint;
+export type Direction = IPoint;
 export class Directions {
   static readonly NORTH: Direction = Point.create(0, -1);
   static readonly SOUTH: Direction = Point.create(0, 1);
@@ -15,13 +16,13 @@ export class Snake {
     public readonly cols: number,
     public readonly rows: number,
     public readonly moves: Direction[],
-    public readonly start: Point,
-    public readonly snake: Point[] = []
+    public readonly start: IPoint,
+    public readonly snake: IPoint[] = []
   ) {}
   public willEat(apple: Apple): boolean {
     return Point.equals(this.nextHead())(apple);
   }
-  public inSnake(point: Point) {
+  public inSnake(point: IPoint) {
     return this.snake.some(Point.equals(point));
   }
   private willCrash(other?: Snake): boolean {
@@ -39,7 +40,7 @@ export class Snake {
   private nextMoves(): Direction[] {
     return this.moves.length > 1 ? this.moves.slice(1) : this.moves;
   }
-  private nextHead(): Point {
+  private nextHead(): IPoint {
     return this.snake.length === 0
       ? this.start
       : Point.create(
@@ -47,7 +48,7 @@ export class Snake {
           mod(this.rows)(this.snake[0].y + this.moves[0].y)
         );
   }
-  private nextSnake(apples: Apple[], other?: Snake): Point[] {
+  private nextSnake(apples: Apple[], other?: Snake): IPoint[] {
     if (this.willCrash(other)) {
       return [];
     } else {
@@ -98,7 +99,7 @@ export class Snake {
     }
     return null;
   }
-  public segments(): Point[][] {
+  public segments(): IPoint[][] {
     return this.snake.reduce((acc, cur) => {
       if (acc.length === 0) {
         acc.push([cur]);

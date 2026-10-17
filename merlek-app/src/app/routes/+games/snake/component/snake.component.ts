@@ -1,8 +1,11 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { CookieManager } from 'app/lib/cookie';
 import { SnakeGameManager } from '../animation/snake-game-manager';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
   selector: 'app-snake',
   templateUrl: './snake.component.html',
   styleUrls: ['./snake.component.scss']
@@ -33,7 +36,7 @@ export class SnakeComponent implements OnInit, OnDestroy {
     this.highScore = +CookieManager.getCookie(SnakeComponent.COOKIE_NAME);
   }
   ngOnDestroy(): void {
-    this.animator.ngOnDestroy();
+    this.animator?.destroy();
   }
   get score() {
     return Math.max(...this.animator.state.snakes.map(s => s.snake.length));

@@ -1,3 +1,4 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit, Input } from '@angular/core';
 
 export class Nav {
@@ -13,6 +14,8 @@ export class Nav {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
   selector: 'app-header',
   templateUrl: './header.component.html',
   styles: ['.navbar {background: #fff;  opacity: 0.95;}']

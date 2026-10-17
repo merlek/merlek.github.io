@@ -1,3 +1,4 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -13,6 +14,8 @@ export class Tab {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
   selector: 'app-hebrew-tab',
   templateUrl: './hebrew-tab.component.html'
 })

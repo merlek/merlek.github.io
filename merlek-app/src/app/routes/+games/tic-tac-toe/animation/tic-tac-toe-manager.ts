@@ -1,12 +1,11 @@
-import { OnDestroy } from '@angular/core';
-import { ClickEventObject, Mouse } from 'canvas-tools';
+import { IClickEventObject, Mouse } from 'canvas-tools';
 import { TicTacToeAI } from '../core/tic-tac-toe-game-ai';
 import { TicTacToeGameState } from '../core/tic-tac-toe-game-state';
 import { BackgroundAnimator } from './background-animator';
 import { TicTacToeAnimator } from './tic-tac-toe-animator';
 import { TicTacToeUIAnimator } from './tic-tac-toe-ui-animator';
 
-export class TicTacToeManager implements OnDestroy {
+export class TicTacToeManager {
   public fps = 60;
   private animationFrameId: number;
   private gameAnimator: TicTacToeAnimator;
@@ -26,7 +25,7 @@ export class TicTacToeManager implements OnDestroy {
     const x = (i: number) => Math.round((i * ui.width) / this.state.cols);
     const y = (j: number) => Math.round((j * ui.height) / this.state.rows);
 
-    const gridButtons: ClickEventObject[] = [];
+    const gridButtons: IClickEventObject[] = [];
     for (let i = 0; i < state.cols; i++) {
       for (let j = 0; j < state.rows; j++) {
         gridButtons.push({
@@ -67,7 +66,10 @@ export class TicTacToeManager implements OnDestroy {
       this.animationFrameId = window.requestAnimationFrame(this.update(t1));
     }
   };
-  ngOnDestroy(): void {
+  destroy(): void {
+    this.backgroundAnimator.destroy();
+    this.gameAnimator.destroy();
+    this.uiAnimator.destroy();
     if (this.animationFrameId) {
       window.cancelAnimationFrame(this.animationFrameId);
     }

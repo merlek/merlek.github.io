@@ -1,8 +1,11 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { GreekVocab } from 'app/routes/+greek-vocab/greekVocab';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
   selector: 'app-greek-flash-cards',
   templateUrl: './greek-flash-cards.component.html',
   styleUrls: ['../flash-cards.scss']

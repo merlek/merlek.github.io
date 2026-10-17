@@ -1,4 +1,5 @@
-import { Text, Animators } from 'canvas-tools';
+import { ManagedCanvasGridAnimator } from 'app/lib/managed-canvas-grid-animator';
+import { Text } from 'canvas-tools';
 import { TicTacToeAI } from '../core/tic-tac-toe-game-ai';
 import {
   TicTacToeGameState,
@@ -7,7 +8,8 @@ import {
 import { BACKGROUND_GRID_RATIO } from './background-animator';
 import { getStrokeStyle, player } from './tic-tac-toe-animator';
 
-export class TicTacToeUIAnimator extends Animators.CanvasGridAnimator {
+export class TicTacToeUIAnimator extends ManagedCanvasGridAnimator {
+
   constructor(canvas: HTMLCanvasElement, grid: { cols: number; rows: number }) {
     super(canvas, grid);
   }

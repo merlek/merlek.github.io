@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DataGridModule } from 'app/modules/data-grid/data-grid.module';
-import { TabsModule } from 'ngx-bootstrap';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { HebrewCompleteQalComponent } from './components/complete-qal/hebrew-complete-qal.component';
 import { HebrewStemSynopsisComponent } from './components/stem-synopsis/hebrew-stem-synopsis.component';
 import { TransliterateComponent } from './components/transliterate/transliterate.component';
@@ -46,7 +46,7 @@ import { TransliteratorService } from './services/transliterator.service';
     FormsModule,
     HebrewRoutingModule,
     NgbModule,
-    TabsModule.forRoot()
+    TabsModule
   ],
   providers: [TransliteratorService, LetterService]
 })

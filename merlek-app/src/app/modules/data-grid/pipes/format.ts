@@ -2,6 +2,7 @@
 import {DatePipe} from '@angular/common';
 
 @Pipe({
+  standalone: false,
   name: 'format'
 })
 @Injectable()

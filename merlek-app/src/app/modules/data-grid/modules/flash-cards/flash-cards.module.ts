@@ -18,7 +18,6 @@ import { HebrewFlashCardsComponent } from './hebrew/hebrew-flash-cards.component
     GreekFlashCardsComponent,
     HebrewFlashCardsComponent
   ],
-  exports: [FlashCardsComponent],
-  entryComponents: [GreekFlashCardsComponent, HebrewFlashCardsComponent]
+  exports: [FlashCardsComponent]
 })
 export class FlashCardsModule {}

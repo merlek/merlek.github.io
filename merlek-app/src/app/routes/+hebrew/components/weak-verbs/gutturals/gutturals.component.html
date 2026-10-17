@@ -1,34 +1,34 @@
 <div class="card">
-  <button type="button" class="btn btn-primary btn-lg btn-block" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+  <button type="button" class="btn btn-primary btn-lg w-100" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
     aria-controls="collapseExample">
     Gutturals
   </button>
   <div class="card-body" id="collapseExample" [ngbCollapse]="isCollapsed">
-    <ngb-tabset class="text-center" justify="fill">
-      <ngb-tab id="dagesh-forte">
-        <ng-template ngbTabTitle>
+    <tabset class="text-center" [justified]="true">
+      <tab id="dagesh-forte">
+        <ng-template tabHeading>
           <h6>Dagesh Forte</h6>
         </ng-template>
-        <ng-template ngbTabContent>
+
           <app-dagesh-forte></app-dagesh-forte>
-        </ng-template>
-      </ngb-tab>
-      <ngb-tab id="sewa">
-        <ng-template ngbTabTitle>
+
+      </tab>
+      <tab id="sewa">
+        <ng-template tabHeading>
           <h6>Sewa</h6>
         </ng-template>
-        <ng-template ngbTabContent>
+
           <app-sewa></app-sewa>
-        </ng-template>
-      </ngb-tab>
-      <ngb-tab id="a-class">
-        <ng-template ngbTabTitle>
+
+      </tab>
+      <tab id="a-class">
+        <ng-template tabHeading>
           <h6>A-class Environment</h6>
         </ng-template>
-        <ng-template ngbTabContent>
+
           <app-a-class></app-a-class>
-        </ng-template>
-      </ngb-tab>
-    </ngb-tabset>
+
+      </tab>
+    </tabset>
   </div>
 </div>

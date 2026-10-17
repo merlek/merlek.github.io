@@ -1,8 +1,11 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TowerOfHanoiAnimationBuilder } from '../tower-of-hanoi-animation-builder';
 import { TowerOfHanoiAnimator } from '../tower-of-hanoi-animator';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
   selector: 'app-tower-of-hanoi',
   templateUrl: './tower-of-hanoi.component.html',
   styleUrls: ['./tower-of-hanoi.component.scss']
@@ -23,7 +26,7 @@ export class TowerOfHanoiComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.animator.destroy();
+    this.animator?.destroy();
   }
 
   reset() {

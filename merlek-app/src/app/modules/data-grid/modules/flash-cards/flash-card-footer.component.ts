@@ -1,3 +1,4 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import {
   Component,
   OnInit,
@@ -15,6 +16,8 @@ export enum KEY_CODE {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
   selector: 'app-flash-card-footer',
   template: `
     <div class="modal-footer">

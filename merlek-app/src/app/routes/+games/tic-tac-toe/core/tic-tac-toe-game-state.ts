@@ -1,3 +1,4 @@
+import { IPoint } from 'canvas-tools';
 import { Point } from 'canvas-tools';
 
 export type TicTacToeMark = 'X' | 'O';
@@ -16,13 +17,13 @@ export class TicTacToeGameState {
       this.board[x] = [];
     }
   }
-  public get({ x, y }: Point): TicTacToeMark | undefined {
+  public get({ x, y }: IPoint): TicTacToeMark | undefined {
     return this.board[x] ? this.board[x][y] : undefined;
   }
-  protected set({ x, y }: Point, marker: TicTacToeMark): void {
+  protected set({ x, y }: IPoint, marker: TicTacToeMark): void {
     this.board[x][y] = marker;
   }
-  protected setIfAble(marker: TicTacToeMark, p: Point): boolean {
+  protected setIfAble(marker: TicTacToeMark, p: IPoint): boolean {
     let set = false;
     if (!this.winner) {
       if (!this.get(p)) {
@@ -33,7 +34,7 @@ export class TicTacToeGameState {
     }
     return set;
   }
-  protected setNextTurn(p: Point): boolean {
+  protected setNextTurn(p: IPoint): boolean {
     let set = false;
     if (p && this.setIfAble(this.getTurn(), p)) {
       this.nextTurn();
@@ -41,7 +42,7 @@ export class TicTacToeGameState {
     }
     return set;
   }
-  public takeTurn(p?: Point): void {
+  public takeTurn(p?: IPoint): void {
     this.setNextTurn(p);
   }
   protected nextTurn(): TicTacToeMark {

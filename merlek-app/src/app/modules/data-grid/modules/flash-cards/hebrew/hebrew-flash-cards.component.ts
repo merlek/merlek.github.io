@@ -1,9 +1,12 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit, Input } from '@angular/core';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HebrewVocab } from 'app/routes/+hebrew/components/vocab/hebrewVocab';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
   selector: 'app-hebrew-flash-cards',
   templateUrl: './hebrew-flash-cards.component.html',
   styleUrls: ['../flash-cards.scss']

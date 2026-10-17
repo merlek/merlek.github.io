@@ -1,6 +1,9 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
   selector: 'app-hebrew-stem-synopsis',
   templateUrl: './hebrew-stem-synopsis.component.html',
   styleUrls: ['./hebrew-stem-synopsis.component.scss']

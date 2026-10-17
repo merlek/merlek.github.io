@@ -1,3 +1,4 @@
+import { IPoint } from 'canvas-tools';
 import { Point } from 'canvas-tools';
 import { TicTacToeGameState, TicTacToeWinner } from './tic-tac-toe-game-state';
 import { randomInt } from 'utility-functions';
@@ -14,11 +15,11 @@ export class TicTacToeAI extends TicTacToeGameState {
   constructor(
     cols: number = 3,
     rows: number = 3,
-    public aiPlayer: 0 | 1 = randomInt(0)(2) as 0 | 1
+    public aiPlayer: 0 | 1 = randomInt(0, 2) as 0 | 1
   ) {
     super(cols, rows);
   }
-  public takeTurn(p?: Point): void {
+  public takeTurn(p?: IPoint): void {
     if (this.isAiTurn() && !this.checkWinner()) {
       // setTimeout(() => {
       while (!this.setNextTurn(this.bestMove())) {}
@@ -28,8 +29,8 @@ export class TicTacToeAI extends TicTacToeGameState {
       this.setNextTurn(p);
     }
   }
-  public getAvailableMoves(): Point[] {
-    const moves: Point[] = [];
+  public getAvailableMoves(): IPoint[] {
+    const moves: IPoint[] = [];
     for (let x = 0; x < this.cols; x++) {
       for (let y = 0; y < this.rows; y++) {
         if (!this.get({ x, y })) {
@@ -47,7 +48,7 @@ export class TicTacToeAI extends TicTacToeGameState {
     alpha: number = -Infinity,
     beta: number = Infinity,
     isMaximizing: boolean = true
-  ): { score: number; move?: Point } {
+  ): { score: number; move?: IPoint } {
     const result = state.checkWinner(false);
     if (result !== undefined) {
       return { score: this.scores(result, depth) };
@@ -56,7 +57,7 @@ export class TicTacToeAI extends TicTacToeGameState {
     const moves = shuffle(state.getAvailableMoves());
 
     let bestScore = isMaximizing ? -Infinity : Infinity;
-    let bestMove: Point;
+    let bestMove: IPoint;
     const compare = (a: any, b: any) => (isMaximizing ? a > b : a < b);
 
     for (const move of moves) {

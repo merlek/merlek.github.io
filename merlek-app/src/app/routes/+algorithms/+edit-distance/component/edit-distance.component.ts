@@ -1,8 +1,11 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EditDistanceAnimator } from '../edit-distance-animator';
 import { EditDistanceCalculator } from '../edit-distance-calculator';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
   selector: 'app-edit-distance',
   templateUrl: './edit-distance.component.html',
   styleUrls: ['./edit-distance.component.scss']
@@ -25,7 +28,7 @@ export class EditDistanceComponent implements OnInit, OnDestroy {
     this.reset();
   }
   ngOnDestroy(): void {
-    this.animator.destroy();
+    this.animator?.destroy();
   }
   reset() {
     const edc = new EditDistanceCalculator(

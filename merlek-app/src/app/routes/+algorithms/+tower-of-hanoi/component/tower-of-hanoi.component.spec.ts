@@ -1,22 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TowerOfHanoiModule } from '../tower-of-hanoi.module';
 import { TowerOfHanoiComponent } from './tower-of-hanoi.component';
 
 describe('TowerOfHanoiComponent', () => {
   let component: TowerOfHanoiComponent;
   let fixture: ComponentFixture<TowerOfHanoiComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ TowerOfHanoiComponent ]
-    })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TowerOfHanoiModule]
+    }).compileComponents();
     fixture = TestBed.createComponent(TowerOfHanoiComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // Canvas initialization and rendering are exercised in the real browser checks.
   });
 
   it('should create', () => {

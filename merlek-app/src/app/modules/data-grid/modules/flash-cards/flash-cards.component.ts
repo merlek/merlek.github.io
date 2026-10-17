@@ -1,3 +1,4 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GreekFlashCardsComponent } from './greek/greek-flash-cards.component';
@@ -9,6 +10,8 @@ export enum KEY_CODE {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
   selector: 'app-flash-cards',
   template: `
     <button class="btn btn-primary mx-1" (click)="open()">Flash Cards</button>

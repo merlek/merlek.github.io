@@ -1,8 +1,10 @@
-import { Line, Point, Animators } from 'canvas-tools';
+import { ManagedCanvasGridAnimator } from 'app/lib/managed-canvas-grid-animator';
+import { Line, Point } from 'canvas-tools';
 
 export const BACKGROUND_GRID_RATIO = 0.9;
 
-export class BackgroundAnimator extends Animators.CanvasGridAnimator {
+export class BackgroundAnimator extends ManagedCanvasGridAnimator {
+
   static readonly BACKGROUND_COLOR = '#232323';
 
   constructor(canvas: HTMLCanvasElement, grid: { cols: number; rows: number }) {

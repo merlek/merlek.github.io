@@ -1,10 +1,10 @@
-import { OnDestroy } from '@angular/core';
-import { Animators } from 'canvas-tools';
+import { ManagedCanvasGridAnimator } from 'app/lib/managed-canvas-grid-animator';
+import { IButton } from 'canvas-tools';
 import { Button, Mouse, Text } from 'canvas-tools';
 
-export class PauseMenuAnimator extends Animators.CanvasGridAnimator
-  implements OnDestroy {
-  private buttons: Button[] = [];
+export class PauseMenuAnimator extends ManagedCanvasGridAnimator {
+
+  private buttons: IButton[] = [];
   private eventListeners: {
     type: string; // <K extends keyof HTMLElementEventMap>
     function: (e: MouseEvent) => void;
@@ -62,7 +62,7 @@ export class PauseMenuAnimator extends Animators.CanvasGridAnimator
   }
   addEventListeners(
     canvas: HTMLCanvasElement = this.canvas,
-    buttons: Button[] = this.buttons
+    buttons: IButton[] = this.buttons
   ) {
     return this.eventListeners.push(
       Mouse.addClickEventListener(canvas, ...buttons),
@@ -80,10 +80,10 @@ export class PauseMenuAnimator extends Animators.CanvasGridAnimator
       canvas.removeEventListener(l.type, l.function);
     });
   }
-  enableButtons(buttons: Button[] = this.buttons) {
+  enableButtons(buttons: IButton[] = this.buttons) {
     buttons.forEach(b => (b.enabled = true));
   }
-  disableButtons(buttons: Button[] = this.buttons) {
+  disableButtons(buttons: IButton[] = this.buttons) {
     buttons.forEach(b => (b.enabled = false));
   }
   public draw = (ctx: CanvasRenderingContext2D = this.ctx) => {
@@ -100,7 +100,7 @@ export class PauseMenuAnimator extends Animators.CanvasGridAnimator
     this.disableButtons();
     this.canvas.style.cursor = 'default';
   }
-  ngOnDestroy(): void {
+  destroy(): void {
     this.removeEventListeners();
   }
 }

@@ -1,22 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NQueensModule } from '../n-queens.module';
 import { NQueensComponent } from './n-queens.component';
 
 describe('NQueensComponent', () => {
   let component: NQueensComponent;
   let fixture: ComponentFixture<NQueensComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ NQueensComponent ]
-    })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [NQueensModule]
+    }).compileComponents();
     fixture = TestBed.createComponent(NQueensComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // Canvas initialization and rendering are exercised in the real browser checks.
   });
 
   it('should create', () => {

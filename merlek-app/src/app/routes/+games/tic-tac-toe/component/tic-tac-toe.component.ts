@@ -1,7 +1,10 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { TicTacToeManager } from '../animation/tic-tac-toe-manager';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
   selector: 'app-tic-tac-toe',
   templateUrl: './tic-tac-toe.component.html',
   styleUrls: ['./tic-tac-toe.component.scss']
@@ -28,7 +31,7 @@ export class TicTacToeComponent implements OnInit, OnDestroy {
     this.animator.start();
   }
   ngOnDestroy(): void {
-    this.animator.ngOnDestroy();
+    this.animator?.destroy();
   }
 
   @HostListener('window:resize', ['$event'])

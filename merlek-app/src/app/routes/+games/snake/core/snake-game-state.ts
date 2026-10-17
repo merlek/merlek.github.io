@@ -1,3 +1,4 @@
+import { IPoint } from 'canvas-tools';
 import { Point } from 'canvas-tools';
 import { random, randomInt } from 'utility-functions';
 import { Apple, Snake, Directions, Direction } from './snake';
@@ -19,7 +20,7 @@ export class SnakeGameState {
       }
     }
   }
-  private snakeFromState(startingMove: Direction, startingPoint: Point): Snake {
+  private snakeFromState(startingMove: Direction, startingPoint: IPoint): Snake {
     return new Snake(this.cols, this.rows, [startingMove], startingPoint, [
       startingPoint
     ]);
@@ -30,8 +31,8 @@ export class SnakeGameState {
   private willEat(apple: Apple): boolean {
     return this.snakes.reduce((acc, curr) => acc || curr.willEat(apple), false);
   }
-  private newApple(): Point {
-    let nextApple: Point;
+  private newApple(): IPoint {
+    let nextApple: IPoint;
     do {
       nextApple = this.snakes.reduce((acc, cur) => {
         return cur.inSnake(acc) ? null : acc;
@@ -39,9 +40,9 @@ export class SnakeGameState {
     } while (!nextApple);
     return nextApple;
   }
-  private nextApple(apple: Apple): Point {
+  private nextApple(apple: Apple): IPoint {
     if (this.willEat(apple)) {
-      return this.apples.length <= 1 || randomInt(0)(2) === 0
+      return this.apples.length <= 1 || randomInt(0, 2) === 0
         ? this.newApple()
         : null;
       // return this.newApple();
@@ -49,7 +50,7 @@ export class SnakeGameState {
       return apple;
     }
   }
-  private nextApples(): Point[] {
+  private nextApples(): IPoint[] {
     const apples = this.apples
       .map(apple => {
         return this.nextApple(apple);
@@ -57,7 +58,7 @@ export class SnakeGameState {
       .filter(Boolean);
     if (
       this.apples.length < SnakeGameState.MAX_APPLES &&
-      randomInt(0)(100) === 0
+      randomInt(0, 100) === 0
     ) {
       apples.push(this.newApple());
     }
@@ -73,8 +74,8 @@ export class SnakeGameState {
       )
     );
   }
-  private rndPos(): Point {
-    return Point.create(randomInt(0)(this.cols), randomInt(0)(this.rows));
+  private rndPos(): IPoint {
+    return Point.create(randomInt(0, this.cols), randomInt(0, this.rows));
   }
   private merge(other: any): SnakeGameState {
     return Object.assign(new SnakeGameState(), this, other);

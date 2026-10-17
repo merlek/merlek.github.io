@@ -1,53 +1,53 @@
 <div class="card">
-  <button type="button" class="btn btn-primary btn-lg btn-block" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+  <button type="button" class="btn btn-primary btn-lg w-100" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
     aria-controls="collapseExample">
     Lamed-Heh
   </button>
   <div class="card-body" id="collapseExample" [ngbCollapse]="isCollapsed">
-    <ngb-tabset class="text-center" justify="fill">
-      <ngb-tab id="sufformative-rules">
-        <ng-template ngbTabTitle>
+    <tabset class="text-center" [justified]="true">
+      <tab id="sufformative-rules">
+        <ng-template tabHeading>
           <h6>Sufformative Rules</h6>
         </ng-template>
-        <ng-template ngbTabContent>
+
           <div class="pt-3">
-            <ngb-tabset class="text-center" justify="fill">
-              <ngb-tab id="no-sufformative">
-                <ng-template ngbTabTitle>
+            <tabset class="text-center" [justified]="true">
+              <tab id="no-sufformative">
+                <ng-template tabHeading>
                   <h6>No Sufformative</h6>
                 </ng-template>
-                <ng-template ngbTabContent>
+
                   <app-no-sufformative></app-no-sufformative>
-                </ng-template>
-              </ngb-tab>
-              <ngb-tab id="consonantal-sufformative">
-                <ng-template ngbTabTitle>
+
+              </tab>
+              <tab id="consonantal-sufformative">
+                <ng-template tabHeading>
                   <h6>Consonantal Sufformative</h6>
                 </ng-template>
-                <ng-template ngbTabContent>
+
                   <app-consonantal-sufformative></app-consonantal-sufformative>
-                </ng-template>
-              </ngb-tab>
-              <ngb-tab id="vocalic-sufformative">
-                <ng-template ngbTabTitle>
+
+              </tab>
+              <tab id="vocalic-sufformative">
+                <ng-template tabHeading>
                   <h6>Vocalic Sufformative</h6>
                 </ng-template>
-                <ng-template ngbTabContent>
+
                   <app-vocalic-sufformative></app-vocalic-sufformative>
-                </ng-template>
-              </ngb-tab>
-            </ngb-tabset>
+
+              </tab>
+            </tabset>
           </div>
-        </ng-template>
-      </ngb-tab>
-      <ngb-tab id="anomalies">
-        <ng-template ngbTabTitle>
+
+      </tab>
+      <tab id="anomalies">
+        <ng-template tabHeading>
           <h6>Anomalies</h6>
         </ng-template>
-        <ng-template ngbTabContent>
+
           <app-sewa></app-sewa>
-        </ng-template>
-      </ngb-tab>
-    </ngb-tabset>
+
+      </tab>
+    </tabset>
   </div>
 </div>

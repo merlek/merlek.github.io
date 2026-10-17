@@ -1,4 +1,5 @@
-import { Line, Point, Animators } from 'canvas-tools';
+import { ManagedCanvasGridAnimator } from 'app/lib/managed-canvas-grid-animator';
+import { Line, Point } from 'canvas-tools';
 import { TicTacToeAI } from '../core/tic-tac-toe-game-ai';
 import {
   TicTacToeGameState,
@@ -22,7 +23,8 @@ export const determineMode = (state: TicTacToeGameState) => {
   }
 };
 
-export class TicTacToeAnimator extends Animators.CanvasGridAnimator {
+export class TicTacToeAnimator extends ManagedCanvasGridAnimator {
+
   constructor(canvas: HTMLCanvasElement, grid: { cols: number; rows: number }) {
     super(canvas, grid);
   }

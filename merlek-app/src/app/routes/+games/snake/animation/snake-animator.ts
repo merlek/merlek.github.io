@@ -1,8 +1,11 @@
-import { Animators, Point } from 'canvas-tools';
+import { ManagedCanvasGridAnimator } from 'app/lib/managed-canvas-grid-animator';
+import { IPoint } from 'canvas-tools';
+import { Point } from 'canvas-tools';
 import { Snake } from '../core/snake';
 import { SnakeGameState } from '../core/snake-game-state';
 
-export class SnakeAnimator extends Animators.CanvasGridAnimator {
+export class SnakeAnimator extends ManagedCanvasGridAnimator {
+
   static readonly SNAKE_COLORS = ['#00c832', '#c7c700'];
   constructor(canvas: HTMLCanvasElement, grid: { cols: number; rows: number }) {
     super(canvas, grid);
@@ -59,7 +62,7 @@ export class SnakeAnimator extends Animators.CanvasGridAnimator {
     ctx.restore();
   }
   private drawSnakeSegment = (ctx: CanvasRenderingContext2D) => (
-    points: Point[]
+    points: IPoint[]
   ) => {
     ctx.save();
 

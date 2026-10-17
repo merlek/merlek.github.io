@@ -1,18 +1,24 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "downlevelIteration": true,
-    "importHelpers": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es2015",
-    "typeRoots": ["node_modules/@types"],
-    "lib": ["es2017", "dom"],
-    "module": "esnext",
-    "baseUrl": "./src"
+    "target": "ES2022",
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "lib": [
+      "ES2022",
+      "dom"
+    ],
+    "baseUrl": "./src",
+    "ignoreDeprecations": "6.0",
+    "useDefineForClassFields": false,
+    "skipLibCheck": true,
+    "strict": false
+  },
+  "angularCompilerOptions": {
+    "strictTemplates": false
   }
 }

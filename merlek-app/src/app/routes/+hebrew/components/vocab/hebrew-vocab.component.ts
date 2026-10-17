@@ -1,12 +1,15 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { throwError } from 'rxjs';
 
 import { HebrewVocab } from './hebrewVocab';
 import { DataGridComponent } from 'app/modules/data-grid/data-grid.component';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
   selector: 'app-hebrew-vocab',
   templateUrl: './hebrew-vocab.component.html'
 })
@@ -87,8 +90,8 @@ export class HebrewVocabComponent implements OnInit {
       );
     }
     // return an ErrorObservable with a user-facing error message
-    return ErrorObservable.create(
+    return throwError(() => new Error(
       'Something bad happened; please try again later.'
-    );
+    ));
   }
 }

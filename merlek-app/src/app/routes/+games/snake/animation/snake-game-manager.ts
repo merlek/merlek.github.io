@@ -1,11 +1,10 @@
-import { OnDestroy } from '@angular/core';
 import { Animators } from 'canvas-tools';
 import { Directions } from '../core/snake';
 import { SnakeGameState } from '../core/snake-game-state';
 import { PauseMenuAnimator } from './pause-menu-animator';
 import { SnakeGameAnimator } from './snake-game-animator';
 
-export class SnakeGameManager implements OnDestroy {
+export class SnakeGameManager {
   public fps = 10;
   public paused = false;
   private animationFrameId: number;
@@ -50,10 +49,12 @@ export class SnakeGameManager implements OnDestroy {
       this.animationFrameId = window.requestAnimationFrame(this.update(t1));
     }
   };
-  ngOnDestroy(): void {
+  destroy(): void {
+    this.backgroundAnimator.destroy();
+    this.gameAnimator.destroy();
     if (this.animationFrameId) {
       window.cancelAnimationFrame(this.animationFrameId);
-      this.pauseMenuAnimator.ngOnDestroy();
+      this.pauseMenuAnimator.destroy();
     }
   }
   public keyEvent(key: string): boolean {

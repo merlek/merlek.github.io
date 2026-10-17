@@ -27,7 +27,6 @@ import { OrderBy } from './pipes/orderby';
     OrderBy,
     SearchListComponent
   ],
-  exports: [DataGridComponent],
-  entryComponents: [GreekFlashCardsComponent, HebrewFlashCardsComponent]
+  exports: [DataGridComponent]
 })
 export class DataGridModule {}

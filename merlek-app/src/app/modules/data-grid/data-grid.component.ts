@@ -1,3 +1,4 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import {
   Component,
   EventEmitter,
@@ -21,6 +22,8 @@ export interface GridAction {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
   selector: 'app-data-grid',
   templateUrl: './data-grid.component.html',
   styleUrls: ['./data-grid.component.scss']
@@ -43,7 +46,7 @@ export class DataGridComponent implements OnInit, OnChanges {
   btnclick: EventEmitter<GridAction> = new EventEmitter<GridAction>();
 
   // Local Variable
-  pdata: any[] = this.data;
+  pdata: any[] = [];
   search: SearchEvent;
   searchTitle = 'Search:';
   page = 0;

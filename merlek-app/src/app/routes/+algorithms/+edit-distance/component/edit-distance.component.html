@@ -28,7 +28,7 @@
         <div class="col-2">
           <div class="form-group">
             <button
-              class="btn btn-dark float-right"
+              class="btn btn-dark float-end"
               type="button"
               (click)="animator.previous()"
             >
@@ -49,7 +49,7 @@
         <div class="col-2">
           <div class="form-group">
             <button
-              class="btn btn-dark float-left"
+              class="btn btn-dark float-start"
               type="button"
               (click)="animator.next()"
             >
@@ -137,7 +137,7 @@ editDistance(src: string, dst: string): number[][] {{ '{' }}
       let rep = edit[i - 1][j - 1];
       if (src[i] !== dst[j]) {{ '{' }}
         rep += 1;
-      }
+      &#125;
       edit[i][j] = Math.min(ins, del, rep);
     {{ '}' }}
   {{ '}' }}
