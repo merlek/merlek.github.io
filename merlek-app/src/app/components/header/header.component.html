@@ -1,7 +1,7 @@
-<nav id="menu" class="navbar fixed-top navbar-expand-sm navbar-light">
-  <a class="navbar-brand" routerLink="">
+<nav id="menu" aria-label="Main navigation" class="navbar fixed-top navbar-expand-md navbar-light">
+  <a class="navbar-brand" routerLink="/home">
     <img
-      src="/assets/logo.svg"
+      src="assets/logo.svg"
       width="30"
       height="30"
       class="d-inline-block align-top"
@@ -34,6 +34,7 @@
         <a
           *ngIf="!nav.children"
           class="nav-link"
+          (click)="isCollapsed = true"
           routerLink="/{{ nav.path }}"
           >{{ nav.name }}</a
         >
@@ -57,6 +58,7 @@
             *ngFor="let child of nav.children"
             class="dropdown-item"
             [routerLinkActive]="['active']"
+            (click)="isCollapsed = true"
             routerLink="/{{ nav.path }}/{{ child.path }}"
             >{{ child.name }}</a
           >

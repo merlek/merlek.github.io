@@ -1,27 +1,29 @@
-# MerlekApp
+# Merle Klein portfolio
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.7.
+Angular 8 application containing a portfolio homepage, the Health Coach public case study, and interactive language, algorithm, and game projects.
 
-## Development server
+## Local development
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Use Node 24 and npm 11. This legacy Angular build uses the OpenSSL legacy provider in its build and serve scripts. Sass replaces the unsupported native node-sass compiler; the application framework has not been upgraded.
 
-## Code scaffolding
+```sh
+npm ci --ignore-scripts --legacy-peer-deps
+npm run build
+python3 -m http.server 4173 --bind 127.0.0.1 --directory dist
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Open `http://127.0.0.1:4173/#/home` or `http://127.0.0.1:4173/#/projects/health-coach`.
 
-## Build
+For a live development server, use `npm run serve`.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+## Public content
 
-## Running unit tests
+The Health Coach implementation is private. Only authored case-study copy and a labeled illustrative interface with fictional values belong here. Never copy private app source, personal health records, source imports, backups, device identifiers, credentials, or private requirements into this repository.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+The validation copy records a dated snapshot. Recheck claims when updating it; keep implemented workout features distinct from future AI coaching ideas. The illustration is not an app screenshot.
 
-## Running end-to-end tests
+## Publication
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+GitHub Pages serves the repository root on `master`; `merlek-app/` holds source, and `dist/` is an ignored local build. A source-only change does not update the public root bundles.
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Preview and obtain approval before copying a reviewed build to the root or pushing any public update. The historical `bin/deploy.sh` script merges branches, deletes root files through `bin/clean.sh`, and pushes immediately; do not use it for preview or review.

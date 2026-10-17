@@ -1,11 +1,13 @@
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HealthCoachComponent } from './routes/+health-coach/health-coach.component';
 import { HomeComponent } from './routes/+home/home.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
+  { path: 'projects/health-coach', component: HealthCoachComponent },
   {
     path: 'languages/greek-vocab',
     loadChildren: () =>
@@ -60,7 +62,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  imports: [RouterModule.forRoot(routes, { useHash: true, scrollPositionRestoration: 'top' })],
   exports: [RouterModule],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }]
 })

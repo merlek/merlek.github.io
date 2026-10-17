@@ -6,9 +6,16 @@ import { Nav } from './components/header/header.component';
   templateUrl: './app.component.html'
 })
 export class AppComponent {
-  title = 'merlek.github.io';
+  focusMain(event: Event) {
+    event.preventDefault();
+    document.getElementById('main').focus();
+  }
+
+  title = 'Merle Klein';
 
   navs = [
+    new Nav('Portfolio', 'home'),
+    new Nav('Health Coach', 'projects/health-coach'),
     new Nav('Languages', 'languages', [
       new Nav('Greek Vocab', 'greek-vocab'),
       new Nav('Hebrew', 'hebrew')

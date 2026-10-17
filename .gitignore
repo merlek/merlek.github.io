@@ -1,3 +1,6 @@
 node_modules
 npm-debug.log
 merlek-github-io.code-workspace
+
+merlek-app/dist/
+merlek-app/.angular/
