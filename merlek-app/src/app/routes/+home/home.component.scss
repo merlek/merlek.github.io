@@ -212,3 +212,8 @@ h3 { font-family: inherit; font-weight: 600; }
   .consulting-copy h3 { font-size: 26px; }
   .consulting-copy p { font-size: 13px; }
 }
+
+.intro-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.intro-actions .primary-link { white-space: nowrap; }
+.intro-bottom .intro-actions .text-link { margin-top: 0; }
+@media (max-width: 767px) { .intro-actions { margin-top: 24px; } }

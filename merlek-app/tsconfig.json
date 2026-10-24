@@ -16,7 +16,8 @@
     "ignoreDeprecations": "6.0",
     "useDefineForClassFields": false,
     "skipLibCheck": true,
-    "strict": false
+    "strict": false,
+    "resolveJsonModule": true
   },
   "angularCompilerOptions": {
     "strictTemplates": false

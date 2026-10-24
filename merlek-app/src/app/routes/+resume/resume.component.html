@@ -1,0 +1,22 @@
+<article class="resume-page">
+  <div class="resume-toolbar">
+    <a routerLink="/home">← Back to portfolio</a>
+    <a class="download-link" href="/resume/merle-klein-resume.pdf" download>Download resume (PDF) ↓</a>
+  </div>
+  <div id="resume-content">
+    <header class="resume-header">
+      <h1>{{ resume.name }}</h1>
+      <p>{{ resume.location }} | <a [href]="'mailto:' + resume.email">{{ resume.email }}</a></p>
+      <p>Portfolio: <a [href]="resume.portfolio">{{ resume.portfolio }}</a></p>
+    </header>
+    <section *ngFor="let section of resume.sections" [attr.aria-labelledby]="'resume-' + section.id">
+      <h2 [id]="'resume-' + section.id">{{ section.heading }}</h2>
+      <div class="resume-block" *ngFor="let block of section.blocks">
+        <h3 *ngIf="block.title">{{ block.title }}</h3>
+        <p *ngFor="let paragraph of block.paragraphs">{{ paragraph }}</p>
+        <p *ngFor="let link of block.links"><a [href]="link">{{ link }}</a></p>
+        <ul *ngIf="block.bullets.length"><li *ngFor="let bullet of block.bullets">{{ bullet }}</li></ul>
+      </div>
+    </section>
+  </div>
+</article>

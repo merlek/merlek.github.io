@@ -1,0 +1,130 @@
+{
+  "name": "MERLE COLEMAN KLEIN",
+  "location": "San Tan Valley, AZ",
+  "email": "merlek.apps.support@gmail.com",
+  "portfolio": "https://merlek.github.io/",
+  "sections": [
+    {
+      "id": "software-engineer",
+      "heading": "Software Engineer",
+      "blocks": [
+        {
+          "title": "",
+          "paragraphs": [
+            "Software engineer with 10+ years of professional experience building commerce, subscription, licensing, and authentication systems. Combines Java and Spring backend development with Wolfram Language ERP services and full-stack delivery. Experience owning pricing logic, improving API performance, and integrating payment and identity platforms."
+          ],
+          "links": [],
+          "bullets": []
+        }
+      ]
+    },
+    {
+      "id": "technical-skills",
+      "heading": "Technical Skills",
+      "blocks": [
+        {
+          "title": "",
+          "paragraphs": [
+            "Languages: Java, Wolfram Language, JavaScript, TypeScript, SQL",
+            "Backend: Spring Boot, Spring, REST APIs, MySQL, Tomcat, Gradle",
+            "Frontend: Angular, HTML, CSS/SCSS",
+            "Integrations: Stripe, Google Play subscriptions, JWT",
+            "Engineering: API profiling, batch processing, unit and performance-regression testing, Git, Jira, Codex"
+          ],
+          "links": [],
+          "bullets": []
+        }
+      ]
+    },
+    {
+      "id": "professional-experience",
+      "heading": "Professional Experience",
+      "blocks": [
+        {
+          "title": "Wolfram Research | Software Engineer / Web Application Developer",
+          "paragraphs": [
+            "2016 - Present"
+          ],
+          "links": [],
+          "bullets": [
+            "Assumed primary development ownership of the ERP pricing engine, implementing product and market-specific pricing, subscription-renewal rules, and price-change reporting across currencies.",
+            "Improved site-user management API performance by resolving subscription-site lookup failures, reducing dependencies, and optimizing repeated per-user work.",
+            "Built ERP-backed site-administration APIs and interfaces in Wolfram Account, including concurrent user uploads, progress feedback, and more reliable access management for large institutional sites.",
+            "Integrated Apple Pay, Google Pay, and Alipay through Stripe across online checkout and ERP payment workflows, and added wallet-based billing updates in Wolfram Account.",
+            "Modernized the backend API for online purchasing and subscriptions to Java 21, Spring Boot 3, and Tomcat 10, including OAuth2/OIDC browser authentication and expanded regression and integration coverage; in testing.",
+            "Implemented Android in-app subscriptions across Java services and ERP, supporting Wolfram|Alpha Pro purchases through Google Play and access to subscriptions bought directly from Wolfram.",
+            "Built automated execution-time regression checks into the ERP unit-test framework to help detect performance regressions.",
+            "Implemented a site-license discovery API for AI clients using domain and IP-based availability checks, product access links, and fallback recommendations."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "personal-projects",
+      "heading": "Personal Projects",
+      "blocks": [
+        {
+          "title": "Health Coach | iPhone Workout Journal | Private external TestFlight beta",
+          "paragraphs": [],
+          "links": [
+            "https://merlek.github.io/#/projects/health-coach"
+          ],
+          "bullets": [
+            "Built an iPhone workout journal with Angular, Ionic, TypeScript, and Capacitor/Swift bridges for Apple Health access and protected on-device storage.",
+            "Implemented set logging, history, user-approved progression changes, atomic local saves with recovery, CSV import validation and duplicate prevention, and JSON backup/restore; verified builds and domain/import behavior through automated tests and simulator workflows."
+          ]
+        },
+        {
+          "title": "AgentFlow | Project Planning and AI Coordination | In development",
+          "paragraphs": [],
+          "links": [],
+          "bullets": [
+            "Developed an Angular/TypeScript project workspace with a Node.js server and SQLite persistence for project registration, discovery, planning, and attention tracking.",
+            "Implemented portable project-knowledge exports in JSON and Markdown and bounded public-HTTPS repository acquisition, keeping external project source separate from application-owned state."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "earlier-experience",
+      "heading": "Earlier Experience",
+      "blocks": [
+        {
+          "title": "Wolfram Alpha | Software Engineer",
+          "paragraphs": [
+            "2013 - 2015"
+          ],
+          "links": [],
+          "bullets": [
+            "Developed Java subscription and payment features, including promotional codes, student eligibility verification, and product-usage credits.",
+            "Built internal customer-service tools for subscription management, with MySQL database and dynamic web-page development."
+          ]
+        },
+        {
+          "title": "Wolfram Research | Software Development Intern",
+          "paragraphs": [
+            "2013"
+          ],
+          "links": [],
+          "bullets": [
+            "Developed Java proof-of-concept applications, including an XMPP chatbot for IT and a radar image composer using NOAA forecast data."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "education",
+      "heading": "Education",
+      "blocks": [
+        {
+          "title": "University of Illinois, Urbana-Champaign",
+          "paragraphs": [
+            "Bachelor of Science in Computer Science | 2013"
+          ],
+          "links": [],
+          "bullets": []
+        }
+      ]
+    }
+  ]
+}

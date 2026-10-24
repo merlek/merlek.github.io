@@ -36,3 +36,9 @@ The validation copy records a dated snapshot. Recheck claims when updating it; k
 GitHub Pages serves the repository root on `master`; `merlek-app/` holds source, and `dist/` is an ignored local build. A source-only change does not update the public root bundles.
 
 Preview and obtain approval before copying a reviewed build to the root or pushing any public update. The historical `bin/deploy.sh` script merges branches, deletes root files through `bin/clean.sh`, and pushes immediately; do not use it for preview or review.
+
+## Public resume
+
+The HTML route `/#/resume` renders `src/resume/resume-content.json`. Its PDF download is the separate public copy at `/resume/merle-klein-resume.pdf`; both use the professional app-support email. Keep phone numbers, personal email, editable Word files and private review notes out of these public assets.
+
+When editing the canonical JSON, regenerate the matching public PDF and run `npm run check:resume`. The production build also runs this parity check, using Poppler's `pdftotext` on PATH. It compares the complete public HTML data with extracted PDF text, ignoring layout and page footers, and checks the approved email and absence of phone numbers. Private editable sources remain outside this repository.

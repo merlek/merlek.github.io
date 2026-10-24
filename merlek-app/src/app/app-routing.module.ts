@@ -4,10 +4,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { AgentFlowComponent } from './routes/+agentflow/agentflow.component';
 import { HealthCoachComponent } from './routes/+health-coach/health-coach.component';
 import { HomeComponent } from './routes/+home/home.component';
+import { ResumeComponent } from './routes/+resume/resume.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
+  { path: 'resume', component: ResumeComponent },
   { path: 'projects/health-coach', component: HealthCoachComponent },
   { path: 'projects/agentflow', component: AgentFlowComponent },
   {
