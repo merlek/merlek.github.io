@@ -191,3 +191,11 @@ h3 { font-family: inherit; font-weight: 600; }
   .roadmap-section { padding-top: 40px; }
 }
 @media (prefers-reduced-motion: reduce) { .text-link span, .primary-link, .exploration-grid > a { transition: none; } .primary-link:hover, .exploration-grid > a:hover { transform: none; } }
+
+.agentflow-feature { margin-top: 26px; }
+.planning-preview { width: 100%; max-width: 320px; border: 1px solid #535e6d; border-radius: 16px; background: #0c1016; padding: 26px; }
+.planning-preview .eyebrow { color: #a0c1ed; font-size: 9px; margin: 0 0 24px; }
+.planning-preview > div { display: flex; align-items: center; gap: 16px; padding: 17px 0; border-top: 1px solid #2c3d46; }
+.planning-preview > div > span { color: #7eb6ff; font: 11px ui-monospace, Menlo, monospace; }
+.planning-preview strong { color: #d6e2e6; font-size: 13px; font-weight: 500; }
+.planning-preview > p:last-child { margin: 16px 0 0; font-size: 11px; line-height: 1.8; color: #99acba; }

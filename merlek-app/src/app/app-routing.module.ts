@@ -1,6 +1,7 @@
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AgentFlowComponent } from './routes/+agentflow/agentflow.component';
 import { HealthCoachComponent } from './routes/+health-coach/health-coach.component';
 import { HomeComponent } from './routes/+home/home.component';
 
@@ -8,6 +9,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'projects/health-coach', component: HealthCoachComponent },
+  { path: 'projects/agentflow', component: AgentFlowComponent },
   {
     path: 'languages/greek-vocab',
     loadChildren: () =>

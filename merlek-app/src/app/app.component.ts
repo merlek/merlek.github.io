@@ -19,6 +19,7 @@ export class AppComponent {
   navs = [
     new Nav('Portfolio', 'home'),
     new Nav('Health Coach', 'projects/health-coach'),
+    new Nav('AgentFlow', 'projects/agentflow'),
     new Nav('Languages', 'languages', [
       new Nav('Greek Vocab', 'greek-vocab'),
       new Nav('Hebrew', 'hebrew')
