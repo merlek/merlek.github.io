@@ -199,3 +199,16 @@ h3 { font-family: inherit; font-weight: 600; }
 .planning-preview > div > span { color: #7eb6ff; font: 11px ui-monospace, Menlo, monospace; }
 .planning-preview strong { color: #d6e2e6; font-size: 13px; font-weight: 500; }
 .planning-preview > p:last-child { margin: 16px 0 0; font-size: 11px; line-height: 1.8; color: #99acba; }
+
+.consulting-section { margin-top: 60px; }
+.consulting-copy { display: grid; grid-template-columns: 1fr 1.3fr; gap: 65px; padding: 18px 0 10px; }
+.consulting-copy h3 { font-size: 30px; line-height: 1.3; letter-spacing: -1px; margin: 0; }
+.consulting-copy p { font-size: 14px; line-height: 1.9; color: #99acba; margin-bottom: 18px; }
+.consulting-copy p:last-child { color: #c1d2dc; margin-bottom: 0; }
+@media (max-width: 767px) {
+  .consulting-section { margin-top: 40px; }
+  .consulting-section .section-label { align-items: flex-start; flex-wrap: wrap; gap: 8px; }
+  .consulting-copy { grid-template-columns: 1fr; gap: 22px; padding-top: 10px; }
+  .consulting-copy h3 { font-size: 26px; }
+  .consulting-copy p { font-size: 13px; }
+}
