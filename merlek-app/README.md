@@ -1,6 +1,6 @@
 # Merle Klein portfolio
 
-Angular 8 application containing a portfolio homepage, the Health Coach public case study, and interactive language, algorithm, and game projects.
+Angular application featuring Health Coach and AgentFlow, a consulting section, and a public HTML/PDF resume. Legacy language, algorithm, game, and theme routes redirect to the portfolio homepage; their source remains retained but is no longer loaded by the portfolio.
 
 ## Local development
 
